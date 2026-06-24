@@ -1,227 +1,169 @@
 # Research Poster Studio
 
-研究ポスター専用の**構造化レイアウトエディタ**．A0 / A1 などの学会ポスターを
-YAML + Markdown で管理し，GUI で縮小プレビューしながら調整して PDF / PNG /
-HTML / SVG / PPTX / Marp に書き出せるデスクトップアプリ．
+研究ポスター専用の**構造化レイアウトエディタ**です。A0 / A1 などの学会ポスターを
+YAML + Markdown で管理し、GUI でプレビューしながら **PDF / PNG / HTML / SVG /
+PPTX / Marp** に書き出せます。
 
-PowerPoint のような自由配置 DTP ではなく，研究内容を「ブロック」「カラム」
-「高さモード」「連動モード」で管理するため，研究数・図表数・文字量が変わっても
-レイアウトが破綻しにくい．ポスターの中身は全てテキストファイルなので，
-Claude Code / Codex などの Agent LLM がそのまま編集できる．
+*A structured layout editor for academic research posters. Manage A0/A1 posters as
+YAML + Markdown, preview them in a desktop GUI, and export to PDF / PNG / HTML /
+SVG / PPTX / Marp.*
 
-技術構成: **Tauri v2 + React + TypeScript + Vite**（Windows / macOS / Linux）．
+ポスターの中身はすべてプレーンテキスト（YAML + Markdown）なので、Claude Code /
+Codex などの **Agent LLM がそのまま読んで編集できます**。AI エージェントによる
+支援を前提に設計しています。
 
-## 主な機能
+*Because every poster is plain text, AI coding agents (Claude Code, Codex, …) can
+read and edit it directly. The tool is designed with LLM-agent assistance in mind.*
 
-- 用紙: A0 / A1 / A2・インチ系プリセット（36x48in / 42x56in / 48x96in）・
-  カスタムサイズ・縦横・表示単位 mm / inch 切替
-- 実寸プレビュー（ホイールズーム 5–200%，プリセット 10–100%）
-- 1〜6 カラム + 全幅（wide）ブロック，カラム幅比（1-3 カラムは
-  `left`/`center`/`right`，4 カラム以上は `col1`..`colN`）
-- 高さモード `auto` / `fixed` / `flex` / `locked`，高さ連動
-  （`sync_row` / `*_follows`：行ペアリンググリッドで左右の行高さを揃える）
-- 入れ子ブロック（ブロック内のバンドレイアウト）
-- ブロック単位のフォントサイズ・文字色・見出し色・斜体・
-  背景色・枠線（有無・色・太さ）・本文の自動フィット
-- 見出し装飾: 塗りバー（`heading_background`）・**番号バッジ**（`heading_badge`）・
-  **カード型**（`card`：枠＋影＋見出しバー端まで密着）・**左アクセントバー**
-  （`accent_bar`）・バー幅指定（`heading_width_mode`）
-- 本文中**コールアウト箱**（`::: note … :::`）・ネイティブ**チャート**
-  （` ```chart ` の棒/折れ線）
-- 行間・段落間隔（全体＋ブロック上書き），読書距離インデックス
-  （目標距離から必要 pt を逆算）
-- Markdown 本文（**太字** / *斜体* / `<u>下線</u>` / 役割色 span）．
-  本文は**ブロック別 `content/*.md`** または**単一 `content.md`**（`# 見出し {#id}`
-  セクション，Pandoc 風）のどちらでも管理可（新規プロジェクトは単一 content.md）
-- リストの自動採番（書いた記号の体裁のまま連番化）: `(1)` / `1)` / `a.` / `i.` /
-  `#.`（アウトライン 1.1.1）＋ ① / ア・あ / 漢数字（Pandoc fancy lists 準拠＋拡張）
-- UI 表示言語の**日英切替**（ツールバー／起動ダイアログの言語ボタン．全画面対応．
-  辞書は `packages/desktop-app/src/i18n/lang_jp.ts` / `lang_en.ts`）
-- 図表: PNG / JPEG / SVG に加えて **PDF 貼り込み**（1 ページ目を PNG 化）・
-  **CSV 簡易表**・**Mermaid**・**Graphviz**（ファイルまたは本文コードブロック）・
-  **EMF/WMF**（デスクトップで PNG 変換）．倍率（100% 超のはみ出し可）・横/縦整列・
-  **テキスト回り込み**（`float`）・キャプション色・枠線・**白背景の透過**，
-  画像ギャラリー（等高横並び・複数行・**画像ごとのトリミング**）
-- ヘッダー: 著者・所属・キーワード・機関ロゴ（ヘッダー/フッター×左/中央/右），
-  文字色一括指定（`text_color`：濃色帯に白文字等）・著者所属の1行結合
-  （`affiliation_inline`）
-- キャンバスのダブルクリックで本文を直接編集・基本的なキーボードショートカット
-  （F1 で一覧）
-- **BibTeX 引用文献**（`references.bib` + 本文 `[@key]` 展開，apa7 / jpa /
-  カスタムスタイル，引用文献リスト自動生成）
-- 校正モード（1 カラム通読ビュー・表記ゆれチェック・全角半角一括変換）
-- Undo / Redo（Ctrl+Z / Ctrl+Y），保存ごとの自動バックアップ（`backups/` 10 世代），
-  最近開いたプロジェクト一覧
-- 着せ替え（配色プリセット）・背景画像・フォーマットパッケージ
-  （体裁の書き出し / 読み込み）
-- 警告: 文字あふれ・本文/引用文献の小ささ・カラム高さ差・図表解像度・
-  キャプション欠落・図表ID重複・図表番号の重複・存在しないカラム指定
-- エクスポート: **PDF**（webview 印刷，@page で実寸）/ **PNG**（既定 150 dpi）/
-  自己完結 **HTML** / **SVG** / **PPTX** / **Marp Markdown**
-  （各形式の忠実度と用途は `docs/export-matrix.md`）
-- Agent LLM 用 Skill 同梱（`skills/research-poster-studio/`）
+PowerPoint のような自由配置ではなく、内容を「ブロック / カラム / 高さモード」で
+構造的に管理するため、研究数・図表数・文字量が変わってもレイアウトが破綻しにくい
+設計です。
 
-## 必要環境
+*Layout is structured by blocks, columns, and height modes rather than free-form
+DTP, so it stays robust as the amount of content changes.*
 
-- Node.js 18+（開発時 22 で確認）
+技術構成 / Stack: **Tauri v2 + React + TypeScript + Vite**（Windows / macOS / Linux）。
+
+## 主な機能 / Features
+
+- **用紙・レイアウト** — A0/A1/A2・インチ系プリセット・カスタムサイズ、1〜6 カラム＋
+  全幅ブロック、高さモード（auto/fixed/flex/locked）と高さ連動、入れ子ブロック。
+  *Paper & layout: A0–A2, inch presets, custom sizes; 1–6 columns + full-width;
+  height modes with row-sync; nested blocks.*
+- **本文・装飾** — Markdown 本文（ブロック別 `content/*.md` または単一 `content.md`）、
+  見出しバー・番号バッジ・カード型・コールアウト箱・チャート、リストの自動採番。
+  *Content: Markdown body (per-block or single file), heading bars/badges/cards/
+  callouts/charts, auto-numbered lists.*
+- **図表** — PNG/JPEG/SVG に加え PDF・CSV 表・Mermaid・Graphviz・EMF/WMF、
+  回り込み・整列・トリミング・ギャラリー・白背景の透過。
+  *Figures: images plus PDF, CSV tables, Mermaid, Graphviz, EMF/WMF, with float,
+  alignment, cropping, galleries, and white-background knockout.*
+- **引用文献** — BibTeX（本文 `[@key]` 展開、apa7 / jpa / カスタム、文献リスト自動生成）。
+  *Citations: BibTeX with `[@key]` expansion and an auto-generated reference list.*
+- **仕上げ・運用** — 実寸プレビュー、あふれ等の各種警告、校正モード、Undo/Redo、
+  自動バックアップ、UI の日英切替、着せ替え・背景画像。
+  *Workflow: real-size preview, overflow warnings, a proofreading mode, undo/redo,
+  auto-backup, a JA/EN UI toggle, and themes.*
+- **出力** — PDF / PNG / HTML / SVG / PPTX / Marp（忠実度は `docs/export-matrix.md`）。
+  *Export to PDF / PNG / HTML / SVG / PPTX / Marp.*
+- **エージェント支援** — `rps` CLI（validate / info / explain / export）、VS Code 拡張
+  （検証・プレビュー・警告）、Agent LLM 用 Skill を同梱。
+  *Agent support: an `rps` CLI, a VS Code extension (validate/preview/warnings),
+  and a bundled LLM Skill — all in this repo.*
+
+詳細な仕様は `docs/design.md`（設計書）を参照してください。
+*See `docs/design.md` for the full specification.*
+
+## 必要環境 / Requirements
+
+- Node.js 18+（開発時 22 で確認 / tested on 22）
 - Rust / Cargo（stable）
-- OS ごとの Tauri 前提（Windows: WebView2，Linux: webkit2gtk，macOS: Xcode CLT）
+- OS ごとの Tauri 前提 / Tauri prerequisites（Windows: WebView2、Linux: webkit2gtk、
+  macOS: Xcode CLT）
 
-## 起動方法
+## クイックスタート / Quick start
 
-```powershell
-npm install              # 初回のみ（npm-workspaces 一括）
-npm run dev              # build:libs → tauri dev（共有ライブラリを建ててからGUI起動）
-# ライブラリ（core/renderer/exporter）も同時に編集する場合は別ターミナルで:
-npm run watch:libs       # tsup --watch
+```bash
+npm install        # 初回のみ / first time (npm workspaces)
+npm run dev        # build:libs → tauri dev（共有ライブラリを建ててから GUI 起動）
 ```
 
-本リポジトリは **npm-workspaces のモノレポ**です．レイアウト計算・検証・
-レンダリングは共有パッケージ（`@rps/core` / `@rps/renderer` / `@rps/exporter`）に
-あり，デスクトップ・`rps` CLI・将来の VS Code 拡張が同じ実装を使います
-（詳細は `docs/architecture.md`）．
+起動直後のダイアログから、新規作成（設定ウィザード）・サンプルを開く・
+ファイルを開く・最近開いた一覧を選べます。
 
-アプリ起動直後は**起動時ダイアログ**が出る（新規作成 / ファイルを開く /
-サンプルを開く / 最近開いたプロジェクト）．ツールバーの「新規作成」からは
-**設定ウィザード**（保存先 → 基本情報 → 用紙とカラム → 構成 →
-着せ替え の 5 ステップ）で新しいポスタープロジェクトを作成できる．構成は
-単一研究 / 複数研究 ×（日本語 / English）から選べ，保存先が既存フォルダの
-場合は確認のうえその中に作成する．
-「サンプルを開く」で `examples/sample-poster/` を読み込める．「ファイルを開く」で
-任意のポスタープロジェクト（`poster.yaml`）を開ける．「最近開いた...」から
-再オープンもできる．
+*On launch, a dialog lets you create a new project (a setup wizard), open a sample,
+open an existing `poster.yaml`, or reopen a recent project.*
 
 ## CLI（`rps`）
 
-```powershell
-npm run rps -- validate <project-dir>             # スキーマ＋警告チェック
-npm run rps -- info <project-dir>                 # サイズ/ブロック/図表/警告の要約
-npm run rps -- explain <project-dir> [--json]     # Agent 向け構造要約（読み順/図表/警告）
-npm run rps -- preview <project-dir> --watch      # ローカルプレビュー（自動リロード）
-npm run rps -- export pdf <project-dir>           # exports/ に出力
-npm run rps -- init <dir> --template quantitative # 雛形生成
+```bash
+npm run rps -- validate <project-dir>          # スキーマ＋警告チェック / validate
+npm run rps -- explain  <project-dir> [--json] # Agent 向け構造要約 / structure summary
+npm run rps -- export   pdf <project-dir>      # exports/ に出力 / export
+npm run rps -- init     <dir> --template quantitative
 ```
 
-PDF / PNG 出力は初回のみブラウザ取得が必要: `npx playwright install chromium`．
-HTML / SVG / Marp は追加依存なしで出力できます（詳細は `docs/vscode-cli-integration.md`）．
+HTML / SVG / Marp は追加依存なしで出力できます。PDF / PNG は初回のみ
+`npx playwright install chromium` が必要です。
+*(HTML/SVG/Marp need no extra deps; PDF/PNG require `npx playwright install
+chromium` once.)*
 
-## ビルド（配布物）
+## ビルド・検証 / Build & test
 
-```powershell
-npm run build:libs                        # 共有ライブラリを建てる
-npm run tauri build -w @rps/desktop-app   # 各OSのインストーラ/実行ファイルを生成
+```bash
+npm run build:libs                       # 共有ライブラリ / build shared libs
+npm run tauri build -w @rps/desktop-app  # 配布物 / desktop installers
+npm run typecheck                        # 全ワークスペースの型チェック / typecheck
+npm run smoke                            # smoke test（要 build:libs）
 ```
 
-## 検証
+GUI の目視確認は `docs/acceptance-tests.md`（手動受け入れテスト表）に従います。
+*Manual GUI checks follow `docs/acceptance-tests.md`.*
 
-```powershell
-npm run typecheck     # 全ワークスペースの型チェック
-npm run smoke         # smoke test（カラムレイアウト + CLI validate/info/export）
-```
-
-- 自動 smoke test は `scripts/smoke-columns.mjs`（core のカラム計算）と
-  `scripts/smoke-cli.mjs`（examples/ 3 サンプルへの CLI 実行と生成物検査）．
-  事前に `npm run build:libs` が必要．
-- GUI の目視確認は `docs/acceptance-tests.md`（手動受け入れテスト表）に従う．
-- `examples/sample-full/` は全部入りの検証用サンプル（3 カラム / 入れ子 /
-  SVG・PDF・CSV・Mermaid・Graphviz / ギャラリー / ロゴ / BibTeX）．
-
-## 使い方の流れ
-
-1. 「新規作成」（設定ウィザード）でプロジェクトを作るか，「サンプルを開く」
-   または「ファイルを開く」で既存プロジェクトを読み込む．
-2. 左ツリーまたはプレビュー上でブロックを選択．
-3. 右ペインのタブ（本文 / レイアウト / 書式）で調整．本文は「本文」タブの
-   Markdown エディタ，高さ・カラム・並べ替えは「レイアウト」タブ，フォント・色・
-   背景（透明可）・枠線は「書式」タブ．
-4. 下部パネルで警告を確認（行をクリックで該当ブロックへ）．
-5. 「保存」で `poster.yaml` と `content/*.md` に書き戻す．
-6. ツールバーの **PDF / PNG / HTML / SVG / PPTX / Marp** で出力．
-   PNG 以降は保存ダイアログでファイル名・場所を選べる（既定は `exports/`）．
-   PDF は印刷ダイアログで「PDF として保存 / Microsoft Print to PDF」を選ぶと
-   実寸で出力される．提出用には PDF を推奨（`docs/export-matrix.md`）．
-
-## プロジェクト構造（ポスター1件）
-
-```text
-poster-project/
-├─ poster.yaml          # 構造・レイアウト・テーマ・ブロック・図表・出力設定
-├─ content/*.md         # 各ブロックの本文（Markdown．ブロック別方式）
-│   または content.md   # 単一ファイル方式（`# 見出し {#id}` セクション．新規既定）
-├─ figures/*            # 図表（PNG / JPEG / SVG / PDF / CSV / Mermaid / Graphviz）
-├─ references.bib       # BibTeX 引用文献（任意）
-├─ exports/             # 生成物（手で編集しない・git 管理外）
-├─ backups/             # 自動バックアップ（自動生成・git 管理外）
-└─ agent/review.md      # Agent LLM 用レビューメモ
-```
-
-### 生成物とバックアップの扱い
-
-- `exports/` は**生成物**．アプリ / CLI が出力する PDF・PNG・HTML・SVG・PPTX・
-  Marp が入る．手で編集せず，git にもコミットしない（`.gitignore` 済み）．
-- `backups/` は**自動バックアップ**．アプリで保存するたびに
-  `backups/<タイムスタンプ>/` へ `poster.yaml`・`references.bib`・`content/`・
-  `styles/` がコピーされ，10 世代を超えた古い分は自動削除される．
-  こちらも git 管理外．
-- **復元手順**: 壊れた場合は `backups/` 内の戻したい時点のフォルダを開き，
-  `poster.yaml`（と必要なら `references.bib`・`content/`・`styles/`）を
-  プロジェクト直下へ手動で上書きコピーしてからアプリで開き直す．
-
-`poster.yaml` のスキーマは `skills/research-poster-studio/schema/poster.schema.json`，
-仕様は `docs/design.md`（= 設計書）．
-
-## リポジトリ構成（モノレポ）
+## リポジトリ構成 / Repository layout
 
 ```text
 packages/
-  core/        @rps/core      型 / Zod schema / validate / layout（DOM非依存・Node+ブラウザ）
-                              + core/node（CLI 用 fs ローダ）
-  renderer/    @rps/renderer  PosterCanvas / renderPosterToHtml / svg / marp / markdown
-  exporter/    @rps/exporter  HTML→PDF/PNG（Playwright）
-  cli/         @rps/cli       rps（init / validate / preview / export / info）
-  desktop-app/ @rps/desktop-app  Tauri v2 + React GUI（src/ + src-tauri/）
+  core/              @rps/core      型 / Zod schema / validate / layout（DOM 非依存）
+  renderer/          @rps/renderer  PosterCanvas / HTML / SVG / Marp / markdown
+  exporter/          @rps/exporter  HTML → PDF/PNG（Playwright）
+  cli/               @rps/cli       rps（init / validate / explain / preview / export）
+  desktop-app/       @rps/desktop-app   Tauri v2 + React GUI
   vscode-extension/  @rps/vscode-extension  VS Code 拡張（validate / preview / warnings）
-examples/                      サンプル（sample-poster / sample-nested / sample-full=全部入り検証用 / sample-combined=単一 content.md）
-skills/research-poster-studio/ Agent LLM 用 Skill（SKILL.md / schema / templates / prompts）
-docs/                          design.md / architecture.md / vscode-cli-integration.md /
-                               agent-workflow.md / export-matrix.md
+examples/            サンプル（sample-poster / sample-nested / sample-full / sample-combined）
+skills/research-poster-studio/  Agent LLM 用 Skill（SKILL.md / schema / templates / prompts）
+docs/                design.md / architecture.md / export-matrix.md / agent-workflow.md ほか
 ```
 
-## アーキテクチャ要点
+レイアウト計算・検証・レンダリングは共有パッケージ（`@rps/core` / `@rps/renderer` /
+`@rps/exporter`）にあり、デスクトップ・`rps` CLI・VS Code 拡張が同じ実装を使います。
+*Layout, validation, and rendering live in shared packages, reused by the desktop
+app, the `rps` CLI, and the VS Code extension (see `docs/architecture.md`).*
 
-- レイアウトは CSS の flexbox に委譲（`engine/layout.ts` がブロックをバンド =
-  カラム帯／全幅帯に分割し，高さモードを flex プロパティへ変換）．
-  あふれは描画後に DOM 計測して**警告**する（自動縮小はしない）．
-- プレビューと各エクスポートは**同一の `PosterCanvas`** を共有
-  （HTML/SVG は `renderToStaticMarkup`）．mm 実寸で描き，プレビューは CSS
-  `transform: scale()` で縮小，印刷は `@page size` で実寸 PDF 化．
-- 図表はロード時に data URI 化するため，HTML/SVG エクスポートは1ファイルで完結．
+### ポスター1件の構成 / A single poster project
 
-## 残課題 / 既知の制限
+```text
+poster-project/
+├─ poster.yaml      # 構造・レイアウト・テーマ・ブロック・図表・出力設定
+├─ content/*.md     # 各ブロックの本文（または単一 content.md）
+├─ figures/*        # 図表（PNG/JPEG/SVG/PDF/CSV/Mermaid/Graphviz）
+├─ references.bib   # BibTeX（任意 / optional）
+├─ exports/         # 生成物 / generated outputs（git 管理外）
+└─ backups/         # 自動バックアップ / auto-backups（git 管理外）
+```
 
-- PPTX は座標・テキスト・画像を再現する近似出力（Markdown 装飾や枠線は簡略）．
-  形式ごとの忠実度は `docs/export-matrix.md` を参照．
-- デスクトップの PDF はネイティブの自動保存ではなく印刷ダイアログ経由
-  （保存先で PDF を選択）．ヘッドレス自動保存は見送り（印刷プレビュー経由が前提）．
-- **CLI の `rps export` は Graphviz（.dot/.gv・```dot）を変換するようになった**
-  （@viz-js/viz・Node）．**Mermaid と PDF 貼り込みは依存が重いためプレースホルダのまま**
-  （デスクトップアプリを使う）．
-- VS Code 拡張は最小実装済み（検証＝診断 / プレビュー webview / 警告表示．
-  エクスポート・新規作成は CLI・デスクトップへ委譲．`packages/vscode-extension/`）．
-- フォント `Noto Sans JP` は未インストール環境では代替フォントになる．
+`exports/` と `backups/` は自動生成され、手で編集せず git にもコミットしません。
+スキーマは `skills/research-poster-studio/schema/poster.schema.json` です。
+*`exports/` and `backups/` are generated; don't edit or commit them.*
 
-## ライセンス / 帰属
+## 既知の制限 / Notes & limitations
 
-作者: 中田友貴（Yuki Inoue Nakata）．研究・教育用途を想定したツールです．
+- あふれは**警告のみ**で、最小可読サイズ未満への自動縮小はしません。
+  *Overflow is reported as a warning; the tool never auto-shrinks below the
+  minimum readable size.*
+- PPTX は座標・テキスト・画像の近似出力です（提出用は PDF を推奨）。
+  *PPTX is an approximate export; PDF is recommended for submission.*
+- CLI の `rps export` は Graphviz を変換しますが、Mermaid と PDF 貼り込みは
+  デスクトップアプリでのみ変換されます（CLI ではプレースホルダ）。
+  *In the CLI, Mermaid and embedded PDFs render only in the desktop app.*
 
-本リポジトリは **Creative Commons 表示 - 非営利 - 継承 4.0 国際
-（CC BY-NC-SA 4.0）** で公開しています（全文は [`LICENSE`](./LICENSE)）．
+## ライセンス / License & attribution
 
-- **非営利利用**: 出典表示のもとで自由に利用・改変・再配布できます．
-- **継承（ShareAlike）**: 改変・再配布する場合は同一の CC BY-NC-SA 4.0 で公開してください．
-- **表示**: 作者名・本リポジトリへのリンク・ライセンスを明記してください．
-- **営利利用**: 上記ライセンスでは許諾されません．営利目的での利用を希望する場合は
-  個別にご相談ください（連絡先: dj.y.nakata@gmail.com）．
+作者 / Author: 中田友貴（Yuki Inoue Nakata）。研究・教育用途を想定したツールです。
 
-注: CC BY-NC-SA 4.0 は営利利用を制限するため，OSI 定義の「オープンソース」ではなく
-*source-available*（ソース公開）ライセンスです．
+本リポジトリは **Creative Commons 表示 - 非営利 - 継承 4.0 国際（CC BY-NC-SA 4.0）**
+で公開しています（全文は [`LICENSE`](./LICENSE)）。
+*Licensed under **CC BY-NC-SA 4.0** (see [`LICENSE`](./LICENSE)).*
+
+- **非営利利用 / Non-commercial** — 出典表示のもとで自由に利用・改変・再配布できます。
+  *Free to use, modify, and redistribute with attribution.*
+- **継承 / ShareAlike** — 改変・再配布する場合は同一の CC BY-NC-SA 4.0 で公開してください。
+  *Derivatives must be shared under the same license.*
+- **表示 / Attribution** — 作者名・本リポジトリへのリンク・ライセンスを明記してください。
+- **営利利用 / Commercial use** — 上記ライセンスでは許諾されません。希望される場合は
+  個別にご相談ください（連絡先 / contact: dj.y.nakata@gmail.com）。
+  *Not granted by this license; please contact the author for commercial terms.*
+
+注: CC BY-NC-SA 4.0 は営利利用を制限するため、OSI 定義の「オープンソース」ではなく
+*source-available*（ソース公開）ライセンスです。
+*Note: this is a source-available (non-OSI) license, as it restricts commercial use.*
