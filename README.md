@@ -212,4 +212,16 @@ docs/                          design.md / architecture.md / vscode-cli-integrat
 
 ## ライセンス / 帰属
 
-立命館大学 中田友貴（Yuki Inoue Nakata）の研究用途を想定した内製ツール．
+作者: 中田友貴（Yuki Inoue Nakata）．研究・教育用途を想定したツールです．
+
+本リポジトリは **Creative Commons 表示 - 非営利 - 継承 4.0 国際
+（CC BY-NC-SA 4.0）** で公開しています（全文は [`LICENSE`](./LICENSE)）．
+
+- **非営利利用**: 出典表示のもとで自由に利用・改変・再配布できます．
+- **継承（ShareAlike）**: 改変・再配布する場合は同一の CC BY-NC-SA 4.0 で公開してください．
+- **表示**: 作者名・本リポジトリへのリンク・ライセンスを明記してください．
+- **営利利用**: 上記ライセンスでは許諾されません．営利目的での利用を希望する場合は
+  個別にご相談ください（連絡先: dj.y.nakata@gmail.com）．
+
+注: CC BY-NC-SA 4.0 は営利利用を制限するため，OSI 定義の「オープンソース」ではなく
+*source-available*（ソース公開）ライセンスです．
