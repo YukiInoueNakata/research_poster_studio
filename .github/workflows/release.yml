@@ -1,0 +1,94 @@
+name: release
+
+# タグ v* を push するとインストーラをビルドして GitHub Releases に添付する．
+# 例) git tag v0.1.0 && git push origin v0.1.0
+# 手動実行 (workflow_dispatch) も可．
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # macOS: Apple Silicon + Intel を 1 つの universal .dmg に
+          - platform: macos-latest
+            args: '--target universal-apple-darwin'
+            rust_targets: 'aarch64-apple-darwin,x86_64-apple-darwin'
+          # Linux: .AppImage / .deb / .rpm
+          - platform: ubuntu-22.04
+            args: ''
+            rust_targets: ''
+          # Windows: .msi / .exe (NSIS)
+          - platform: windows-latest
+            args: ''
+            rust_targets: ''
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Rust (stable)
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust_targets }}
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: './packages/desktop-app/src-tauri -> target'
+
+      - name: Install Linux build dependencies
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            build-essential \
+            curl \
+            wget \
+            file \
+            libxdo-dev \
+            libssl-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev
+
+      - name: Install JS dependencies
+        run: npm ci
+
+      - name: Build shared libraries (@rps/core, renderer, exporter)
+        run: npm run build:libs
+
+      - name: Build app and publish release
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          projectPath: packages/desktop-app
+          tagName: ${{ github.ref_name }}
+          releaseName: 'Research Poster Studio ${{ github.ref_name }}'
+          releaseBody: |
+            各 OS のインストーラを添付しています / Installers for each OS are attached below.
+
+            - Windows: `.msi` / `.exe`
+            - macOS (universal): `.dmg`
+            - Linux: `.AppImage` / `.deb` / `.rpm`
+
+            注: アプリは未署名のため，初回起動時に OS の警告が出ることがあります
+            （Windows SmartScreen / macOS Gatekeeper）．回避手順は README を参照してください．
+            ライセンスは CC BY-NC-SA 4.0（非営利）です．
+          releaseDraft: true
+          prerelease: false
+          args: ${{ matrix.args }}

@@ -54,6 +54,22 @@ DTP, so it stays robust as the amount of content changes.*
 詳細な仕様は `docs/design.md`（設計書）を参照してください。
 *See `docs/design.md` for the full specification.*
 
+## ダウンロード / Download
+
+ビルド済みインストーラは [Releases](../../releases) から入手できます
+（Windows `.msi` / `.exe`、macOS universal `.dmg`、Linux `.AppImage` / `.deb` / `.rpm`）。
+*Prebuilt installers are on the [Releases](../../releases) page.*
+
+アプリは未署名のため、初回起動時に OS の警告が出ることがあります。回避手順:
+*The app is unsigned, so your OS may warn on first launch:*
+
+- **Windows（SmartScreen）**: 「詳細情報」→「実行」。
+- **macOS（Gatekeeper）**: アプリを右クリック →「開く」→「開く」。または
+  システム設定 → プライバシーとセキュリティ →「このまま開く」。
+
+自分でビルドする場合は下記の手順に従ってください。
+*To build from source, follow the steps below.*
+
 ## 必要環境 / Requirements
 
 - Node.js 18+（開発時 22 で確認 / tested on 22）
