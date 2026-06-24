@@ -1,0 +1,12 @@
+digraph model {
+  rankdir=LR;
+  node [shape=box, fontname="Noto Sans JP", fontsize=14];
+  prime   [label="文章プライム"];
+  implicit[label="潜在的態度"];
+  explicit[label="顕在的態度"];
+  intent  [label="援助要請意図"];
+  prime -> implicit;
+  prime -> explicit;
+  implicit -> intent [label=" .42"];
+  explicit -> intent [label=" .18"];
+}

@@ -1,0 +1,41 @@
+project:
+  title: "（タイトル）"
+  authors:
+    - name: "（著者）"
+      affiliation: "（所属）"
+  poster_size: "A0"
+  orientation: "portrait"
+
+layout:
+  template: "multi-study"
+  margin_mm: 16
+  gap_mm: 8
+  columns:
+    count: 3
+    width_mode: "equal"
+    ratio: [0.333, 0.334, 0.333]
+    sync_mode: "balance_columns"
+
+theme:
+  name: "default"
+  font_size: { title: 52pt, heading1: 30pt, heading2: 24pt, body: 20pt, caption: 15pt, references: 13pt }
+  colors: { text: "#222", heading: "#111", accent: "#1f5f99", warning: "#c00000", muted: "#666", background: "#ffffff" }
+
+blocks:
+  - { id: overview, type: text, title: 全体背景, source: content/overview.md, column: wide, order: 1, height: { mode: auto } }
+  - { id: s1-purpose, type: text, title: "研究1 目的", source: content/s1-purpose.md, column: left, order: 10, height: { mode: auto } }
+  - { id: s1-method, type: text, title: "研究1 方法", source: content/s1-method.md, column: left, order: 11, height: { mode: auto } }
+  - { id: s1-results, type: mixed, title: "研究1 結果", source: content/s1-results.md, column: left, order: 12, figures: [fig1], height: { mode: flex, weight: 1 } }
+  - { id: s2-purpose, type: text, title: "研究2 目的", source: content/s2-purpose.md, column: center, order: 10, height: { mode: auto } }
+  - { id: s2-method, type: text, title: "研究2 方法", source: content/s2-method.md, column: center, order: 11, height: { mode: auto } }
+  - { id: s2-results, type: mixed, title: "研究2 結果", source: content/s2-results.md, column: center, order: 12, figures: [fig2], height: { mode: flex, weight: 1 } }
+  - { id: s3-purpose, type: text, title: "研究3 目的", source: content/s3-purpose.md, column: right, order: 10, height: { mode: auto } }
+  - { id: s3-method, type: text, title: "研究3 方法", source: content/s3-method.md, column: right, order: 11, height: { mode: auto } }
+  - { id: s3-results, type: mixed, title: "研究3 結果", source: content/s3-results.md, column: right, order: 12, figures: [fig3], height: { mode: flex, weight: 1 } }
+  - { id: general, type: text, title: 総合考察, source: content/general.md, column: wide, order: 90, height: { mode: auto }, style: { background: "#f3f7fb", border: true, border_color: accent } }
+  - { id: references, type: text, title: 引用文献, source: content/references.md, column: wide, order: 100, height: { mode: auto } }
+
+export:
+  pdf: { enabled: true, filename: exports/poster.pdf }
+  svg: { enabled: true, filename: exports/poster.svg }
+  pptx: { enabled: true, filename: exports/poster.pptx }

@@ -1,0 +1,344 @@
+project:
+  title: 文章プライムが援助要請意図に与える影響
+  authors:
+    - name: 山田太郎
+      affiliations:
+        - 1
+    - name: 共著者 太郎
+      affiliations:
+        - 0
+  poster_size: A0
+  orientation: portrait
+  subtitle: 潜在的態度と顕在的態度の乖離に着目して
+  conference:
+    name: 日本心理学会 第90回大会
+    date: '2026-09-12'
+  affiliations:
+    - サンプル大学 心理学部
+    - サンプル大学 大学院
+  affiliation_line_breaks: []
+  keywords:
+    - 司法面接
+layout:
+  template: two-column-research
+  columns:
+    count: 2
+    width_mode: ratio
+    ratio:
+      - 0.5
+      - 0.5
+    height_balance: auto
+    sync_mode: independent
+  margin_mm: 18
+  gap_mm: 8
+theme:
+  name: default
+  font_family:
+    body: Noto Sans JP
+    heading: Noto Sans JP
+    title: Noto Sans JP
+  font_size:
+    title: 56pt
+    subtitle: 30pt
+    heading1: 34pt
+    heading2: 26pt
+    body: 22pt
+    caption: 16pt
+    references: 14pt
+  colors:
+    text: '#222222'
+    heading: '#10243a'
+    accent: '#1f5f99'
+    warning: '#c00000'
+    muted: '#666666'
+    background: '#ffffff'
+header:
+  align: center
+  border: true
+  show_affiliation: true
+  affiliation_marker: number
+  affil_font_size: 24pt
+  show_keywords: true
+  keywords_font_size: 24pt
+blocks:
+  - id: background
+    type: text
+    title: 背景
+    source: content/background.md
+    column: wide
+    order: 1
+    visible: true
+    height:
+      mode: auto
+      min: 120mm
+      weight: 1
+    pin_bottom: false
+    style:
+      background: '#ffffff'
+      border: true
+    figures: []
+    overflow:
+      action: warn
+    children:
+      - id: c1
+        type: text
+        title: 子ブロック
+        source: content/c1.md
+        column: left
+        order: 1
+        visible: true
+        height:
+          mode: auto
+          weight: 1
+        pin_bottom: false
+        style:
+          background: '#ffffff'
+          border: true
+        figures: []
+        overflow:
+          action: warn
+      - id: c2
+        type: text
+        title: 子ブロック
+        source: content/c2.md
+        column: right
+        order: 2
+        visible: true
+        height:
+          mode: auto
+          weight: 1
+        pin_bottom: false
+        style:
+          background: '#ffffff'
+          border: true
+        figures: []
+        overflow:
+          action: warn
+  - id: purpose
+    type: text
+    title: 目的
+    source: content/purpose.md
+    column: left
+    order: 2
+    visible: true
+    height:
+      mode: auto
+      weight: 1
+    pin_bottom: false
+    style:
+      background: '#ffffff'
+      border: true
+      border_color: accent
+      border_width: 1.5pt
+    figures: []
+    overflow:
+      action: warn
+  - id: method
+    type: text
+    title: 方法
+    source: content/method.md
+    column: left
+    order: 3
+    visible: true
+    height:
+      mode: auto
+      weight: 1
+    pin_bottom: false
+    style:
+      background: '#ffffff'
+      border: true
+    figures: []
+    overflow:
+      action: warn
+  - id: results
+    type: mixed
+    title: 結果
+    column: right
+    order: 1
+    visible: true
+    height:
+      mode: auto
+      min: 200mm
+      weight: 1
+    pin_bottom: false
+    style:
+      background: '#ffffff'
+      border: true
+    figures: []
+    overflow:
+      action: warn
+    children:
+      - id: results__text
+        type: text
+        title: ''
+        source: content/results.md
+        column: wide
+        order: -100
+        visible: true
+        height:
+          mode: auto
+          weight: 1
+        pin_bottom: false
+        style:
+          background: '#ffffff'
+          border: true
+        figures: []
+        overflow:
+          action: warn
+      - id: results__fig1
+        type: figure
+        title: ''
+        column: wide
+        order: -99
+        visible: true
+        height:
+          mode: auto
+          weight: 1
+        pin_bottom: false
+        style:
+          background: '#ffffff'
+          border: true
+        figures: []
+        overflow:
+          action: warn
+        figure_id: fig1
+  - id: subanalysis
+    type: mixed
+    title: 追加分析
+    column: right
+    order: 2
+    visible: true
+    height:
+      mode: auto
+      weight: 1
+    pin_bottom: false
+    style:
+      background: '#ffffff'
+      border: true
+    figures: []
+    overflow:
+      action: warn
+    child_layout:
+      mode: custom
+      count: 2
+      width_mode: ratio
+      ratio:
+        - 0.37
+        - 0.63
+    children:
+      - id: subanalysis__text
+        type: text
+        title: ''
+        source: content/subanalysis.md
+        column: left
+        order: -100
+        visible: true
+        height:
+          mode: auto
+          weight: 1
+        pin_bottom: false
+        style:
+          background: '#ffffff'
+          border: true
+        figures: []
+        overflow:
+          action: warn
+      - id: subanalysis__fig1
+        type: figure
+        title: ''
+        column: right
+        order: -99
+        visible: true
+        height:
+          mode: auto
+          weight: 1
+        pin_bottom: false
+        style:
+          background: '#ffffff'
+          border: true
+        figures: []
+        overflow:
+          action: warn
+        figure_id: fig2
+  - id: discussion
+    type: text
+    title: 考察
+    source: content/discussion.md
+    column: wide
+    order: 90
+    visible: true
+    height:
+      mode: auto
+      min: 90mm
+      weight: 1
+    pin_bottom: false
+    style:
+      background: '#ffffff'
+      border: true
+      border_color: '#cccccc'
+      border_width: 1pt
+    figures: []
+    overflow:
+      action: warn
+  - id: references
+    type: text
+    title: 引用文献
+    source: content/references.md
+    column: wide
+    order: 100
+    visible: true
+    height:
+      mode: auto
+      weight: 1
+    pin_bottom: false
+    style:
+      background: '#ffffff'
+      border: true
+    figures: []
+    overflow:
+      action: warn
+    references_list: true
+figures:
+  - id: fig1
+    path: figures/fig1.svg
+    caption: 図1．条件別の援助要請意図（平均値±SE）
+    placement: full-width
+    block: results__fig1
+    scale: 0.59
+    align: center
+    crop:
+      enabled: false
+    style:
+      border: true
+      caption_position: top
+  - id: fig2
+    path: figures/fig2.svg
+    caption: 図2．潜在的態度と顕在的態度の相関
+    placement: inside-block
+    block: subanalysis__fig1
+    scale: 1
+    align: center
+    crop:
+      enabled: false
+    style:
+      border: true
+      border_color: '#999999'
+      caption_position: bottom
+references:
+  style: jpa
+export:
+  pdf:
+    enabled: true
+    filename: exports/poster.pdf
+  png:
+    enabled: true
+    filename: exports/poster.png
+  svg:
+    enabled: true
+    filename: exports/poster.svg
+  pptx:
+    enabled: true
+    filename: exports/poster.pptx
+  marp:
+    enabled: true
+    filename: exports/poster.marp.md

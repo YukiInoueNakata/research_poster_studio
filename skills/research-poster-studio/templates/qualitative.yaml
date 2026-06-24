@@ -1,0 +1,40 @@
+project:
+  title: "（タイトル）"
+  authors:
+    - name: "（著者）"
+      affiliation: "（所属）"
+  poster_size: "A0"
+  orientation: "portrait"
+
+layout:
+  template: "qualitative-process"
+  margin_mm: 18
+  gap_mm: 8
+  columns:
+    count: 2
+    width_mode: "ratio"
+    ratio: [0.45, 0.55]
+    sync_mode: "independent"
+
+theme:
+  name: "default"
+  font_size: { title: 54pt, heading1: 32pt, body: 22pt, caption: 16pt, references: 14pt }
+  colors: { text: "#222", heading: "#111", accent: "#3a6b35", warning: "#c00000", muted: "#666", background: "#ffffff" }
+
+blocks:
+  - { id: background, type: text, title: 背景, source: content/background.md, column: left, order: 1, height: { mode: auto } }
+  - { id: purpose, type: text, title: 目的, source: content/purpose.md, column: left, order: 2, height: { mode: auto } }
+  - { id: method, type: text, title: 方法, source: content/method.md, column: left, order: 3, height: { mode: auto } }
+  - { id: procedure, type: text, title: 分析手続き, source: content/procedure.md, column: left, order: 4, height: { mode: flex, weight: 1 } }
+  - { id: model, type: mixed, title: モデル図（TEM）, source: content/model.md, column: right, order: 1, figures: [tem], height: { mode: auto, min: 260mm } }
+  - { id: cases, type: text, title: 事例引用, source: content/cases.md, column: right, order: 2, height: { mode: flex, weight: 1 }, style: { italic: true, background: "#f5f8f4" } }
+  - { id: discussion, type: text, title: 考察, source: content/discussion.md, column: wide, order: 90, height: { mode: auto } }
+  - { id: references, type: text, title: 引用文献, source: content/references.md, column: wide, order: 100, height: { mode: auto } }
+
+figures:
+  - { id: tem, path: figures/tem.svg, caption: "図1．TEM図", placement: inside-block, block: model, scale: 1.0, align: center }
+
+export:
+  pdf: { enabled: true, filename: exports/poster.pdf }
+  svg: { enabled: true, filename: exports/poster.svg }
+  pptx: { enabled: true, filename: exports/poster.pptx }

@@ -1,0 +1,57 @@
+# dependencies & build output
+node_modules/
+dist/
+dist-ssr/
+build/
+.cache/
+.rps-cache/
+*.tsbuildinfo
+
+# Rust / Tauri
+packages/desktop-app/src-tauri/target/
+src-tauri/target/
+
+# logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# generated poster outputs (sources are tracked, exports are not)
+**/exports/*.pdf
+**/exports/*.png
+**/exports/*.html
+**/exports/*.svg
+**/exports/*.pptx
+**/exports/*.marp.md
+
+# automatic per-save backups (poster projects)
+**/backups/
+# keep final releases if any
+!releases/
+
+# editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.local
+*.suo
+*.sw?
+
+# Playwright
+/test-results/
+/playwright-report/
+.playwright/
+
+# internal project-management notes (kept local, not published)
+/review.md
+/ADDITIONAL.md
+/HISTORY.md
+/TODO.md
+/docs/work-log/
+/docs/feature-needs.md
+/docs/shortcuts-proposal.md
+/docs/postergenius-feature-gap.md
+/examples/sample-poster/agent/

@@ -1,0 +1,273 @@
+# sample-full — 全部入り検証用サンプル（ロードマップ Phase 2）
+# 検証対象: 3 カラム / 入れ子ブロック / fixed 高さ / SVG・PDF・CSV・Mermaid・
+#   Graphviz 図表（ファイルと本文コードブロックの両方）/ 画像ギャラリー /
+#   機関ロゴ / BibTeX 引用（apa7・DOI 付き）/ 引用文献リスト自動生成 /
+#   Markdown 装飾（太字・斜体・下線・打消し・mark・役割色 span）
+project:
+  title: 文章プライムが援助要請意図に与える影響（全部入り検証サンプル）
+  subtitle: Research Poster Studio の機能検証用ポスター
+  authors:
+    - name: 山田太郎
+      affiliations: [1]
+    - name: 検証 花子
+      affiliations: [2]
+  affiliations:
+    - サンプル大学 心理学部
+    - サンプル大学 大学院
+  conference:
+    name: 日本心理学会 第90回大会
+    date: "2026-09-12"
+  keywords:
+    - 援助要請
+    - 潜在的態度
+    - 文章プライム
+  poster_size: A0
+  orientation: portrait
+layout:
+  template: three-column-research
+  columns:
+    count: 3
+    width_mode: ratio
+    ratio: [0.34, 0.33, 0.33]
+    height_balance: auto
+    sync_mode: independent
+  margin_mm: 18
+  gap_mm: 8
+theme:
+  name: default
+  font_family:
+    body: Noto Sans JP
+    heading: Noto Sans JP
+    title: Noto Sans JP
+  font_size:
+    title: 56pt
+    subtitle: 28pt
+    heading1: 32pt
+    heading2: 24pt
+    body: 20pt
+    caption: 15pt
+    references: 13pt
+  colors:
+    text: "#222222"
+    heading: "#10243a"
+    accent: "#1f5f99"
+    warning: "#c00000"
+    muted: "#666666"
+    background: "#ffffff"
+header:
+  align: center
+  border: true
+  show_affiliation: true
+  affiliation_marker: number
+  show_keywords: true
+  logos:
+    - path: figures/logo.png
+      area: header
+      position: left
+      height_mm: 18
+    - path: figures/logo.png
+      area: footer
+      position: right
+      height_mm: 10
+blocks:
+  - id: background
+    type: text
+    title: 背景
+    source: content/background.md
+    column: wide
+    order: 1
+    height:
+      mode: auto
+      min: 90mm
+    style:
+      border: true
+  - id: purpose
+    type: text
+    title: 目的
+    source: content/purpose.md
+    column: left
+    order: 2
+    height:
+      mode: fixed
+      value: 130mm
+    style:
+      border: true
+      border_color: accent
+      border_width: 1.5pt
+  - id: method
+    type: text
+    title: 方法（本文 Mermaid）
+    source: content/method.md
+    column: left
+    order: 3
+    height:
+      mode: auto
+    style:
+      border: true
+  - id: results
+    type: mixed
+    title: 結果（SVG 図）
+    column: center
+    order: 1
+    height:
+      mode: auto
+      min: 160mm
+    style:
+      border: true
+    children:
+      - id: results__text
+        type: text
+        title: ""
+        source: content/results.md
+        column: wide
+        order: -100
+        height:
+          mode: auto
+      - id: results__fig
+        type: figure
+        title: ""
+        column: wide
+        order: -99
+        height:
+          mode: auto
+        figure_id: fig1
+  - id: table
+    type: text
+    title: 記述統計（本文 CSV 表）
+    source: content/table-note.md
+    column: center
+    order: 2
+    height:
+      mode: auto
+    style:
+      border: true
+  - id: model
+    type: text
+    title: モデル（本文 Graphviz）
+    source: content/model.md
+    column: right
+    order: 1
+    height:
+      mode: auto
+    style:
+      border: true
+  - id: discussion
+    type: text
+    title: 考察
+    source: content/discussion.md
+    column: wide
+    order: 90
+    height:
+      mode: auto
+      min: 70mm
+    style:
+      border: true
+      border_color: "#cccccc"
+      border_width: 1pt
+  - id: references
+    type: text
+    title: 引用文献
+    source: content/references.md
+    column: wide
+    order: 100
+    height:
+      mode: auto
+    references_list: true
+    style:
+      border: true
+figures:
+  # ブロック内 SVG 図
+  - id: fig1
+    path: figures/fig1.svg
+    caption: 図1．条件別の援助要請意図（M ± SE）
+    placement: inside-block
+    block: results__fig
+    scale: 0.9
+    align: center
+    style:
+      border: true
+      caption_position: bottom
+  # スタンドアロン Mermaid 図（左カラム）
+  - id: fig_flow
+    path: figures/flow.mmd
+    caption: 図2．実験手続きの流れ（.mmd ファイル）
+    placement: column
+    column: left
+    order: 4
+    scale: 1
+    align: center
+    style:
+      border: true
+      caption_position: bottom
+  # スタンドアロン CSV 表（中央カラム）
+  - id: fig_table
+    path: figures/table1.csv
+    caption: 表1．条件別の記述統計（.csv ファイル）
+    placement: column
+    column: center
+    order: 3
+    scale: 1
+    align: center
+    style:
+      border: false
+      caption_position: top
+  # スタンドアロン Graphviz 図（右カラム）
+  - id: fig_model
+    path: figures/model.dot
+    caption: 図3．媒介モデル（.dot ファイル）
+    placement: column
+    column: right
+    order: 2
+    scale: 1
+    align: center
+    style:
+      border: true
+      caption_position: bottom
+  # 画像ギャラリー（右カラム．PNG 3 枚を 2 列で）
+  - id: fig_gallery
+    path: figures/photo1.png
+    images:
+      - figures/photo2.png
+      - figures/photo3.png
+    gallery_columns: 2
+    caption: 図4．実験環境（画像ギャラリー：PNG 3 枚・2 列）
+    placement: column
+    column: right
+    order: 3
+    scale: 1
+    align: center
+    style:
+      border: true
+      caption_position: bottom
+  # スタンドアロン PDF 図（右カラム）
+  - id: fig_pdf
+    path: figures/supplement.pdf
+    caption: 図5．補足資料（PDF 1 ページ目の貼り込み）
+    placement: column
+    column: right
+    order: 4
+    scale: 1
+    align: center
+    style:
+      border: true
+      caption_position: bottom
+references:
+  style: apa7
+  include_doi: true
+export:
+  pdf:
+    enabled: true
+    filename: exports/poster.pdf
+  png:
+    enabled: true
+    filename: exports/poster.png
+    dpi: 150
+  svg:
+    enabled: true
+    filename: exports/poster.svg
+  pptx:
+    enabled: true
+    filename: exports/poster.pptx
+  marp:
+    enabled: true
+    filename: exports/poster.marp.md

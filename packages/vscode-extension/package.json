@@ -1,0 +1,54 @@
+{
+  "name": "@rps/vscode-extension",
+  "version": "0.1.0",
+  "private": true,
+  "description": "VS Code extension for Research Poster Studio (uses @rps/core + @rps/renderer)",
+  "main": "./dist/extension.js",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": ["Other", "Visualization"],
+  "activationEvents": ["onLanguage:yaml", "workspaceContains:**/poster.yaml"],
+  "scripts": {
+    "build": "tsup",
+    "watch": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@rps/core": "*",
+    "@rps/renderer": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/vscode": "^1.90.0",
+    "tsup": "^8.3.0",
+    "typescript": "~5.8.3"
+  },
+  "contributes": {
+    "commands": [
+      { "command": "rps.openPreview", "title": "Research Poster: Open Preview", "category": "Research Poster" },
+      { "command": "rps.validate", "title": "Research Poster: Validate", "category": "Research Poster" },
+      { "command": "rps.exportPdf", "title": "Research Poster: Export PDF", "category": "Research Poster" },
+      { "command": "rps.exportPng", "title": "Research Poster: Export PNG", "category": "Research Poster" },
+      { "command": "rps.createNew", "title": "Research Poster: Create New Poster", "category": "Research Poster" },
+      { "command": "rps.showWarnings", "title": "Research Poster: Show Warnings", "category": "Research Poster" }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "rps.openPreview",
+          "when": "resourceFilename == poster.yaml",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        { "command": "rps.openPreview" },
+        { "command": "rps.validate" },
+        { "command": "rps.showWarnings" },
+        { "command": "rps.createNew" },
+        { "command": "rps.exportPdf" },
+        { "command": "rps.exportPng" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "@rps/exporter",
+  "version": "0.1.0",
+  "description": "Render self-contained poster HTML to PDF / PNG via Playwright (A0/A1 @page)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "playwright": "^1.49.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.0",
+    "typescript": "~5.8.3"
+  }
+}

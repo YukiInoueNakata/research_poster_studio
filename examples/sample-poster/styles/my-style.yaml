@@ -1,0 +1,13 @@
+# ユーザー定義引用スタイルの例（全体設定 > 引用文献 で選択できる）
+# 省略したフィールドは locale（ja=心理学研究 / en=APA7）の既定値が使われる．
+name: my-style
+locale: ja
+in_text:
+  single: "（{authors}, {year}）"
+  multi_sep: "; "
+  et_al_min: 3
+reference:
+  article: "{authors}（{year}）．{title}　{journal}, {volume}, {pages}．{doi}"
+  book: "{authors}（{year}）．{title}　{publisher}"
+sort: author
+include_doi: false

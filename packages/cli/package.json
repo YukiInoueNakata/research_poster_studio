@@ -1,0 +1,30 @@
+{
+  "name": "@rps/cli",
+  "version": "0.1.0",
+  "description": "rps - command line for Research Poster Studio (init / validate / preview / export / info)",
+  "type": "module",
+  "bin": {
+    "rps": "./dist/index.js"
+  },
+  "scripts": {
+    "rps": "tsx src/index.ts",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@rps/core": "*",
+    "@rps/exporter": "*",
+    "@rps/renderer": "*",
+    "@viz-js/viz": "^3.28.0",
+    "chokidar": "^4.0.1",
+    "commander": "^12.1.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsup": "^8.3.0",
+    "tsx": "^4.19.2",
+    "typescript": "~5.8.3"
+  }
+}

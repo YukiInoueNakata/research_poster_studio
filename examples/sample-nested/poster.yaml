@@ -1,0 +1,91 @@
+project:
+  title: "入れ子ブロックのデモ"
+  subtitle: "ブロック内部に wide / 左右の子ブロックを再帰配置"
+  authors:
+    - name: "山田太郎"
+      affiliation: "サンプル大学 心理学部"
+  conference:
+    name: "デモ大会"
+    date: "2026-06-10"
+  poster_size: "A0"
+  orientation: "portrait"
+
+layout:
+  template: "two-column-research"
+  margin_mm: 18
+  gap_mm: 8
+  columns:
+    count: 2
+    width_mode: "ratio"
+    ratio: [0.5, 0.5]
+    sync_mode: "independent"
+
+theme:
+  name: "default"
+  colors:
+    text: "#222222"
+    heading: "#10243a"
+    accent: "#1f5f99"
+    warning: "#c00000"
+    muted: "#666666"
+    background: "#ffffff"
+
+blocks:
+  - id: "background"
+    type: "text"
+    title: "背景"
+    source: "content/background.md"
+    column: "left"
+    order: 1
+    height: { mode: "auto" }
+
+  - id: "results"
+    type: "mixed"
+    title: "結果（入れ子）"
+    column: "right"
+    order: 1
+    height: { mode: "auto" }
+    style: { background: "#f3f7fb", border: true, border_color: "accent" }
+    children:
+      - id: "res-overview"
+        type: "text"
+        title: "概要"
+        source: "content/res-overview.md"
+        column: "wide"
+        order: 1
+        height: { mode: "auto" }
+      - id: "res-left"
+        type: "text"
+        title: "実験1"
+        source: "content/res-left.md"
+        column: "left"
+        order: 2
+        height: { mode: "auto" }
+      - id: "res-right"
+        type: "text"
+        title: "実験2"
+        source: "content/res-right.md"
+        column: "right"
+        order: 2
+        height: { mode: "auto" }
+      - id: "res-note"
+        type: "text"
+        title: "補足"
+        source: "content/res-note.md"
+        column: "wide"
+        order: 3
+        height: { mode: "auto" }
+
+  - id: "discussion"
+    type: "text"
+    title: "考察"
+    source: "content/discussion.md"
+    column: "wide"
+    order: 90
+    height: { mode: "auto" }
+
+figures: []
+
+export:
+  pdf: { enabled: true, filename: "exports/poster.pdf" }
+  svg: { enabled: true, filename: "exports/poster.svg" }

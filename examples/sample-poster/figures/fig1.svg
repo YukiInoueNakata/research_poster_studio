@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="540" viewBox="0 0 820 540" font-family="Noto Sans JP, sans-serif">
+  <rect width="820" height="540" fill="#ffffff"/>
+  <!-- axes -->
+  <line x1="120" y1="60" x2="120" y2="440" stroke="#333" stroke-width="2"/>
+  <line x1="120" y1="440" x2="760" y2="440" stroke="#333" stroke-width="2"/>
+  <!-- y ticks -->
+  <g fill="#333" font-size="20" text-anchor="end">
+    <text x="108" y="446">0</text>
+    <text x="108" y="350">2</text>
+    <text x="108" y="255">4</text>
+    <text x="108" y="160">6</text>
+  </g>
+  <!-- bars -->
+  <rect x="220" y="220" width="140" height="220" fill="#9fb8cf"/>
+  <rect x="470" y="178" width="140" height="262" fill="#1f5f99"/>
+  <!-- error bars -->
+  <line x1="290" y1="200" x2="290" y2="240" stroke="#333" stroke-width="3"/>
+  <line x1="540" y1="158" x2="540" y2="198" stroke="#333" stroke-width="3"/>
+  <!-- labels -->
+  <g fill="#222" font-size="22" text-anchor="middle">
+    <text x="290" y="475">統制</text>
+    <text x="540" y="475">プライム</text>
+    <text x="290" y="210">4.63</text>
+    <text x="540" y="168">5.12</text>
+  </g>
+  <text x="40" y="250" font-size="22" fill="#222" transform="rotate(-90 40 250)" text-anchor="middle">援助要請意図</text>
+</svg>

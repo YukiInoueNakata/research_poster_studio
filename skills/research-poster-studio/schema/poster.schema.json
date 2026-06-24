@@ -1,0 +1,371 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Research Poster Studio poster.yaml",
+  "type": "object",
+  "required": ["project", "layout", "theme", "blocks"],
+  "$comment": "Intentionally permissive — normalizeDoc fills defaults. Mirrors packages/core/src/types.ts.",
+  "$defs": {
+    "halign": { "enum": ["left", "center", "right"] },
+    "column": {
+      "type": "string",
+      "pattern": "^(left|center|right|wide|col[1-9][0-9]*)$",
+      "description": "1-3 カラムは left/center/right，4 カラム以上は col1..colN（left/center/right は先頭/中央/末尾列の別名）．wide は全幅"
+    },
+    "syncMode": {
+      "enum": ["sync_row", "independent", "left_follows", "right_follows", "balance_columns"]
+    },
+    "blockStyle": {
+      "type": "object",
+      "description": "役割色（accent/warning/muted/heading/text/background）は色名で指定でき，テーマ色に解決される（カスタム hex より優先）．transparent も可．",
+      "properties": {
+        "font_family": { "type": "string" },
+        "body_font_size": { "type": "string" },
+        "heading_font_size": { "type": "string" },
+        "heading_color": { "type": "string" },
+        "heading_bold": { "type": "boolean" },
+        "heading_italic": { "type": "boolean" },
+        "heading_underline": { "type": "boolean" },
+        "heading_align": { "$ref": "#/$defs/halign" },
+        "heading_background": { "type": "string" },
+        "heading_width_mode": { "enum": ["full", "fit", "custom"] },
+        "heading_width": { "type": "string" },
+        "heading_accent_bar": { "type": "boolean" },
+        "heading_bar_color": { "type": "string" },
+        "heading_badge": {
+          "type": "object",
+          "properties": {
+            "background": { "type": "string" },
+            "color": { "type": "string" },
+            "shape": { "enum": ["square", "rounded", "circle"] }
+          }
+        },
+        "card": { "type": "boolean" },
+        "accent_bar": {
+          "type": "object",
+          "properties": {
+            "color": { "type": "string" },
+            "width": { "type": "string" }
+          }
+        },
+        "corner": { "enum": ["square", "rounded"] },
+        "text_color": { "type": "string" },
+        "italic": { "type": "boolean" },
+        "line_height": { "type": "number" },
+        "paragraph_spacing_mm": { "type": "number" },
+        "background": { "type": "string" },
+        "border": { "type": "boolean" },
+        "border_color": { "type": "string" },
+        "border_width": { "type": "string" },
+        "padding_mm": { "type": "number" }
+      }
+    },
+    "block": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "enum": ["text", "figure", "mixed"] },
+        "title": { "type": "string" },
+        "source": {
+          "type": "string",
+          "description": "本文ファイル．per-block は content/<id>.md，単一ファイルは content.md#<id>（project.content_file 設定時）"
+        },
+        "column": { "$ref": "#/$defs/column" },
+        "order": { "type": "number" },
+        "visible": { "type": "boolean" },
+        "sync": { "$ref": "#/$defs/syncMode" },
+        "pin_bottom": { "type": "boolean", "description": "ブロックを列/本文の下部に固定（margin-top:auto）" },
+        "references_list": { "type": "boolean", "description": "本文の代わりに引用された文献リストを描画" },
+        "figure_id": { "type": "string", "description": "type:figure ブロックが描画する図表 id" },
+        "height": {
+          "type": "object",
+          "required": ["mode"],
+          "properties": {
+            "mode": { "enum": ["auto", "fixed", "flex", "locked"] },
+            "value": { "type": "string" },
+            "min": { "type": "string" },
+            "max": { "type": "string" },
+            "weight": { "type": "number" }
+          }
+        },
+        "style": { "$ref": "#/$defs/blockStyle" },
+        "figures": { "type": "array", "items": { "type": "string" } },
+        "overflow": {
+          "type": "object",
+          "properties": { "action": { "enum": ["warn", "clip", "scroll"] } }
+        },
+        "child_layout": {
+          "type": "object",
+          "properties": {
+            "mode": { "enum": ["inherit", "custom"] },
+            "count": { "type": "number" },
+            "ratio": { "type": "array", "items": { "type": "number" } },
+            "width_mode": { "type": "string" }
+          }
+        },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/block" },
+          "description": "入れ子の子ブロック（バンドレイアウト）"
+        }
+      }
+    }
+  },
+  "properties": {
+    "project": {
+      "type": "object",
+      "required": ["title", "poster_size", "orientation"],
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "authors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name": { "type": "string" },
+              "affiliation": { "type": "string", "description": "後方互換の単一所属（affiliations index へ正規化される）" },
+              "affiliations": { "type": "array", "items": { "type": "number" }, "description": "project.affiliations への index 配列" }
+            }
+          }
+        },
+        "affiliations": { "type": "array", "items": { "type": "string" }, "description": "所属マスタリスト（著者は index で参照）" },
+        "affiliation_line_breaks": { "type": "array", "items": { "type": "number" } },
+        "keywords": { "type": "array", "items": { "type": "string" } },
+        "conference": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "date": { "type": "string" }
+          }
+        },
+        "poster_size": { "enum": ["A0", "A1", "A2", "36x48in", "42x56in", "48x96in", "custom"] },
+        "orientation": { "enum": ["portrait", "landscape"] },
+        "custom_size": {
+          "type": "object",
+          "description": "poster_size:custom 用．width_mm/height_mm（数値）または width/height（\"36in\" 等の単位付き文字列）",
+          "properties": {
+            "width_mm": { "type": "number" },
+            "height_mm": { "type": "number" },
+            "width": { "type": ["string", "number"] },
+            "height": { "type": ["string", "number"] }
+          }
+        },
+        "units": { "enum": ["mm", "in"], "description": "GUI 表示単位（既定 mm）" },
+        "content_file": {
+          "type": "string",
+          "description": "単一ファイル本文（例 content.md）．設定時は全ブロックの本文をこの 1 枚に '# Title {#id}' セクションとして保持し，各ブロックは source: 'content.md#id' で参照．未設定なら content/<id>.md（per-block）"
+        }
+      }
+    },
+    "layout": {
+      "type": "object",
+      "required": ["columns"],
+      "properties": {
+        "template": { "type": "string" },
+        "margin_mm": { "type": "number" },
+        "gap_mm": { "type": "number" },
+        "column_gap_mm": { "type": "number", "description": "カラム間（横）gap．未指定は gap_mm" },
+        "row_gap_mm": { "type": "number", "description": "ブロック上下（縦）gap．未指定は gap_mm" },
+        "number_sections": {
+          "type": "boolean",
+          "description": "見出しに章番号（1, 2, …；入れ子 1.1）を付ける．表示のみ"
+        },
+        "number_figures": {
+          "type": "boolean",
+          "description": "図表キャプションの既存ラベル（図N/表N/Figure N/Table N）を宣言順に振り直す．表示のみ"
+        },
+        "columns": {
+          "type": "object",
+          "required": ["count"],
+          "properties": {
+            "count": { "type": "integer", "minimum": 1, "maximum": 6 },
+            "width_mode": {
+              "enum": ["equal", "ratio", "left_master", "right_master", "independent"]
+            },
+            "ratio": { "type": "array", "items": { "type": "number" } },
+            "height_balance": { "enum": ["auto", "manual"] },
+            "sync_mode": { "$ref": "#/$defs/syncMode" }
+          }
+        }
+      }
+    },
+    "theme": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "font_family": {
+          "type": "object",
+          "properties": {
+            "body": { "type": "string" },
+            "heading": { "type": "string" },
+            "title": { "type": "string" }
+          }
+        },
+        "font_size": {
+          "type": "object",
+          "properties": {
+            "title": { "type": "string" },
+            "subtitle": { "type": "string" },
+            "heading1": { "type": "string" },
+            "heading2": { "type": "string" },
+            "body": { "type": "string" },
+            "caption": { "type": "string" },
+            "references": { "type": "string" }
+          }
+        },
+        "colors": {
+          "type": "object",
+          "properties": {
+            "text": { "type": "string" },
+            "heading": { "type": "string" },
+            "accent": { "type": "string" },
+            "warning": { "type": "string" },
+            "muted": { "type": "string" },
+            "background": { "type": "string" }
+          }
+        },
+        "background": {
+          "type": "object",
+          "description": "ポスター全面の背景画像（colors.background の上）",
+          "properties": {
+            "image": { "type": "string" },
+            "fit": { "enum": ["cover", "contain", "tile"] },
+            "opacity": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        "line_height": { "type": "number", "description": "本文の行間（倍率，既定 1.45）" },
+        "paragraph_spacing_mm": { "type": "number", "description": "段落間隔 mm（既定 2）" }
+      }
+    },
+    "header": {
+      "type": "object",
+      "description": "タイトルブロック（タイトル/著者/所属/キーワード/ロゴ）の体裁",
+      "properties": {
+        "align": { "$ref": "#/$defs/halign" },
+        "background": { "type": "string" },
+        "border": { "type": "boolean" },
+        "border_color": { "type": "string" },
+        "border_width": { "type": "string" },
+        "padding_mm": { "type": "number" },
+        "show_affiliation": { "type": "boolean" },
+        "affiliation_marker": { "enum": ["number", "symbol"] },
+        "author_separator": { "type": "string" },
+        "title_color": { "type": "string" },
+        "accent_color": { "type": "string" },
+        "text_color": { "type": "string" },
+        "conference_font_size": { "type": "string" },
+        "conference_align": { "$ref": "#/$defs/halign" },
+        "title_font_size": { "type": "string" },
+        "title_align": { "$ref": "#/$defs/halign" },
+        "subtitle_font_size": { "type": "string" },
+        "subtitle_align": { "$ref": "#/$defs/halign" },
+        "authors_font_size": { "type": "string" },
+        "authors_align": { "$ref": "#/$defs/halign" },
+        "affil_font_size": { "type": "string" },
+        "affil_align": { "$ref": "#/$defs/halign" },
+        "affiliation_inline": { "type": "boolean" },
+        "show_keywords": { "type": "boolean" },
+        "keywords_label": { "type": "string" },
+        "keywords_font_size": { "type": "string" },
+        "keywords_align": { "$ref": "#/$defs/halign" },
+        "logos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["path"],
+            "properties": {
+              "path": { "type": "string" },
+              "area": { "enum": ["header", "footer"] },
+              "position": { "enum": ["left", "center", "right"] },
+              "height_mm": { "type": "number" }
+            }
+          }
+        }
+      }
+    },
+    "blocks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/block" }
+    },
+    "figures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "path"],
+        "properties": {
+          "id": { "type": "string" },
+          "path": { "type": "string", "description": "PNG/JPEG/SVG または PDF/CSV/Mermaid(.mmd)/Graphviz(.dot,.gv)" },
+          "images": { "type": "array", "items": { "type": "string" }, "description": "ギャラリー（追加画像．1 キャプション共有）" },
+          "gallery_columns": { "type": "number", "description": "ギャラリーの 1 行あたり枚数（0/未指定=全部 1 行）" },
+          "caption": { "type": "string" },
+          "placement": { "enum": ["inside-block", "full-width", "column"] },
+          "block": { "type": "string" },
+          "column": { "$ref": "#/$defs/column" },
+          "order": { "type": "number" },
+          "scale": { "type": "number" },
+          "align": { "$ref": "#/$defs/halign" },
+          "valign": { "enum": ["top", "middle", "bottom"] },
+          "float": { "enum": ["left", "right"] },
+          "image_crops": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "enabled": { "type": "boolean" },
+                "top": { "type": "number" },
+                "right": { "type": "number" },
+                "bottom": { "type": "number" },
+                "left": { "type": "number" }
+              }
+            }
+          },
+          "crop": {
+            "type": "object",
+            "properties": {
+              "enabled": { "type": "boolean" },
+              "top": { "type": "number" },
+              "right": { "type": "number" },
+              "bottom": { "type": "number" },
+              "left": { "type": "number" }
+            }
+          },
+          "style": {
+            "type": "object",
+            "properties": {
+              "border": { "type": "boolean" },
+              "border_color": { "type": "string" },
+              "caption_position": { "enum": ["top", "bottom", "left", "right"] },
+              "caption_font_size": { "type": "string" },
+              "caption_color": { "type": "string" },
+              "title_inside_border": { "type": "boolean" },
+              "transparent_white": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "references": {
+      "type": "object",
+      "description": "BibTeX 引用（本文 [@key] 展開＋文献リスト生成）",
+      "properties": {
+        "bib": { "type": "string", "description": "BibTeX ファイル（既定 references.bib）" },
+        "style": { "type": "string", "description": "apa7 / jpa / styles/*.yaml のユーザー定義名" },
+        "include_doi": { "type": "boolean" }
+      }
+    },
+    "export": {
+      "type": "object",
+      "description": "形式ごとの enabled / filename",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "enabled": { "type": "boolean" },
+          "filename": { "type": "string" },
+          "dpi": { "type": "number" }
+        }
+      }
+    }
+  }
+}

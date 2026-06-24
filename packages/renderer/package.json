@@ -1,0 +1,36 @@
+{
+  "name": "@rps/renderer",
+  "version": "0.1.0",
+  "description": "Render a poster project to self-contained HTML / SVG / Marp (shared by desktop, CLI, VS Code)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@rps/core": "*",
+    "isomorphic-dompurify": "^2.16.0",
+    "marked": "^18.0.5"
+  },
+  "peerDependencies": {
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tsup": "^8.3.0",
+    "typescript": "~5.8.3"
+  }
+}

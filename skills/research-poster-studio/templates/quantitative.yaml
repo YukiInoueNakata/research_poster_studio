@@ -1,0 +1,56 @@
+project:
+  title: "（タイトル）"
+  subtitle: "（副題）"
+  authors:
+    - name: "（著者）"
+      affiliation: "（所属）"
+  conference:
+    name: "（学会名）"
+    date: "2026-01-01"
+  poster_size: "A0"
+  orientation: "portrait"
+
+layout:
+  template: "two-column-research"
+  margin_mm: 18
+  gap_mm: 8
+  columns:
+    count: 2
+    width_mode: "ratio"
+    ratio: [0.5, 0.5]
+    sync_mode: "independent"
+
+theme:
+  name: "default"
+  font_size:
+    title: "54pt"
+    subtitle: "30pt"
+    heading1: "34pt"
+    heading2: "26pt"
+    body: "22pt"
+    caption: "16pt"
+    references: "14pt"
+  colors:
+    text: "#222222"
+    heading: "#111111"
+    accent: "#1f5f99"
+    warning: "#c00000"
+    muted: "#666666"
+    background: "#ffffff"
+
+blocks:
+  - { id: background, type: text, title: 背景, source: content/background.md, column: left, order: 1, height: { mode: auto, min: 120mm } }
+  - { id: purpose, type: text, title: 目的, source: content/purpose.md, column: left, order: 2, height: { mode: auto } }
+  - { id: method, type: text, title: 方法, source: content/method.md, column: left, order: 3, height: { mode: flex, weight: 1 } }
+  - { id: results, type: mixed, title: 結果, source: content/results.md, column: right, order: 1, figures: [fig1], height: { mode: auto, min: 200mm } }
+  - { id: discussion, type: text, title: 考察, source: content/discussion.md, column: wide, order: 90, height: { mode: auto, min: 90mm } }
+  - { id: references, type: text, title: 引用文献, source: content/references.md, column: wide, order: 100, height: { mode: auto } }
+
+figures:
+  - { id: fig1, path: figures/fig1.svg, caption: "図1．", placement: inside-block, block: results, scale: 0.95, align: center }
+
+export:
+  pdf: { enabled: true, filename: exports/poster.pdf }
+  svg: { enabled: true, filename: exports/poster.svg }
+  pptx: { enabled: true, filename: exports/poster.pptx }
+  marp: { enabled: true, filename: exports/poster.marp.md }

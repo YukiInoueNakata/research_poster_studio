@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400">
+  <rect width="640" height="400" fill="#ffffff"/>
+  <!-- axes -->
+  <line x1="70" y1="330" x2="600" y2="330" stroke="#222222" stroke-width="2"/>
+  <line x1="70" y1="40" x2="70" y2="330" stroke="#222222" stroke-width="2"/>
+  <!-- bars: 統制 / プライム弱 / プライム強 -->
+  <rect x="130" y="210" width="90" height="120" fill="#9bb7d4"/>
+  <rect x="290" y="150" width="90" height="180" fill="#5a8ab8"/>
+  <rect x="450" y="90"  width="90" height="240" fill="#1f5f99"/>
+  <!-- error bars -->
+  <line x1="175" y1="190" x2="175" y2="230" stroke="#222222" stroke-width="2"/>
+  <line x1="335" y1="130" x2="335" y2="170" stroke="#222222" stroke-width="2"/>
+  <line x1="495" y1="70"  x2="495" y2="110" stroke="#222222" stroke-width="2"/>
+  <!-- labels -->
+  <text x="175" y="355" font-size="20" text-anchor="middle" fill="#222222">統制</text>
+  <text x="335" y="355" font-size="20" text-anchor="middle" fill="#222222">プライム弱</text>
+  <text x="495" y="355" font-size="20" text-anchor="middle" fill="#222222">プライム強</text>
+  <text x="40" y="190" font-size="18" text-anchor="middle" fill="#222222" transform="rotate(-90 40 190)">援助要請意図</text>
+  <text x="320" y="28" font-size="22" text-anchor="middle" fill="#10243a">条件別の援助要請意図（M ± SE）</text>
+</svg>

@@ -1,0 +1,24 @@
+{
+  "name": "research-poster-studio",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Research Poster Studio - structured layout editor for academic research posters (monorepo)",
+  "workspaces": [
+    "packages/core",
+    "packages/renderer",
+    "packages/exporter",
+    "packages/cli",
+    "packages/desktop-app",
+    "packages/vscode-extension"
+  ],
+  "scripts": {
+    "dev": "npm run build:libs && npm run tauri:dev -w @rps/desktop-app",
+    "build": "npm run build -ws --if-present",
+    "build:libs": "npm run build -w @rps/core -w @rps/renderer -w @rps/exporter",
+    "watch:libs": "npm run dev -w @rps/core & npm run dev -w @rps/renderer & npm run dev -w @rps/exporter",
+    "typecheck": "npm run typecheck -ws --if-present",
+    "smoke": "node scripts/smoke-columns.mjs && node scripts/smoke-cli.mjs",
+    "tauri": "npm run tauri -w @rps/desktop-app --",
+    "rps": "npm run rps -w @rps/cli --"
+  }
+}
