@@ -45,7 +45,9 @@ pnpm-debug.log*
 /playwright-report/
 .playwright/
 
-# internal project-management notes (kept local, not published)
+# internal project-management & AI-agent files (kept local, not published)
+/CLAUDE.md
+/AGENTS.md
 /review.md
 /ADDITIONAL.md
 /HISTORY.md
