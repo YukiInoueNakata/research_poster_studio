@@ -73,16 +73,25 @@ md.use({
         return m ? m.index : undefined;
       },
       tokenizer(this: any, src: string) {
-        const m = /^::: *([A-Za-z0-9_-]+|\{[^}]*\})? *\n([\s\S]*?)\n::: *(?:\n+|$)/.exec(src);
+        // `::: <type> [label...]` — type = note/warning/muted/heading; the rest
+        // of the line is an optional label rendered as a tab chip (N14, for the
+        // "Important / Challenge 1 / Main Idea" boxes common in STEM posters).
+        const m = /^::: *([A-Za-z0-9_-]+|\{[^}]*\})?[ \t]*([^\n]*)\n([\s\S]*?)\n::: *(?:\n+|$)/.exec(src);
         if (!m) return undefined;
         const cls = (m[1] ?? "note").replace(/[{}.#]/g, "").trim() || "note";
-        const token: any = { type: "calloutDiv", raw: m[0], cls, tokens: [] };
-        this.lexer.blockTokens(m[2], token.tokens);
+        const label = (m[2] ?? "").trim();
+        const token: any = { type: "calloutDiv", raw: m[0], cls, label, tokens: [] };
+        this.lexer.blockTokens(m[3], token.tokens);
         return token;
       },
       renderer(this: any, token: any) {
         const cls = String(token.cls).replace(/[^A-Za-z0-9_-]/g, "");
-        return `<div class="rps-callout rps-callout-${cls}">${this.parser.parse(token.tokens)}</div>`;
+        const label = String(token.label ?? "").trim();
+        const labelHtml = label
+          ? `<span class="rps-callout-label">${escapeHtml(label)}</span>`
+          : "";
+        const labeled = label ? " rps-callout-labeled" : "";
+        return `<div class="rps-callout rps-callout-${cls}${labeled}">${labelHtml}${this.parser.parse(token.tokens)}</div>`;
       },
     },
   ],

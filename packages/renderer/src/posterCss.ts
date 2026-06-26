@@ -82,6 +82,15 @@ ${fancyListCss(paraMm)}
 .rps-block-body .rps-callout-warning{ border-left-color:${t.colors.warning}; background:color-mix(in srgb, ${t.colors.warning} 8%, ${t.colors.background}); }
 .rps-block-body .rps-callout-muted{ border-left-color:${t.colors.muted}; background:color-mix(in srgb, ${t.colors.muted} 8%, ${t.colors.background}); }
 .rps-block-body .rps-callout-heading{ border-left-color:${t.colors.heading}; background:color-mix(in srgb, ${t.colors.heading} 8%, ${t.colors.background}); }
+/* N14 labeled callout: full border + a tab chip (Important / Challenge / Main Idea) */
+.rps-block-body .rps-callout-labeled{ border:1.2pt solid ${t.colors.accent}; border-left-width:3pt; padding-top:2mm; }
+.rps-callout-label{ display:inline-block; background:${t.colors.accent}; color:#fff; font-weight:700; padding:0.3mm 2.5mm; border-radius:1mm; margin:0 0 1.5mm; font-size:0.92em; line-height:1.3; }
+.rps-block-body .rps-callout-warning.rps-callout-labeled{ border-color:${t.colors.warning}; }
+.rps-block-body .rps-callout-warning .rps-callout-label{ background:${t.colors.warning}; }
+.rps-block-body .rps-callout-muted.rps-callout-labeled{ border-color:${t.colors.muted}; }
+.rps-block-body .rps-callout-muted .rps-callout-label{ background:${t.colors.muted}; }
+.rps-block-body .rps-callout-heading.rps-callout-labeled{ border-color:${t.colors.heading}; }
+.rps-block-body .rps-callout-heading .rps-callout-label{ background:${t.colors.heading}; }
 .rps-figure{ margin:3mm 0; text-align:center; }
 .rps-figure img{ max-width:100%; height:auto; }
 .rps-figcaption{ font-size:${t.font_size.caption}; color:${t.colors.muted}; margin-top:1.5mm; }

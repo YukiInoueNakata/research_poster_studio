@@ -104,6 +104,16 @@ Class names map to colors: `note`/`accent` (accent), `warning` (warning),
 `muted`, `heading`. Use these instead of trying to fragment a block into tiny
 sub-blocks for a highlight box.
 
+Add a label after the type to get a **bordered box with a tab chip** (N14, for
+the "Important / Challenge 1 / Main Idea / Purpose / Suggestion" boxes common in
+STEM posters):
+
+```markdown
+::: warning Challenge 1
+The robot needs to classify objects fine-grained.
+:::
+```
+
 ### Charts (native, dependency-free SVG)
 
 A `chart` fenced block draws a bar / line chart from simple data (theme
