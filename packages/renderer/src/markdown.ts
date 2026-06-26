@@ -18,6 +18,7 @@ import { diagramKindOf, parseCsv } from "@rps/core";
 import { preprocessFancyLists } from "./fancyLists";
 import { parseChartSpec, chartSvg } from "./chart";
 import { texToSvg } from "./math";
+import { parseQrSpec, qrSvg } from "./qr";
 
 const ALLOWED_TAGS = [
   "p", "br", "strong", "b", "em", "i", "u", "s", "del", "ins", "mark",
@@ -149,6 +150,10 @@ md.use({
     code(token) {
       const lang = (token.lang ?? "").trim().toLowerCase();
       if (lang === "csv") return csvTableHtml(token.text);
+      if (lang === "qr") {
+        diagramSlots.push(qrSvg(parseQrSpec(token.text)));
+        return `<div class="rps-qr" data-rps-slot="${diagramSlots.length - 1}"></div>`;
+      }
       if (lang === "chart" && currentOpts.colors) {
         const svg = chartSvg(parseChartSpec(token.text), currentOpts.colors);
         diagramSlots.push(svg);

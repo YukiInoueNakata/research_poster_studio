@@ -20,7 +20,8 @@
     "@rps/core": "*",
     "isomorphic-dompurify": "^2.16.0",
     "marked": "^18.0.5",
-    "mathjax-full": "^3.2.1"
+    "mathjax-full": "^3.2.1",
+    "qrcode-generator": "^2.0.4"
   },
   "peerDependencies": {
     "react": "^19",

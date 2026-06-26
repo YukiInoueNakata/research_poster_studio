@@ -131,6 +131,8 @@ ${fancyListCss(paraMm)}
 .rps-math-display svg{ max-width:100%; height:auto; }
 .rps-math svg{ max-width:100%; }
 .rps-math-error{ color:${t.colors.warning}; border-bottom:1px dotted ${t.colors.warning}; }
+.rps-qr{ text-align:center; margin:0 0 var(--rps-para, ${paraMm}mm); }
+.rps-qr svg{ width:32mm; height:32mm; max-width:100%; display:inline-block; }
 .rps-gallery{ display:inline-flex; flex-direction:column; gap:2mm; vertical-align:top; max-width:100%; }
 .rps-gallery-row{ display:flex; gap:2mm; align-items:stretch; width:100%; }
 .rps-gallery-item{ flex-basis:0; flex-shrink:1; min-width:0; }

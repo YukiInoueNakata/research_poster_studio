@@ -130,7 +130,9 @@ title: Comments per term
 ```
 
 Other fenced blocks: `csv` (table), `mermaid`, `dot`/`graphviz` (diagrams —
-desktop / CLI render; see Export Targets).
+desktop / CLI render; see Export Targets), `qr` (QR code: first line is the
+URL/text; optional `ecc: L|M|Q|H`, `dark:`, `light:` lines — renders a crisp
+self-contained SVG, e.g. a paper/demo link in the header) (N18).
 
 ### Math (LaTeX)
 
