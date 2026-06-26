@@ -17,6 +17,7 @@ import type { DiagramResolver, ThemeColors } from "@rps/core";
 import { diagramKindOf, parseCsv } from "@rps/core";
 import { preprocessFancyLists } from "./fancyLists";
 import { parseChartSpec, chartSvg } from "./chart";
+import { texToSvg } from "./math";
 
 const ALLOWED_TAGS = [
   "p", "br", "strong", "b", "em", "i", "u", "s", "del", "ins", "mark",
@@ -86,6 +87,54 @@ md.use({
     },
   ],
 });
+// LaTeX math: `$$…$$` / `\[…\]` => display (block), `$…$` / `\(…\)` => inline.
+// Rendered to self-contained SVG (math.ts) and spliced like diagrams so the
+// restrictive HTML sanitize pass keeps the SVG intact. `$…$` follows Pandoc
+// rules (no space just inside; closing `$` not before a digit) so currency
+// like "$5 and $10" is not mistaken for math; escape a literal dollar as `\$`.
+md.use({
+  extensions: [
+    {
+      name: "rpsMathBlock",
+      level: "block",
+      start(src: string) {
+        const m = /\$\$|\\\[/.exec(src);
+        return m ? m.index : undefined;
+      },
+      tokenizer(_src: string) {
+        let m = /^\$\$([\s\S]+?)\$\$/.exec(_src);
+        if (!m) m = /^\\\[([\s\S]+?)\\\]/.exec(_src);
+        if (!m) return undefined;
+        return { type: "rpsMathBlock", raw: m[0], tex: m[1] } as any;
+      },
+      renderer(token: any) {
+        diagramSlots.push(texToSvg(String(token.tex), true));
+        return `<div class="rps-math-display" data-rps-slot="${diagramSlots.length - 1}"></div>`;
+      },
+    },
+    {
+      name: "rpsMathInline",
+      level: "inline",
+      start(src: string) {
+        const m = /\$|\\\(/.exec(src);
+        return m ? m.index : undefined;
+      },
+      tokenizer(_src: string) {
+        let m = /^\\\(([\s\S]+?)\\\)/.exec(_src);
+        if (m) return { type: "rpsMathInline", raw: m[0], tex: m[1] } as any;
+        m = /^\$(?![\s$])((?:\\\$|[^$\n])+?)\$(?!\d)/.exec(_src);
+        if (m && /\S$/.test(m[1])) {
+          return { type: "rpsMathInline", raw: m[0], tex: m[1].replace(/\\\$/g, "$") } as any;
+        }
+        return undefined;
+      },
+      renderer(token: any) {
+        diagramSlots.push(texToSvg(String(token.tex), false));
+        return `<span class="rps-math" data-rps-slot="${diagramSlots.length - 1}"></span>`;
+      },
+    },
+  ],
+});
 md.use({
   renderer: {
     code(token) {
@@ -129,16 +178,20 @@ export function renderMarkdown(src: string, opts?: MarkdownOptions): string {
     // allow data: nothing; keep simple inline styles (color) only
   });
   if (slots.length === 0) return clean;
+  // Splice the held SVG/HTML back into its slot, preserving the placeholder's
+  // tag (div = block diagram/chart/display-math, span = inline math) and class.
   return clean.replace(
-    /<div\b[^>]*data-rps-slot="(\d+)"[^>]*><\/div>/g,
-    (_m, n: string) => {
+    /<(div|span)\b([^>]*?)data-rps-slot="(\d+)"([^>]*?)><\/\1>/g,
+    (_m, tag: string, pre: string, n: string, post: string) => {
       const inner = slots[Number(n)] ?? "";
       const safe = DOMPurify.sanitize(inner, {
         USE_PROFILES: { html: true, svg: true, svgFilters: true },
         ADD_TAGS: ["foreignObject"],
         ADD_ATTR: ["dominant-baseline", "transform-origin"],
       });
-      return `<div class="rps-diagram">${safe}</div>`;
+      const clsMatch = (pre + post).match(/class="([^"]*)"/);
+      const cls = clsMatch ? clsMatch[1] : tag === "span" ? "rps-math" : "rps-diagram";
+      return `<${tag} class="${cls}">${safe}</${tag}>`;
     },
   );
 }

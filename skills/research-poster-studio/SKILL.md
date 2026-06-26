@@ -119,6 +119,24 @@ title: Comments per term
 Other fenced blocks: `csv` (table), `mermaid`, `dot`/`graphviz` (diagrams —
 desktop / CLI render; see Export Targets).
 
+### Math (LaTeX)
+
+Write LaTeX directly in body text. Inline with `$…$` or `\(…\)`, display
+(block, centered) with `$$…$$` or `\[…\]`:
+
+```markdown
+間接効果は $a \times b$，Sobel 検定は $z = \dfrac{ab}{\sqrt{b^2 s_a^2 + a^2 s_b^2}}$．
+
+$$ Y = c'X + bM + \varepsilon_Y $$
+```
+
+Rendered to self-contained SVG (MathJax) so it embeds with no font dependency
+and looks identical in preview / HTML / SVG / PDF / CLI (PPTX rasterizes it).
+A `$` not meant as math (currency) is left alone when it follows Pandoc rules
+(no space just inside the `$…$`, closing `$` not before a digit); escape a
+literal dollar as `\$`. A formula that fails to parse falls back to an inline
+error marker instead of breaking the block.
+
 ### Single-file content (`content.md`)
 
 Two storage modes (both load; backward compatible):

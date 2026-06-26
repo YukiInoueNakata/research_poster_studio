@@ -104,6 +104,10 @@ ${fancyListCss(paraMm)}
 .rps-chart-svg{ width:100%; height:auto; max-width:520px; }
 .rps-diagram-pending{ border:1pt dashed ${t.colors.muted}; color:${t.colors.muted}; padding:3mm; font-size:${t.font_size.caption}; text-align:center; }
 .rps-diagram-error{ border:1pt dashed ${t.colors.warning}; color:${t.colors.warning}; padding:3mm; font-size:${t.font_size.caption}; text-align:left; white-space:pre-wrap; }
+.rps-math-display{ display:block; text-align:center; margin:0 0 var(--rps-para, ${paraMm}mm); overflow-x:auto; }
+.rps-math-display svg{ max-width:100%; height:auto; }
+.rps-math svg{ max-width:100%; }
+.rps-math-error{ color:${t.colors.warning}; border-bottom:1px dotted ${t.colors.warning}; }
 .rps-gallery{ display:inline-flex; flex-direction:column; gap:2mm; vertical-align:top; max-width:100%; }
 .rps-gallery-row{ display:flex; gap:2mm; align-items:stretch; width:100%; }
 .rps-gallery-item{ flex-basis:0; flex-shrink:1; min-width:0; }

@@ -19,7 +19,8 @@
   "dependencies": {
     "@rps/core": "*",
     "isomorphic-dompurify": "^2.16.0",
-    "marked": "^18.0.5"
+    "marked": "^18.0.5",
+    "mathjax-full": "^3.2.1"
   },
   "peerDependencies": {
     "react": "^19",

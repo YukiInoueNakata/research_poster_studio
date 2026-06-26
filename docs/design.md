@@ -366,6 +366,11 @@ export:
 - **content.md 記法**: 本文中コールアウト箱 `::: note … :::`（Pandoc fenced div，
   `note`/`warning`/`muted`/`heading`），ネイティブチャート ` ```chart `（bar/line，
   依存なし・全エクスポート対応），既存の ` ```csv `/` ```mermaid `/` ```dot `．
+- **数式（LaTeX）**: インライン `$…$` / `\(…\)`，ディスプレイ `$$…$$` / `\[…\]`．
+  MathJax で自己完結 SVG に変換し，フォント非依存でプレビュー/HTML/SVG/PDF/CLI に同一描画
+  （PPTX はラスタ化）．`$` の誤検出は Pandoc 規則（`$…$` 内側に空白なし，閉じ `$` の直後が
+  数字でない）で回避，リテラルは `\$`．解析失敗はインラインのエラーマーカーに退避．
+  Marp は front-matter `math: katex` で本文の `$…$` をネイティブ描画．
 - これら描画機能はプレビュー・PDF・HTML・SVG・PNG・VS Code プレビューで同一に出る
   （`docs/export-matrix.md`）．EMF 変換・白の真アルファ化・余白自動トリムはデスクトップ
   専用の「変換アクション」（結果はどこでも描画）．

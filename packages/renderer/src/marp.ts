@@ -16,6 +16,9 @@ export function buildMarp(project: PosterProject): string {
     `size: ${size.w}mm ${size.h}mm`,
     "paginate: false",
     `theme: default`,
+    // LaTeX math ($…$ / $$…$$) in block bodies is passed through verbatim and
+    // rendered by Marp's own math support.
+    "math: katex",
     "---",
     "",
     `# ${oneLine(doc.project.title)}`,

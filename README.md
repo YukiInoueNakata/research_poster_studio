@@ -31,9 +31,10 @@ DTP, so it stays robust as the amount of content changes.*
   *Paper & layout: A0–A2, inch presets, custom sizes; 1–6 columns + full-width;
   height modes with row-sync; nested blocks.*
 - **本文・装飾** — Markdown 本文（ブロック別 `content/*.md` または単一 `content.md`）、
-  見出しバー・番号バッジ・カード型・コールアウト箱・チャート、リストの自動採番。
+  見出しバー・番号バッジ・カード型・コールアウト箱・チャート・**数式（LaTeX）**、
+  リストの自動採番。
   *Content: Markdown body (per-block or single file), heading bars/badges/cards/
-  callouts/charts, auto-numbered lists.*
+  callouts/charts/**math (LaTeX)**, auto-numbered lists.*
 - **図表** — PNG/JPEG/SVG に加え PDF・CSV 表・Mermaid・Graphviz・EMF/WMF、
   回り込み・整列・トリミング・ギャラリー・白背景の透過。
   *Figures: images plus PDF, CSV tables, Mermaid, Graphviz, EMF/WMF, with float,
