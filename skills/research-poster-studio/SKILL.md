@@ -134,6 +134,9 @@ desktop / CLI render; see Export Targets), `qr` (QR code: first line is the
 URL/text; optional `ecc: L|M|Q|H`, `dark:`, `light:` lines — renders a crisp
 self-contained SVG, e.g. a paper/demo link in the header) (N18).
 
+Markdown table cells: wrap a cell in `==…==` to highlight it (tinted box +
+accent border) — e.g. `| ==**0.79**== |` for a best value in a results table (N15).
+
 ### Math (LaTeX)
 
 Write LaTeX directly in body text. Inline with `$…$` or `\(…\)`, display

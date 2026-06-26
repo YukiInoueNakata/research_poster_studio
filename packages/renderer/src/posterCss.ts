@@ -120,6 +120,8 @@ ${fancyListCss(paraMm)}
 .rps-block-body table,.rps-table{ border-collapse:collapse; margin:0 auto var(--rps-para, ${paraMm}mm); }
 .rps-block-body th,.rps-block-body td,.rps-table th,.rps-table td{ border:0.5pt solid ${t.colors.muted}; padding:1mm 2.5mm; text-align:left; }
 .rps-block-body th,.rps-table th{ border-bottom:1.2pt solid ${t.colors.text}; border-top:1.2pt solid ${t.colors.text}; background:transparent; font-weight:700; }
+/* N15: highlighted table cell (==value==) — tinted box + accent border for best values */
+.rps-cell-hl{ background:color-mix(in srgb, ${t.colors.accent} 16%, ${t.colors.background}); box-shadow:inset 0 0 0 1.2pt ${t.colors.accent}; font-weight:700; }
 .rps-tablewrap .rps-table{ margin:0; }
 .rps-diagram{ margin:0 0 var(--rps-para, ${paraMm}mm); text-align:center; }
 .rps-diagram svg{ max-width:100%; height:auto; }

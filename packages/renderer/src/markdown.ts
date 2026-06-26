@@ -171,6 +171,16 @@ md.use({
       }
       return false; // default code rendering
     },
+    // N15: a table cell wrapped in ==…== renders highlighted (best-value box),
+    // e.g. `| ==**0.79**== |`. Other cells render normally.
+    tablecell(this: any, token: any) {
+      const inner = this.parser.parseInline(token.tokens);
+      const tag = token.header ? "th" : "td";
+      const align = token.align ? ` style="text-align:${token.align}"` : "";
+      const m = /^\s*==([\s\S]*?)==\s*$/.exec(inner);
+      if (m) return `<${tag} class="rps-cell-hl"${align}>${m[1]}</${tag}>`;
+      return `<${tag}${align}>${inner}</${tag}>`;
+    },
   },
 });
 
