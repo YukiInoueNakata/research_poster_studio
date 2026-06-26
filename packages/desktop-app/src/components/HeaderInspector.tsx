@@ -534,6 +534,57 @@ export default function HeaderInspector({
         </div>
       </div>
 
+      {/* footer band (N17) */}
+      <div className="field-group">
+        <div className="legend">{t("header.footerLegend")}</div>
+        <div className="field">
+          <label>{t("header.footerLeft")}</label>
+          <input
+            type="text"
+            value={header.footer_left ?? ""}
+            onChange={(e) => onChangeHeader({ footer_left: e.target.value || undefined })}
+          />
+        </div>
+        <div className="field">
+          <label>{t("header.footerCenter")}</label>
+          <input
+            type="text"
+            value={header.footer_center ?? ""}
+            onChange={(e) => onChangeHeader({ footer_center: e.target.value || undefined })}
+          />
+        </div>
+        <div className="field">
+          <label>{t("header.footerRight")}</label>
+          <input
+            type="text"
+            value={header.footer_right ?? ""}
+            onChange={(e) => onChangeHeader({ footer_right: e.target.value || undefined })}
+          />
+        </div>
+        <div className="inline">
+          <ColorField
+            label={t("header.footerBackground")}
+            value={header.footer_background}
+            onChange={(v) => onChangeHeader({ footer_background: v })}
+          />
+          <ColorField
+            label={t("header.footerTextColor")}
+            value={header.footer_text_color}
+            onChange={(v) => onChangeHeader({ footer_text_color: v })}
+          />
+        </div>
+        <div className="field">
+          <label>{t("header.footerFontSize")}</label>
+          <input
+            type="text"
+            placeholder={theme.font_size.caption}
+            value={header.footer_font_size ?? ""}
+            onChange={(e) => onChangeHeader({ footer_font_size: e.target.value || undefined })}
+          />
+        </div>
+        <div className="hint" style={{ marginTop: 4 }}>{t("header.footerHint")}</div>
+      </div>
+
       {/* box */}
       <div className="field-group">
         <div className="legend">{t("header.boxLegend")}</div>
