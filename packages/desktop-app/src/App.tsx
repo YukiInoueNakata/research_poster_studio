@@ -524,39 +524,55 @@ export default function App() {
     }
   }
 
-  /** Siblings in the same column (same nesting level), visually sorted. */
-  function sameColumnSiblings(id: string): { sib: Block[]; idx: number } | null {
+  /**
+   * Vertical "track" for up/down reordering (visual-neighbour semantics):
+   * a block's track is the same-column blocks at its nesting level PLUS every
+   * full-width (`wide`) block at that level. A wide block spans all columns, so
+   * it sits above/below the block and is a crossable barrier; other-column
+   * blocks are beside (not above/below) the block and are skipped. A wide
+   * block's own track is all siblings. `full` is the whole sibling list, used
+   * for level-wide renumbering.
+   */
+  function moveTrack(
+    id: string,
+  ): { full: Block[]; track: Block[]; idx: number } | null {
     if (!project) return null;
     const b = findBlock(project.doc.blocks, id);
     const siblings = findContainingArray(project.doc.blocks, id);
     if (!b || !siblings) return null;
-    const sib = siblings
-      .filter((x) => x.column === b.column)
-      .slice()
-      .sort((a, c) => a.order - c.order);
-    return { sib, idx: sib.findIndex((x) => x.id === id) };
+    const full = siblings.slice().sort((a, c) => a.order - c.order);
+    const track =
+      b.column === "wide"
+        ? full
+        : full.filter((x) => x.column === b.column || x.column === "wide");
+    return { full, track, idx: track.findIndex((x) => x.id === id) };
   }
 
   function canMove(id: string | null, dir: -1 | 1): boolean {
     if (!id) return false;
-    const r = sameColumnSiblings(id);
+    const r = moveTrack(id);
     if (!r || r.idx < 0) return false;
     const j = r.idx + dir;
-    return j >= 0 && j < r.sib.length;
+    return j >= 0 && j < r.track.length;
   }
 
   function moveBlock(dir: -1 | 1) {
     if (!project || !selectedId) return;
-    const r = sameColumnSiblings(selectedId);
+    const r = moveTrack(selectedId);
     if (!r) return;
-    const { sib, idx } = r;
+    const { full, track, idx } = r;
     const j = idx + dir;
-    if (idx < 0 || j < 0 || j >= sib.length) return;
-    // Move the block to position j, then renumber the column 1..n so orders are
-    // always distinct (avoids ties that would make the change invisible).
-    const seq = sib.slice();
-    const [moved] = seq.splice(idx, 1);
-    seq.splice(j, 0, moved);
+    if (idx < 0 || j < 0 || j >= track.length) return;
+    // Reposition the block immediately past its track-neighbour in the full
+    // sibling order — jumping over other-column blocks and crossing full-width
+    // barriers — while keeping its own column. Then renumber the whole level
+    // 1..n so orders stay distinct across all columns (no ties, no surprise
+    // band re-flushing).
+    const neighbor = track[j];
+    const self = full.find((x) => x.id === selectedId)!;
+    const seq = full.filter((x) => x.id !== selectedId);
+    const at = seq.findIndex((x) => x.id === neighbor.id);
+    seq.splice(dir === 1 ? at + 1 : at, 0, self);
     const orderById = new Map<string, number>();
     seq.forEach((s, k) => orderById.set(s.id, k + 1));
     const blocks = mapBlockTree(project.doc.blocks, (x) =>
