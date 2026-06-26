@@ -574,6 +574,7 @@ export default function ProjectSettings({
             >
               <option value="apa7">{t("settings.cite.style.apa7")}</option>
               <option value="jpa">{t("settings.cite.style.jpa")}</option>
+              <option value="ieee">{t("settings.cite.style.ieee")}</option>
               {Object.keys(project.citationStyles ?? {}).map((name) => (
                 <option key={name} value={name}>
                   {t("settings.cite.style.custom", { name })}

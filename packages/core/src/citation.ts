@@ -44,6 +44,9 @@ export interface CitationStyle {
   sort: "author" | "appearance";
   /** DOI / URL をリストに含めるか（doc.references.include_doi で上書き可） */
   include_doi?: boolean;
+  /** 番号引用（Vancouver / IEEE）: 本文 [@key]→[1]，末尾リストは出現順で [n] 前置．
+   *  true のとき in_text の著者・年テンプレは使わず番号で描画する（N16）． */
+  numeric?: boolean;
 }
 
 export interface CitationWarning {
@@ -78,7 +81,40 @@ const JPA_REFERENCE: Record<string, string> = {
   default: "{authors}（{year}）．{title}　{doi}",
 };
 
+// 番号引用（IEEE 風）の文献テンプレート．著者は既存の referenceAuthors（APA 形式）を
+// 流用する（厳密な IEEE の "A. B. Author" 表記・句読点は将来の精緻化対象）．
+const IEEE_REFERENCE: Record<string, string> = {
+  article: '{authors}, "{title}," {journal}, vol. {volume}, no. {number}, pp. {pages}, {year}. {doi}',
+  inproceedings: '{authors}, "{title}," in {booktitle}, {year}, pp. {pages}. {doi}',
+  incollection: '{authors}, "{title}," in {booktitle}, {editor}, Ed. {publisher}, {year}, pp. {pages}. {doi}',
+  inbook: '{authors}, "{title}," in {booktitle}, {publisher}, {year}, pp. {pages}. {doi}',
+  book: "{authors}, {title}. {publisher}, {year}. {doi}",
+  phdthesis: "{authors}, \"{title},\" Ph.D. dissertation, {school}, {year}. {doi}",
+  mastersthesis: "{authors}, \"{title},\" M.S. thesis, {school}, {year}. {doi}",
+  techreport: "{authors}, \"{title},\" {institution}, Rep. {number}, {year}. {doi}",
+  misc: '{authors}, "{title}," {howpublished}, {year}. {doi}',
+  default: '{authors}, "{title}," {year}. {doi}',
+};
+
 export const BUILTIN_STYLES: Record<string, CitationStyle> = {
+  ieee: {
+    name: "ieee",
+    locale: "en",
+    numeric: true,
+    in_text: {
+      // numeric styles render bracketed numbers; these templates are unused for
+      // in-text numbers but kept valid for the shared type.
+      item: "{number}",
+      wrap: "[{items}]",
+      year_only: "{number}",
+      narrative: "[{number}]",
+      multi_sep: ", ",
+      et_al_min: 0,
+    },
+    reference: IEEE_REFERENCE,
+    sort: "appearance",
+    include_doi: true,
+  },
   apa7: {
     name: "apa7",
     locale: "en",
@@ -142,8 +178,9 @@ export function normalizeCitationStyle(raw: any, fallbackName?: string): Citatio
         ? { ...base.reference, ...raw.reference }
         : { ...base.reference },
     reference_latin: locale === "ja" ? { ...APA7_REFERENCE, ...(raw.reference_latin ?? {}) } : undefined,
-    sort: raw.sort === "appearance" ? "appearance" : "author",
+    sort: raw.sort === "appearance" || raw.numeric === true ? "appearance" : "author",
     include_doi: typeof raw.include_doi === "boolean" ? raw.include_doi : base.include_doi,
+    numeric: raw.numeric === true,
   };
 }
 
@@ -194,6 +231,20 @@ function fillTemplate(tpl: string, vals: Record<string, string>): string {
   return tpl.replace(/\{([a-z_]+)\}/g, (_, k: string) => vals[k] ?? "");
 }
 
+/** Collapse a sorted unique number list into IEEE-style ranges: [1,2,3,5] -> "1–3, 5". */
+function collapseRanges(nums: number[]): string {
+  const xs = [...new Set(nums)].sort((a, b) => a - b);
+  const out: string[] = [];
+  let i = 0;
+  while (i < xs.length) {
+    let j = i;
+    while (j + 1 < xs.length && xs[j + 1] === xs[j] + 1) j++;
+    out.push(j - i >= 2 ? `${xs[i]}–${xs[j]}` : xs.slice(i, j + 1).join(", "));
+    i = j + 1;
+  }
+  return out.join(", ");
+}
+
 /** 空フィールドで残った "()" "，，" などのテンプレ残骸を掃除する． */
 function cleanupArtifacts(s: string): string {
   let prev = "";
@@ -203,7 +254,7 @@ function cleanupArtifacts(s: string): string {
     out = out
       .replace(/\(\s*\)/g, "")
       .replace(/（\s*）/g, "")
-      .replace(/pp\.\s*(?=[).，．,;；]|$)/g, "")
+      .replace(/(?:pp|vol|no)\.\s*(?=[).，．,;；]|$)/g, "")
       .replace(/,\s*(?=[,.;．，；)])/g, "")
       .replace(/，\s*(?=[，．；)）])/g, "")
       .replace(/\.\s+\./g, ".")
@@ -315,6 +366,8 @@ export function expandCitations(
   text: string,
   entries: Map<string, BibEntry>,
   style: CitationStyle,
+  /** numeric styles (N16): maps a key to its 1-based citation number */
+  numberOf?: (key: string) => number | undefined,
 ): ExpandResult {
   const cited: string[] = [];
   const unknown: string[] = [];
@@ -348,6 +401,10 @@ export function expandCitations(
     s.replace(RE_NARRATIVE, (_whole, key: string) => {
       const e = entries.get(key);
       note(key, !!e);
+      if (style.numeric) {
+        if (!e) return `[?]`;
+        return `[${numberOf?.(key) ?? "?"}]`;
+      }
       if (!e) return `@${key}?`;
       return fillTemplate(style.in_text.narrative, {
         authors: inTextAuthors(e, style),
@@ -362,6 +419,16 @@ export function expandCitations(
     const matches = parts.map((p) => RE_ITEM.exec(p));
     if (parts.length === 0 || matches.some((m) => !m)) return null;
     const grp = (m: RegExpExecArray) => m.groups!;
+    if (style.numeric) {
+      const nums: number[] = [];
+      for (const m of matches) {
+        const key = grp(m!).key;
+        note(key, !!entries.get(key));
+        const n = numberOf?.(key);
+        if (n != null) nums.push(n);
+      }
+      return `[${nums.length ? collapseRanges(nums) : "?"}]`;
+    }
     const hasExtra = matches.some((m) => grp(m!).prefix.trim() || grp(m!).suffix.trim());
     const items = matches.map((m) =>
       renderItem(grp(m!).prefix, grp(m!).sign, grp(m!).key, grp(m!).suffix),
@@ -440,13 +507,19 @@ export function buildReferenceList(
     .map((k) => entries.get(k))
     .filter((e): e is BibEntry => !!e);
   let ordered = cited;
-  if (style.sort === "author") {
+  if (style.sort === "author" && !style.numeric) {
     ordered = cited
       .map((e) => ({ e, k: `${sortKeyFor(e, warnings)} ${entryYear(e)}` }))
       .sort((a, b) => (a.k < b.k ? -1 : a.k > b.k ? 1 : 0))
       .map((x) => x.e);
   }
-  return { items: ordered.map((e) => formatReference(e, style, includeDoi)), warnings };
+  const items = ordered.map((e) => formatReference(e, style, includeDoi));
+  // numeric styles (N16): appearance order + [n] prefix; numbers match the
+  // in-text [n] (both count existing cited keys in first-appearance order).
+  return {
+    items: style.numeric ? items.map((s, i) => `[${i + 1}] ${s}`) : items,
+    warnings,
+  };
 }
 
 // ---- project-level preparation -------------------------------------------------
@@ -519,6 +592,15 @@ export function prepareCitations(project: PosterProject): CitationPrep {
   for (const b of flattenBlocks(project.doc.blocks)) collect(project.content[b.id]);
   for (const f of project.doc.figures) collect(f.caption);
 
+  // numeric styles (N16): number existing cited keys 1..n in first-appearance
+  // order; the in-text [n] and the [n] list prefix both derive from this.
+  const numberMap = new Map<string, number>();
+  if (style.numeric) {
+    let n = 0;
+    for (const k of citedKeys) if (entries.has(k)) numberMap.set(k, ++n);
+  }
+  const numberOf = (k: string) => numberMap.get(k);
+
   const list = buildReferenceList(citedKeys, entries, style, includeDoi);
   warnings.push(...list.warnings);
 
@@ -526,7 +608,7 @@ export function prepareCitations(project: PosterProject): CitationPrep {
     active,
     style,
     includeDoi,
-    expand: (t) => expandCitations(t, entries, style).text,
+    expand: (t) => expandCitations(t, entries, style, numberOf).text,
     referenceItems: list.items,
     warnings,
   };

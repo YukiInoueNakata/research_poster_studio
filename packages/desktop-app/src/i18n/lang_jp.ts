@@ -209,6 +209,7 @@ export const lang_jp: Record<string, string> = {
   "settings.cite.style": "引用スタイル",
   "settings.cite.style.apa7": "APA 第 7 版（英）",
   "settings.cite.style.jpa": "心理学研究（日）",
+  "settings.cite.style.ieee": "IEEE 番号引用（理工系・[1]）",
   "settings.cite.style.custom": "{name}（styles/）",
   "settings.cite.includeDoi": "文献リストに DOI / URL を含める",
   "settings.cite.stylesHint": "ユーザー定義スタイルはプロジェクトの styles/*.yaml に置きます（name / locale / in_text / reference / sort）．和文献は bib の yomi フィールドで欧文と統合ソートします．",

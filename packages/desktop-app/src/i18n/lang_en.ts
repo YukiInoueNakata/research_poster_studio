@@ -208,6 +208,7 @@ export const lang_en: Record<string, string> = {
   "settings.cite.style": "Citation style",
   "settings.cite.style.apa7": "APA 7th edition (EN)",
   "settings.cite.style.jpa": "Shinrigaku Kenkyu (JA)",
+  "settings.cite.style.ieee": "IEEE numbered ([1], STEM)",
   "settings.cite.style.custom": "{name} (styles/)",
   "settings.cite.includeDoi": "Include DOI / URL in the reference list",
   "settings.cite.stylesHint": "User-defined styles go in the project's styles/*.yaml (name / locale / in_text / reference / sort). Japanese references are merge-sorted with Western ones using the bib's yomi field.",

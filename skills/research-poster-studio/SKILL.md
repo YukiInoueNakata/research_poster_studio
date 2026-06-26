@@ -16,7 +16,10 @@ files, never the generated PDF/PNG/SVG/PPTX.
   elsewhere they show a placeholder.
 - `references.bib` — optional BibTeX references. Pandoc-style citations in the
   body: `[@key]`, `[@a; @b]`, `[-@key]` (year only), inline `@key`, plus
-  extended notation `[@key, p. 5]` / `[@key, pp. 4-6]` / `[see @key, for a review]`
+  extended notation `[@key, p. 5]` / `[@key, pp. 4-6]` / `[see @key, for a review]`.
+  Citation style is `references.style`: `apa7` (author–year, EN), `jpa`
+  (Shinrigaku Kenkyu, JA), or **`ieee`** (numbered: `[@key]`→`[1]`, `[@a; @b; @c]`→
+  `[1]–[3]`, reference list in citation order with `[n]` prefixes — STEM/Vancouver)
 - `themes/*.theme.yaml` — optional theme overrides
 - `agent/review.md` — review notes and warnings
 - `exports/` and `backups/` — generated / auto-backup. **Never edit these.**
