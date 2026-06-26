@@ -99,6 +99,12 @@ ${fancyListCss(paraMm)}
 .rps-ref-list p{ padding-left:2em; text-indent:-2em; margin:0 0 1.2mm; }
 .rps-ref-empty{ color:${t.colors.muted}; }
 .rps-footer{ padding:5mm 10mm; border-top:1pt solid ${t.colors.muted}; font-size:${t.font_size.caption}; color:${t.colors.muted}; display:flex; justify-content:space-between; }
+/* N24: header logos laid out in flow (left | center | right) so they never
+   overlap a centered title; replaces the old absolute overlay. */
+.rps-header-inner{ display:flex; align-items:center; gap:6mm; }
+.rps-header-center{ flex:1 1 auto; min-width:0; }
+.rps-header-side{ flex:0 0 auto; display:flex; align-items:center; gap:4mm; }
+.rps-header-logo-row{ display:flex; justify-content:center; align-items:center; gap:4mm; margin:0 0 3mm; }
 .rps-header-logos{ position:absolute; top:50%; transform:translateY(-50%); display:flex; align-items:center; gap:4mm; }
 .rps-header-logos.rps-pos-left{ left:0; }
 .rps-header-logos.rps-pos-right{ right:0; }

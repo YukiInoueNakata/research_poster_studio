@@ -794,6 +794,12 @@ export default function PosterCanvas({
   const logos = (hc.logos ?? []).map((l, i) => ({ ...l, _idx: i }));
   const headerLogos = logos.filter((l) => l.area !== "footer");
   const footerLogos = logos.filter((l) => l.area === "footer");
+  // N24: lay header logos in flow (left | center content | right) so a logo
+  // never overlaps a centered title regardless of the logo's width.
+  const hLeft = headerLogos.filter((l) => (l.position ?? "left") === "left");
+  const hCenter = headerLogos.filter((l) => (l.position ?? "left") === "center");
+  const hRight = headerLogos.filter((l) => (l.position ?? "left") === "right");
+  const hasSideLogos = hLeft.length > 0 || hRight.length > 0;
   const logoImg = (l: LogoConfig & { _idx: number }) => {
     const base = l.path.replace(/\\/g, "/").split("/").pop() ?? l.path;
     const asset = project.figures[base] ?? project.figures[l.path];
@@ -817,20 +823,6 @@ export default function PosterCanvas({
       />
     );
   };
-  const logoGroup = (
-    list: typeof logos,
-    pos: "left" | "center" | "right",
-    cls: string,
-  ) => {
-    const items = list.filter((l) => (l.position ?? "left") === pos);
-    if (items.length === 0) return null;
-    return (
-      <div className={`${cls} rps-pos-${pos}`} key={pos}>
-        {items.map(logoImg)}
-      </div>
-    );
-  };
-
   // Poster-wide background image (drawn over colors.background, under content).
   const bg = theme.background;
   let bgEl: ReactNode = null;
@@ -877,6 +869,14 @@ export default function PosterCanvas({
               : undefined
           }
         >
+          <div className="rps-header-inner">
+          {hasSideLogos ? (
+            <div className="rps-header-side rps-header-side-left">{hLeft.map(logoImg)}</div>
+          ) : null}
+          <div className="rps-header-center">
+          {hCenter.length > 0 ? (
+            <div className="rps-header-logo-row">{hCenter.map(logoImg)}</div>
+          ) : null}
           {confText ? (
             <div
               className="rps-conf"
@@ -975,9 +975,11 @@ export default function PosterCanvas({
               {(meta.keywords ?? []).join("，")}
             </div>
           ) : null}
-          {logoGroup(headerLogos, "left", "rps-header-logos")}
-          {logoGroup(headerLogos, "center", "rps-header-logos")}
-          {logoGroup(headerLogos, "right", "rps-header-logos")}
+          </div>
+          {hasSideLogos ? (
+            <div className="rps-header-side rps-header-side-right">{hRight.map(logoImg)}</div>
+          ) : null}
+          </div>
         </header>
 
         <div
