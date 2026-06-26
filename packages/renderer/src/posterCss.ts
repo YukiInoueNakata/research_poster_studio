@@ -16,12 +16,19 @@ export function posterCss(doc: PosterDoc): string {
   color:${t.colors.text};
   font-family:${t.font_family.body}, "Yu Gothic", "Hiragino Sans", sans-serif;
   display:flex; flex-direction:column;
-  overflow:hidden;
+  /* On screen, overflowing content stays VISIBLE (spills past the A0 frame) so
+     the overflow is obvious and the overflow warning is actionable — never
+     silently clipped (設計書 §8.5: あふれは警告，自動縮小しない). Print clips to
+     the page below. This fixes content (e.g. lower sections) vanishing when the
+     poster overflows A0 — including with sync_row, which can push a section
+     past the bottom edge. */
+  overflow:visible;
   position:relative;
   /* own stacking context so .rps-bg (z-index:-1) paints above the poster
      background color but below all content */
   z-index:0;
 }
+@media print { .rps-poster{ overflow:hidden; } }
 .rps-poster *{ box-sizing:border-box; }
 .rps-header{ text-align:center; padding:0 0 6mm; border-bottom:2pt solid ${t.colors.accent}; }
 .rps-title{ font-family:${t.font_family.title}; font-size:${t.font_size.title}; color:${t.colors.heading}; margin:0 0 3mm; line-height:1.1; font-weight:700; white-space:pre-line; }
