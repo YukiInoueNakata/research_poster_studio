@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "description": "Research Poster Studio - structured layout editor for academic research posters (monorepo)",
+  "license": "Apache-2.0",
   "workspaces": [
     "packages/core",
     "packages/renderer",

@@ -167,19 +167,16 @@ poster-project/
 
 作者 / Author: 中田友貴（Yuki Inoue Nakata）。研究・教育用途を想定したツールです。
 
-本リポジトリは **Creative Commons 表示 - 非営利 - 継承 4.0 国際（CC BY-NC-SA 4.0）**
-で公開しています（全文は [`LICENSE`](./LICENSE)）。
-*Licensed under **CC BY-NC-SA 4.0** (see [`LICENSE`](./LICENSE)).*
+本リポジトリは **Apache License 2.0** で公開しています（全文は [`LICENSE`](./LICENSE)、
+帰属表示は [`NOTICE`](./NOTICE)）。
+*Licensed under the **Apache License 2.0** (see [`LICENSE`](./LICENSE) and [`NOTICE`](./NOTICE)).*
 
-- **非営利利用 / Non-commercial** — 出典表示のもとで自由に利用・改変・再配布できます。
-  *Free to use, modify, and redistribute with attribution.*
-- **継承 / ShareAlike** — 改変・再配布する場合は同一の CC BY-NC-SA 4.0 で公開してください。
-  *Derivatives must be shared under the same license.*
-- **表示 / Attribution** — 作者名・本リポジトリへのリンク・ライセンスを明記してください。
-- **営利利用 / Commercial use** — 上記ライセンスでは許諾されません。希望される場合は
-  個別にご相談ください（連絡先 / contact: dj.y.nakata@gmail.com）。
-  *Not granted by this license; please contact the author for commercial terms.*
+- **自由な利用 / Permissive** — 出典表示（著作権・ライセンス・NOTICE の保持）のもとで、
+  **営利・非営利を問わず**自由に利用・改変・再配布できます。
+  *Free to use, modify, and redistribute for any purpose, including commercial, with attribution.*
+- **特許許諾 / Patent grant** — Apache-2.0 は貢献者からの特許ライセンスを含みます。
+  *Includes an express patent license from contributors.*
+- **表示 / Attribution** — 改変ファイルにはその旨を明示し、`LICENSE`・`NOTICE` を同梱してください。
+  *Retain notices; state changes; include `LICENSE` and `NOTICE` in redistributions.*
 
-注: CC BY-NC-SA 4.0 は営利利用を制限するため、OSI 定義の「オープンソース」ではなく
-*source-available*（ソース公開）ライセンスです。
-*Note: this is a source-available (non-OSI) license, as it restricts commercial use.*
+連絡先 / contact: dj.y.nakata@gmail.com

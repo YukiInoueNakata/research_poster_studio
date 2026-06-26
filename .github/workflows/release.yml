@@ -88,7 +88,7 @@ jobs:
 
             注: アプリは未署名のため，初回起動時に OS の警告が出ることがあります
             （Windows SmartScreen / macOS Gatekeeper）．回避手順は README を参照してください．
-            ライセンスは CC BY-NC-SA 4.0（非営利）です．
+            ライセンスは Apache License 2.0 です．
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
