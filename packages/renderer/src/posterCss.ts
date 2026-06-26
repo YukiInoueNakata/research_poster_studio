@@ -113,6 +113,7 @@ ${fancyListCss(paraMm)}
 .rps-footer-zone{ flex:1 1 0; display:flex; align-items:center; gap:4mm; min-width:0; }
 .rps-footer-zone.rps-pos-center{ justify-content:center; }
 .rps-footer-zone.rps-pos-right{ justify-content:flex-end; }
+.rps-footer-text{ white-space:pre-line; }
 .rps-logo-img{ display:block; width:auto; }
 .rps-logo-missing{ display:inline-flex; align-items:center; padding:0 3mm; border:1pt dashed ${t.colors.muted}; color:${t.colors.muted}; font-size:${t.font_size.caption}; }
 .rps-bg{ position:absolute; inset:0; z-index:-1; }

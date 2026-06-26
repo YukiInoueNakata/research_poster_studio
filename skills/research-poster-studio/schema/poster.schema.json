@@ -283,7 +283,13 @@
               "height_mm": { "type": "number" }
             }
           }
-        }
+        },
+        "footer_left": { "type": "string", "description": "N17 全幅フッター帯の左テキスト（日付等）" },
+        "footer_center": { "type": "string", "description": "N17 フッター帯の中央テキスト" },
+        "footer_right": { "type": "string", "description": "N17 フッター帯の右テキスト（会場名等）" },
+        "footer_background": { "type": "string", "description": "N17 フッター帯の背景色（濃色帯）" },
+        "footer_text_color": { "type": "string", "description": "N17 フッター帯の文字色" },
+        "footer_font_size": { "type": "string", "description": "N17 フッター帯の文字サイズ（例 20pt）" }
       }
     },
     "blocks": {

@@ -404,6 +404,12 @@ export function normalizeDoc(raw: any): PosterDoc {
               typeof l.height_mm === "number" && l.height_mm > 0 ? l.height_mm : 20,
           }))
       : [],
+    footer_left: h.footer_left,
+    footer_center: h.footer_center,
+    footer_right: h.footer_right,
+    footer_background: h.footer_background,
+    footer_text_color: h.footer_text_color,
+    footer_font_size: h.footer_font_size,
   };
 
   // references (citation mode) config passthrough

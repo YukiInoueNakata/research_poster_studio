@@ -198,6 +198,14 @@ export interface HeaderConfig {
   keywords_align?: HAlign;
   /** institution logos (header / footer; multiple allowed) */
   logos?: LogoConfig[];
+  /** N17: full-width footer band text (date / venue / etc.), per zone, plus an
+   *  optional band background and text color (e.g. white on a colored bar) */
+  footer_left?: string;
+  footer_center?: string;
+  footer_right?: string;
+  footer_background?: string;
+  footer_text_color?: string;
+  footer_font_size?: string;
 }
 
 export interface BlockHeight {

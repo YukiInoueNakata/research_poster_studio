@@ -800,6 +800,16 @@ export default function PosterCanvas({
   const hCenter = headerLogos.filter((l) => (l.position ?? "left") === "center");
   const hRight = headerLogos.filter((l) => (l.position ?? "left") === "right");
   const hasSideLogos = hLeft.length > 0 || hRight.length > 0;
+  // N17: full-width footer band with text zones (date / venue / etc.).
+  const footerText: Record<"left" | "center" | "right", string | undefined> = {
+    left: hc.footer_left,
+    center: hc.footer_center,
+    right: hc.footer_right,
+  };
+  const hasFooterText = !!(hc.footer_left || hc.footer_center || hc.footer_right);
+  const hasFooter = footerLogos.length > 0 || hasFooterText;
+  const footerBg = hc.footer_background ? resolveColor(hc.footer_background, theme) : undefined;
+  const footerColor = hc.footer_text_color ? resolveColor(hc.footer_text_color, theme) : undefined;
   const logoImg = (l: LogoConfig & { _idx: number }) => {
     const base = l.path.replace(/\\/g, "/").split("/").pop() ?? l.path;
     const asset = project.figures[base] ?? project.figures[l.path];
@@ -986,18 +996,30 @@ export default function PosterCanvas({
           className="rps-body"
           style={{
             gap: rowGap,
-            // with a logo footer the page margin moves to the footer itself
-            padding: `${rowGap} ${margin}mm ${footerLogos.length > 0 ? rowGap : `${margin}mm`}`,
+            // with a footer band the page margin moves to the footer itself
+            padding: `${rowGap} ${margin}mm ${hasFooter ? rowGap : `${margin}mm`}`,
           }}
         >
           <BandsView bands={computeBands(doc)} sync={doc.layout.columns.sync_mode} />
         </div>
 
-        {footerLogos.length > 0 ? (
-          <div className="rps-poster-footer" style={{ margin: `0 ${margin}mm ${margin}mm` }}>
+        {hasFooter ? (
+          <div
+            className="rps-poster-footer"
+            style={
+              footerBg
+                ? { margin: 0, padding: `3mm ${margin}mm`, background: footerBg, color: footerColor }
+                : { margin: `0 ${margin}mm ${margin}mm`, color: footerColor }
+            }
+          >
             {(["left", "center", "right"] as const).map((pos) => (
-              <div className={`rps-footer-zone rps-pos-${pos}`} key={pos}>
+              <div
+                className={`rps-footer-zone rps-pos-${pos}`}
+                key={pos}
+                style={{ fontSize: hc.footer_font_size ?? theme.font_size.caption }}
+              >
                 {footerLogos.filter((l) => (l.position ?? "left") === pos).map(logoImg)}
+                {footerText[pos] ? <span className="rps-footer-text">{footerText[pos]}</span> : null}
               </div>
             ))}
           </div>
