@@ -243,6 +243,10 @@ export interface BlockStyle {
   card?: boolean;
   /** left accent bar on the whole block (callout look without a full border) (N7) */
   accent_bar?: { color?: string; width?: string };
+  /** format this block's own hand-written body as a reference list (small
+   *  reference font + hanging indent), for in-context citations placed in a
+   *  block / child block — independent of the BibTeX `references_list` (D) */
+  reference_format?: boolean;
   text_color?: string;
   background?: string;
   border?: boolean;

@@ -85,7 +85,11 @@ export function bodyTextStyle(block: Block, theme: Theme): CSSProperties {
   const s = block.style ?? {};
   const css: CSSProperties = {
     fontFamily: s.font_family ?? undefined,
-    fontSize: s.body_font_size ?? theme.font_size.body,
+    // reference-format blocks (D) default to the smaller references size unless
+    // an explicit body_font_size is set.
+    fontSize:
+      s.body_font_size ??
+      (s.reference_format ? theme.font_size.references : theme.font_size.body),
     color: resolveColor(s.text_color, theme) ?? theme.colors.text,
     fontStyle: s.italic ? "italic" : undefined,
   };

@@ -241,6 +241,8 @@ export const lang_jp: Record<string, string> = {
   "inspector.referencesLegend": "引用文献",
   "inspector.referencesAutoGen": "引用文献リストを自動生成（本文の代わりに表示）",
   "inspector.referencesHint": "ON の間は .bib から「引用された文献のみ」のリストをこのブロックに描画します（OFF に戻すと手書きの本文が再表示されます）．",
+  "inspector.referenceFormat": "本文を引用文献として整形（小フォント＋ぶら下げインデント）",
+  "inspector.referenceFormatHint": "このブロック／子ブロックに手書きした文献を，文献体裁で描画します（.bib 不要）．出現箇所に文献を直接置くスタイル向け．自動生成リストとは別です．",
   "inspector.bibNotLoaded": "現在 .bib は未読込です（プロジェクト直下に references.bib を置いて開き直してください）．",
   "inspector.bibLoaded": "現在 {count} 件のエントリを読込済み．",
   "inspector.bodyLegend": "本文（{source}）",

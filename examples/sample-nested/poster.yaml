@@ -75,6 +75,15 @@ blocks:
         column: "wide"
         order: 3
         height: { mode: "auto" }
+      - id: "res-refs"
+        type: "text"
+        title: "引用文献"
+        source: "content/res-refs.md"
+        column: "wide"
+        order: 4
+        height: { mode: "auto" }
+        # D: 出現箇所の子ブロックに手書きの文献を「文献体裁」で描画（.bib 不要）
+        style: { reference_format: true }
 
   - id: "discussion"
     type: "text"

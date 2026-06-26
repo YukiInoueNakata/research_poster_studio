@@ -48,6 +48,7 @@
           }
         },
         "corner": { "enum": ["square", "rounded"] },
+        "reference_format": { "type": "boolean", "description": "このブロックの手書き本文を引用文献体裁（小フォント＋ぶら下げインデント）で描画．出現箇所にブロック/子ブロックで文献を置くスタイル向け（.bib 不要・references_list とは別）" },
         "text_color": { "type": "string" },
         "italic": { "type": "boolean" },
         "line_height": { "type": "number" },

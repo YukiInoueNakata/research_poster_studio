@@ -410,7 +410,15 @@ function BlockView({ block }: { block: Block }) {
     style.padding = "2mm";
   }
   const isRefs =
-    !!block.references_list || /ref|文献/i.test(block.id) || /文献|reference/i.test(block.title);
+    !!block.references_list ||
+    !!block.style?.reference_format ||
+    /ref|文献/i.test(block.id) ||
+    /文献|reference/i.test(block.title);
+  // D: format hand-written reference blocks (small font via rps-refs + hanging
+  // indent via rps-ref-list), independent of the BibTeX auto-generated list.
+  const bodyClass = block.style?.reference_format
+    ? "rps-block-body rps-ref-list"
+    : "rps-block-body";
   const figs = figuresForBlock(project, block);
   const floatFigs = figs.filter((f) => !!f.float);
   const normalFigs = figs.filter((f) => !f.float);
@@ -543,14 +551,14 @@ function BlockView({ block }: { block: Block }) {
                   <FigureView key={f.id} fig={f} />
                 ))}
                 <div
-                  className="rps-block-body"
+                  className={bodyClass}
                   style={bodyTextStyle(block, theme)}
                   dangerouslySetInnerHTML={{ __html: html }}
                 />
               </div>
             ) : (
               <div
-                className="rps-block-body"
+                className={bodyClass}
                 style={bodyTextStyle(block, theme)}
                 dangerouslySetInnerHTML={{ __html: html }}
               />

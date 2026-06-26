@@ -240,6 +240,8 @@ export const lang_en: Record<string, string> = {
   "inspector.referencesLegend": "References",
   "inspector.referencesAutoGen": "Auto-generate reference list (shown instead of body text)",
   "inspector.referencesHint": "While on, a list of \"only cited references\" from the .bib file is rendered in this block (turning it off restores the hand-written body text).",
+  "inspector.referenceFormat": "Format body as a reference list (small font + hanging indent)",
+  "inspector.referenceFormatHint": "Renders references you hand-write in this block / child block with reference styling (no .bib needed). For placing references in-context where they are cited; independent of the auto-generated list.",
   "inspector.bibNotLoaded": "No .bib is currently loaded (place references.bib in the project root and reopen).",
   "inspector.bibLoaded": "{count} entries currently loaded.",
   "inspector.bodyLegend": "Body ({source})",

@@ -167,6 +167,17 @@ export default function Inspector({
                   ? t("inspector.bibNotLoaded")
                   : t("inspector.bibLoaded", { count: project.bib.length })}
               </div>
+              <label className="check">
+                <input
+                  type="checkbox"
+                  checked={!!block.style?.reference_format}
+                  onChange={(e) =>
+                    setStyle({ reference_format: e.target.checked || undefined })
+                  }
+                />
+                {t("inspector.referenceFormat")}
+              </label>
+              <div className="hint">{t("inspector.referenceFormatHint")}</div>
             </div>
           )}
 
