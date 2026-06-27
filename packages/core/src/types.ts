@@ -88,6 +88,9 @@ export interface LayoutColumns {
   ratio: number[];
   height_balance?: "auto" | "manual";
   sync_mode: HeightSyncMode;
+  /** A1: full-height background colour per column index (role name or hex).
+   *  Fills the whole column band edge-to-edge behind its stacked blocks. */
+  backgrounds?: (string | null)[];
 }
 
 export interface Layout {

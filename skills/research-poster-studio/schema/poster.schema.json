@@ -188,7 +188,12 @@
             },
             "ratio": { "type": "array", "items": { "type": "number" } },
             "height_balance": { "enum": ["auto", "manual"] },
-            "sync_mode": { "$ref": "#/$defs/syncMode" }
+            "sync_mode": { "$ref": "#/$defs/syncMode" },
+            "backgrounds": {
+              "type": "array",
+              "description": "A1 カラムごとの全高背景色（index 順，role 名 or hex，null でスキップ）",
+              "items": { "type": ["string", "null"] }
+            }
           }
         }
       }

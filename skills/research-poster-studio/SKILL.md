@@ -51,6 +51,9 @@ files, never the generated PDF/PNG/SVG/PPTX.
   right). `left`/`center`/`right` always resolve as first/middle/last aliases
   at any count. `wide` = full width. An out-of-range `colK` falls back to the
   first column with an `unknown-column` warning.
+- `layout.columns.backgrounds: [<color|null>, …]` — A1 per-column **full-height
+  background band** (one entry per column index; `null` to skip). Fills the whole
+  column edge-to-edge behind its stacked blocks (the coloured-column poster look).
 - Height modes per block:
   - `auto` — natural content height (clamp with `min`/`max`)
   - `fixed` — exact `height.value` (e.g. `160mm`)

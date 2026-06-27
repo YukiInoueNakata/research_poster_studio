@@ -36,7 +36,9 @@ export function posterCss(doc: PosterDoc): string {
 .rps-authors{ font-size:${t.font_size.heading2}; color:${t.colors.text}; }
 .rps-affil{ font-size:${t.font_size.caption}; color:${t.colors.muted}; margin-top:2mm; }
 .rps-conf{ font-size:${t.font_size.caption}; color:${t.colors.muted}; margin-top:2mm; }
-.rps-body{ flex:1 1 auto; display:flex; flex-direction:column; padding:8mm 10mm; gap:8mm; min-height:0; }
+.rps-body{ flex:1 1 auto; display:flex; flex-direction:column; padding:8mm 10mm; gap:8mm; min-height:0; position:relative; isolation:isolate; }
+/* A1: per-column background bands sit behind the blocks (own stacking layer). */
+.rps-col-bg{ position:absolute; inset:0; z-index:-1; pointer-events:none; }
 .rps-band-columns{ display:flex; align-items:stretch; }
 .rps-column{ display:flex; flex-direction:column; min-width:0; }
 .rps-band-wide{ width:100%; }

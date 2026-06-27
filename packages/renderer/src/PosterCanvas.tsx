@@ -829,6 +829,26 @@ export default function PosterCanvas({
   const hasFooter = footerLogos.length > 0 || hasFooterText;
   const footerBg = hc.footer_background ? resolveColor(hc.footer_background, theme) : undefined;
   const footerColor = hc.footer_text_color ? resolveColor(hc.footer_text_color, theme) : undefined;
+  // A1: full-height per-column background bands (behind the stacked blocks).
+  const colBgRects: { left: number; width: number; color: string }[] = (() => {
+    const lc = doc.layout.columns;
+    const bg = lc.backgrounds;
+    if (!bg || !bg.some(Boolean)) return [];
+    const n = lc.count ?? lc.ratio?.length ?? 2;
+    const ratios = lc.ratio && lc.ratio.length === n ? lc.ratio : Array(n).fill(1);
+    const rsum = ratios.reduce((a, b) => a + b, 0) || 1;
+    const gMm = doc.layout.column_gap_mm ?? doc.layout.gap_mm ?? 8;
+    const usable = size.w - 2 * margin - (n - 1) * gMm;
+    const out: { left: number; width: number; color: string }[] = [];
+    let x = margin;
+    for (let i = 0; i < n; i++) {
+      const w = (usable * ratios[i]) / rsum;
+      const c = bg[i];
+      if (c) out.push({ left: x, width: w, color: resolveColor(c, theme) ?? c });
+      x += w + gMm;
+    }
+    return out;
+  })();
   const logoImg = (l: LogoConfig & { _idx: number }) => {
     const base = l.path.replace(/\\/g, "/").split("/").pop() ?? l.path;
     const asset = project.figures[base] ?? project.figures[l.path];
@@ -1028,6 +1048,23 @@ export default function PosterCanvas({
             padding: `${rowGap} ${margin}mm ${hasFooter ? rowGap : `${margin}mm`}`,
           }}
         >
+          {colBgRects.length ? (
+            <div className="rps-col-bg" aria-hidden="true">
+              {colBgRects.map((r, i) => (
+                <div
+                  key={i}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    bottom: 0,
+                    left: `${r.left}mm`,
+                    width: `${r.width}mm`,
+                    background: r.color,
+                  }}
+                />
+              ))}
+            </div>
+          ) : null}
           <BandsView bands={computeBands(doc)} sync={doc.layout.columns.sync_mode} />
         </div>
 
