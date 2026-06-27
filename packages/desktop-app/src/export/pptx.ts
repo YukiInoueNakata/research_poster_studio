@@ -8,11 +8,28 @@
 // PowerPoint, satisfying 設計書 §12.2.
 
 import pptxgen from "pptxgenjs";
-import type { PosterProject } from "@rps/core";
+import type { PosterProject, Block } from "@rps/core";
 import { posterSizeMm, parseFontPt, MM_PER_INCH } from "@rps/core";
+import { groupPptxBase64 } from "./pptxGroup";
 
 const hex = (c: string | undefined, fallback: string) =>
   (c ?? fallback).replace("#", "").slice(0, 6).padEnd(6, "0");
+
+// Map each block id -> its slash-joined ancestry path (block / child-block …),
+// so PPTX shapes can be tagged for grouping (see pptxGroup.ts).
+function buildBlockPaths(
+  blocks: Block[],
+  prefix = "",
+  out = new Map<string, string>(),
+): Map<string, string> {
+  for (const b of blocks) {
+    const path = prefix ? `${prefix}/${b.id}` : b.id;
+    out.set(b.id, path);
+    if (b.children?.length) buildBlockPaths(b.children, path, out);
+  }
+  return out;
+}
+const grpName = (path: string) => `rps|${path}`;
 
 interface Box {
   x: number;
@@ -36,6 +53,7 @@ export async function buildPptxBase64(
   rootEl: HTMLElement,
 ): Promise<string> {
   const { doc } = project;
+  const blockPaths = buildBlockPaths(doc.blocks);
   const size = posterSizeMm(doc.project);
   const inW = size.w / MM_PER_INCH;
   const inH = size.h / MM_PER_INCH;
@@ -102,7 +120,7 @@ export async function buildPptxBase64(
           options: { fontSize: parseFontPt(doc.theme.font_size.heading2) ?? 28 },
         },
       ],
-      { ...b, align: "center", valign: "middle" },
+      { ...b, align: "center", valign: "middle", objectName: grpName("__header__") },
     );
   }
 
@@ -141,6 +159,7 @@ export async function buildPptxBase64(
         align: "left",
         valign: "top",
         color: hex(doc.theme.colors.text, "222222"),
+        objectName: grpName(blockPaths.get(id) ?? id),
         fill: block?.style?.background
           ? { color: hex(block.style.background, "ffffff") }
           : undefined,
@@ -157,7 +176,7 @@ export async function buildPptxBase64(
     const src = (el as HTMLImageElement).src;
     if (!src.startsWith("data:")) return;
     const b = toBox(normRect(el, rootRect));
-    slide.addImage({ data: src, ...b });
+    slide.addImage({ data: src, ...b, objectName: grpName("__header__") });
   });
 
   // Figures. Crop is baked into a fresh data URI via canvas so PowerPoint shows
@@ -169,12 +188,15 @@ export async function buildPptxBase64(
     const asset = project.figures[id];
     if (!asset) continue;
     const fig = doc.figures.find((f) => f.id === id);
+    const figObj = grpName(
+      fig?.block ? (blockPaths.get(fig.block) ?? fig.block) : "__figures__",
+    );
     // gallery: place each rendered image at its measured box (src = data URI)
     if (fig?.images?.length) {
       figEl.querySelectorAll("img[data-asset-key]").forEach((img) => {
         const src = (img as HTMLImageElement).src;
         if (!src.startsWith("data:")) return;
-        slide.addImage({ data: src, ...toBox(normRect(img, rootRect)) });
+        slide.addImage({ data: src, ...toBox(normRect(img, rootRect)), objectName: figObj });
       });
       continue;
     }
@@ -186,11 +208,13 @@ export async function buildPptxBase64(
     const cropped =
       c?.enabled && ((c.left ?? 0) || (c.right ?? 0) || (c.top ?? 0) || (c.bottom ?? 0));
     const data = cropped ? await cropDataUri(asset.dataUri, c) : asset.dataUri;
-    slide.addImage({ data, ...b });
+    slide.addImage({ data, ...b, objectName: figObj });
   }
 
-  const out = await pptx.write({ outputType: "base64" });
-  return out as string;
+  const out = (await pptx.write({ outputType: "base64" })) as string;
+  // Wrap each block's shapes (text + figures + child-blocks) into PowerPoint
+  // groups so a block moves/edits as one unit. Best-effort: returns `out` on error.
+  return groupPptxBase64(out);
 }
 
 /** Bake background color + image (fit / opacity) into one poster-aspect JPEG. */
