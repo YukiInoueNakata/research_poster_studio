@@ -24,7 +24,11 @@ function getDoc(): MJDoc {
   if (!mjDoc) {
     adaptor = liteAdaptor();
     RegisterHTMLHandler(adaptor);
-    const tex = new TeX({ packages: AllPackages });
+    // tags 'ams' numbers equation/align/gather environments and enables
+    // \tag{…} / \label / \eqref (within one equation block). Bare `$$…$$` /
+    // `$…$` stay unnumbered. Cross-block \eqref is out of scope (each equation
+    // is rendered independently). (E1)
+    const tex = new TeX({ packages: AllPackages, tags: "ams" });
     // fontCache 'none' inlines every glyph as a direct <path> (no <defs>/<use>).
     // 'local' would reference glyphs via <use xlink:href="#…">, which the SVG
     // sanitizer strips — leaving the equation blank. 'none' is self-contained and

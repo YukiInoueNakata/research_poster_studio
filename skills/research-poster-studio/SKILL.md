@@ -179,6 +179,11 @@ A `$` not meant as math (currency) is left alone when it follows Pandoc rules
 literal dollar as `\$`. A formula that fails to parse falls back to an inline
 error marker instead of breaking the block.
 
+Equation numbering (E1): `\tag{1}` adds a right-aligned manual number, and
+`equation`/`align`/`gather` environments auto-number their lines with `\eqref`
+working **inside the same equation block**; bare `$$…$$` / `$…$` stay unnumbered.
+Cross-block references are out of scope (each formula renders independently).
+
 ### Single-file content (`content.md`)
 
 Two storage modes (both load; backward compatible):
