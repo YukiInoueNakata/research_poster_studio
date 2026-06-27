@@ -111,7 +111,10 @@ ${fancyListCss(paraMm)}
    overlap a centered title; replaces the old absolute overlay. */
 .rps-header-inner{ display:flex; align-items:center; gap:6mm; }
 .rps-header-center{ flex:1 1 auto; min-width:0; }
-.rps-header-side{ flex:0 0 auto; display:flex; align-items:center; gap:4mm; }
+.rps-header-side{ flex:0 0 auto; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:3mm; }
+/* B1: header text badge / pill */
+.rps-header-badge{ display:inline-block; background:${t.colors.accent}; color:#fff; font-weight:700; font-size:${t.font_size.caption}; padding:1mm 3mm; border-radius:1.5mm; line-height:1.2; white-space:nowrap; }
+.rps-header-logo-row .rps-header-badge{ margin:0 1mm; }
 .rps-header-logo-row{ display:flex; justify-content:center; align-items:center; gap:4mm; margin:0 0 3mm; }
 .rps-header-logos{ position:absolute; top:50%; transform:translateY(-50%); display:flex; align-items:center; gap:4mm; }
 .rps-header-logos.rps-pos-left{ left:0; }

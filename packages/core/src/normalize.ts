@@ -405,6 +405,18 @@ export function normalizeDoc(raw: any): PosterDoc {
               typeof l.height_mm === "number" && l.height_mm > 0 ? l.height_mm : 20,
           }))
       : [],
+    badges: Array.isArray(h.badges)
+      ? h.badges
+          .filter((b: any) => b && typeof b.text === "string" && b.text)
+          .map((b: any) => ({
+            text: b.text,
+            position:
+              b.position === "left" || b.position === "center" ? b.position : "right",
+            background: b.background,
+            color: b.color,
+            font_size: b.font_size,
+          }))
+      : undefined,
     footer_left: h.footer_left,
     footer_center: h.footer_center,
     footer_right: h.footer_right,

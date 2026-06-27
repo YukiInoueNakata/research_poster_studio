@@ -157,6 +157,18 @@ export interface LogoConfig {
   height_mm?: number;
 }
 
+/** B1: a coloured text badge / pill shown in the header row. */
+export interface HeaderBadge {
+  text: string;
+  /** header slot (default "right") */
+  position?: "left" | "center" | "right";
+  /** pill background (role color name or hex; default accent) */
+  background?: string;
+  /** text color (default white) */
+  color?: string;
+  font_size?: string;
+}
+
 export interface HeaderConfig {
   /** default horizontal alignment for elements that don't set their own */
   align?: HAlign;
@@ -198,6 +210,9 @@ export interface HeaderConfig {
   keywords_align?: HAlign;
   /** institution logos (header / footer; multiple allowed) */
   logos?: LogoConfig[];
+  /** B1: text badges / pills in the header row (e.g. "Spotlight Paper",
+   *  "Best Poster"). Flow in the left / center / right header slots. */
+  badges?: HeaderBadge[];
   /** N17: full-width footer band text (date / venue / etc.), per zone, plus an
    *  optional band background and text color (e.g. white on a colored bar) */
   footer_left?: string;

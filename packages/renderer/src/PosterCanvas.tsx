@@ -799,7 +799,26 @@ export default function PosterCanvas({
   const hLeft = headerLogos.filter((l) => (l.position ?? "left") === "left");
   const hCenter = headerLogos.filter((l) => (l.position ?? "left") === "center");
   const hRight = headerLogos.filter((l) => (l.position ?? "left") === "right");
-  const hasSideLogos = hLeft.length > 0 || hRight.length > 0;
+  // B1: header text badges / pills (left | center | right slots).
+  const badges = hc.badges ?? [];
+  const bLeft = badges.filter((b) => (b.position ?? "right") === "left");
+  const bCenter = badges.filter((b) => (b.position ?? "right") === "center");
+  const bRight = badges.filter((b) => (b.position ?? "right") === "right");
+  const hasSideLogos =
+    hLeft.length > 0 || hRight.length > 0 || bLeft.length > 0 || bRight.length > 0;
+  const badgeEl = (b: (typeof badges)[number], i: number) => (
+    <span
+      key={`b${i}`}
+      className="rps-header-badge"
+      style={{
+        background: b.background ? resolveColor(b.background, theme) : undefined,
+        color: b.color ? resolveColor(b.color, theme) : undefined,
+        fontSize: b.font_size,
+      }}
+    >
+      {b.text}
+    </span>
+  );
   // N17: full-width footer band with text zones (date / venue / etc.).
   const footerText: Record<"left" | "center" | "right", string | undefined> = {
     left: hc.footer_left,
@@ -881,11 +900,17 @@ export default function PosterCanvas({
         >
           <div className="rps-header-inner">
           {hasSideLogos ? (
-            <div className="rps-header-side rps-header-side-left">{hLeft.map(logoImg)}</div>
+            <div className="rps-header-side rps-header-side-left">
+              {hLeft.map(logoImg)}
+              {bLeft.map(badgeEl)}
+            </div>
           ) : null}
           <div className="rps-header-center">
-          {hCenter.length > 0 ? (
-            <div className="rps-header-logo-row">{hCenter.map(logoImg)}</div>
+          {hCenter.length > 0 || bCenter.length > 0 ? (
+            <div className="rps-header-logo-row">
+              {hCenter.map(logoImg)}
+              {bCenter.map(badgeEl)}
+            </div>
           ) : null}
           {confText ? (
             <div
@@ -987,7 +1012,10 @@ export default function PosterCanvas({
           ) : null}
           </div>
           {hasSideLogos ? (
-            <div className="rps-header-side rps-header-side-right">{hRight.map(logoImg)}</div>
+            <div className="rps-header-side rps-header-side-right">
+              {hRight.map(logoImg)}
+              {bRight.map(badgeEl)}
+            </div>
           ) : null}
           </div>
         </header>

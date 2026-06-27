@@ -284,6 +284,21 @@
             }
           }
         },
+        "badges": {
+          "type": "array",
+          "description": "B1 ヘッダーのテキストバッジ/ピル（Spotlight Paper 等）",
+          "items": {
+            "type": "object",
+            "required": ["text"],
+            "properties": {
+              "text": { "type": "string" },
+              "position": { "enum": ["left", "center", "right"] },
+              "background": { "type": "string", "description": "ピル背景（役割色名 or hex）" },
+              "color": { "type": "string", "description": "文字色（既定 白）" },
+              "font_size": { "type": "string" }
+            }
+          }
+        },
         "footer_left": { "type": "string", "description": "N17 全幅フッター帯の左テキスト（日付等）" },
         "footer_center": { "type": "string", "description": "N17 フッター帯の中央テキスト" },
         "footer_right": { "type": "string", "description": "N17 フッター帯の右テキスト（会場名等）" },

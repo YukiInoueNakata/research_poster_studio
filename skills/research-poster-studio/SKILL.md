@@ -74,6 +74,8 @@ files, never the generated PDF/PNG/SVG/PPTX.
   `text_color` (authors/affiliation/conference, e.g. white on a colored band),
   `affiliation_inline: true` (show "Name (Affiliation)" on the authors line),
   per-element font size/align, `logos`. Role colors still win over custom hex.
+  `badges: [{ text, position: left|center|right, background, color }]` adds
+  coloured text pills to the header row (e.g. "Spotlight Paper", "Best Poster") (B1).
 
 ## Content Markdown
 
