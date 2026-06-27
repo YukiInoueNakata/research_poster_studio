@@ -385,6 +385,7 @@ export function normalizeDoc(raw: any): PosterDoc {
     // accept legacy author_font_size as the authors size
     authors_font_size: h.authors_font_size ?? h.author_font_size,
     authors_align: h.authors_align,
+    author_separator: h.author_separator,
     affil_font_size: h.affil_font_size,
     affil_align: h.affil_align,
     affiliation_inline: h.affiliation_inline ?? false,
