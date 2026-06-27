@@ -90,6 +90,7 @@
           }
         },
         "style": { "$ref": "#/$defs/blockStyle" },
+        "style_preset": { "type": "string", "description": "A2 theme.block_styles のプリセット名（style の下にマージ）" },
         "figures": { "type": "array", "items": { "type": "string" } },
         "overflow": {
           "type": "object",
@@ -237,7 +238,12 @@
           }
         },
         "line_height": { "type": "number", "description": "本文の行間（倍率，既定 1.45）" },
-        "paragraph_spacing_mm": { "type": "number", "description": "段落間隔 mm（既定 2）" }
+        "paragraph_spacing_mm": { "type": "number", "description": "段落間隔 mm（既定 2）" },
+        "block_styles": {
+          "type": "object",
+          "description": "A2 名前付き block-style プリセット（block.style_preset から参照）",
+          "additionalProperties": { "$ref": "#/$defs/blockStyle" }
+        }
       }
     },
     "header": {

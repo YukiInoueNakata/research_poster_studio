@@ -3,6 +3,7 @@
 
 import type {
   Block,
+  BlockStyle,
   Figure,
   Layout,
   PaperSize,
@@ -343,6 +344,7 @@ export function normalizeDoc(raw: any): PosterDoc {
       sync: b.sync,
       pin_bottom: b.pin_bottom ?? false,
       style: b.style ?? {},
+      style_preset: b.style_preset,
       figures: b.figures ?? [],
       overflow: { action: b.overflow?.action ?? "warn" },
       references_list: b.references_list === true ? true : undefined,
@@ -357,11 +359,23 @@ export function normalizeDoc(raw: any): PosterDoc {
 
   // Owned-figure migration (see syncOwnedFigureChildBlocks), then standalone
   // figure placement (see syncStandaloneFigureBlocks).
-  const blocks: Block[] = syncOwnedFigureChildBlocks(
+  let blocks: Block[] = syncOwnedFigureChildBlocks(
     (raw?.blocks ?? []).map((b: any, i: number) => normalizeBlock(b, i)),
     figures,
   );
   syncStandaloneFigureBlocks(blocks, figures);
+
+  // A2: resolve style_preset — merge theme.block_styles[preset] UNDER the
+  // block's inline style (inline wins), recursively through child-blocks.
+  const presets = (theme.block_styles ?? {}) as Record<string, BlockStyle>;
+  const applyPreset = (b: Block): Block => {
+    const preset = b.style_preset ? presets[b.style_preset] : undefined;
+    const style = preset ? { ...preset, ...(b.style ?? {}) } : b.style;
+    return b.children?.length
+      ? { ...b, style, children: b.children.map(applyPreset) }
+      : { ...b, style };
+  };
+  blocks = blocks.map(applyPreset);
 
   const h = raw?.header ?? {};
   const header = {

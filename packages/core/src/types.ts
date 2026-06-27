@@ -144,6 +144,11 @@ export interface Theme {
   line_height?: number;
   /** space after paragraphs / lists in mm (default 2) */
   paragraph_spacing_mm?: number;
+  /** A2: named reusable block-style presets. A block references one via
+   *  `style_preset: "<name>"`; the preset is merged under the block's inline
+   *  `style` (inline wins). Lets a multi-colour poster define each section
+   *  colour once instead of repeating heading_background on every block. */
+  block_styles?: Record<string, BlockStyle>;
 }
 
 export interface LogoConfig {
@@ -300,6 +305,8 @@ export interface Block {
   /** pin this block to the bottom of its column / the body (margin-top:auto) */
   pin_bottom?: boolean;
   style?: BlockStyle;
+  /** A2: name of a theme.block_styles preset to apply under `style`. */
+  style_preset?: string;
   figures?: string[]; // figure ids placed inside this block
   overflow?: BlockOverflow;
   /** for type "figure" blocks: the figure id they render */
