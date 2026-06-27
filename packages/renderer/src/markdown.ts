@@ -179,6 +179,30 @@ md.use({
         return `<span class="rps-math" data-rps-slot="${diagramSlots.length - 1}"></span>`;
       },
     },
+    {
+      // A3: inline coloured chip / tag pill — `[label]{role}` or `[label]{#hex}`.
+      // role = a theme role (accent/warning/muted/heading) → class; `#hex` → style.
+      name: "rpsChip",
+      level: "inline",
+      start(src: string) {
+        const m = /\[[^\]\n]+\]\{\.?[A-Za-z0-9_#-]+\}/.exec(src);
+        return m ? m.index : undefined;
+      },
+      tokenizer(_src: string) {
+        const m = /^\[([^\]\n]+)\]\{\.?([A-Za-z0-9_#-]+)\}/.exec(_src);
+        if (!m) return undefined;
+        return { type: "rpsChip", raw: m[0], label: m[1], role: m[2] } as any;
+      },
+      renderer(token: any) {
+        const role = String(token.role);
+        const label = escapeHtml(String(token.label));
+        if (role.startsWith("#") && safeColor(role)) {
+          return `<span class="rps-chip" style="background:${role}">${label}</span>`;
+        }
+        const safe = role.replace(/[^A-Za-z0-9_-]/g, "") || "accent";
+        return `<span class="rps-chip rps-chip-${safe}">${label}</span>`;
+      },
+    },
   ],
 });
 md.use({

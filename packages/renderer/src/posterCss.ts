@@ -101,6 +101,12 @@ ${fancyListCss(paraMm)}
 .rps-block-body .rps-callout-banner > :last-child{ margin-bottom:2.5mm; }
 .rps-block-body .rps-callout-theorem{ background:color-mix(in srgb, ${t.colors.heading} 7%, ${t.colors.background}); }
 .rps-block-body .rps-callout-boxed{ background:${t.colors.background}; }
+/* A3: inline coloured chip / tag pill */
+.rps-block-body .rps-chip{ display:inline-block; background:${t.colors.accent}; color:#fff; font-weight:700; font-size:0.82em; padding:0.2mm 1.8mm; border-radius:1mm; line-height:1.35; white-space:nowrap; vertical-align:baseline; }
+.rps-block-body .rps-chip-warning{ background:${t.colors.warning}; }
+.rps-block-body .rps-chip-muted{ background:${t.colors.muted}; }
+.rps-block-body .rps-chip-heading{ background:${t.colors.heading}; }
+.rps-block-body .rps-chip-accent{ background:${t.colors.accent}; }
 .rps-figure{ margin:3mm 0; text-align:center; }
 .rps-figure img{ max-width:100%; height:auto; }
 .rps-figcaption{ font-size:${t.font_size.caption}; color:${t.colors.muted}; margin-top:1.5mm; }

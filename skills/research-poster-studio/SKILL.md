@@ -95,6 +95,10 @@ Standard Markdown plus a small inline HTML set:
 <span class="role-accent">主要な知見</span>
 ```
 
+Inline coloured **chip / tag pill** (A3): `[label]{role}` (role = accent / warning /
+muted / heading) or `[label]{#hex}` — e.g. `[Inner Actor]{warning}` renders a small
+filled pill. (A normal link `[text](url)` is untouched.)
+
 Allowed inline tags: `strong/b`, `em/i`, `u`, `s/del`, `mark`, `sub`, `sup`,
 `span` (with `class="role-accent|role-warning|role-muted"` or inline `color`).
 
