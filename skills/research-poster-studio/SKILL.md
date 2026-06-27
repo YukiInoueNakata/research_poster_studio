@@ -114,6 +114,16 @@ The robot needs to classify objects fine-grained.
 :::
 ```
 
+`theorem` / `boxed` render the label as a **full-width title bar** (amsthm-style
+theorem boxes). Optional colours via `{type key=value …}`: `title_bg`,
+`title_color`, `bg` (box background), `border` (A4):
+
+```markdown
+::: {theorem title_bg=#1c3d5a title_color=#ffffff bg=#eef2f7} Theorem 1 (MPC simulation)
+For depth $d$ and width $w$, a transformer simulates …
+:::
+```
+
 ### Charts (native, dependency-free SVG)
 
 A `chart` fenced block draws a bar / line chart from simple data (theme

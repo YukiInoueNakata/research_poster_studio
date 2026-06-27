@@ -91,6 +91,14 @@ ${fancyListCss(paraMm)}
 .rps-block-body .rps-callout-muted .rps-callout-label{ background:${t.colors.muted}; }
 .rps-block-body .rps-callout-heading.rps-callout-labeled{ border-color:${t.colors.heading}; }
 .rps-block-body .rps-callout-heading .rps-callout-label{ background:${t.colors.heading}; }
+/* A4: theorem / boxed callout — full-width title bar (amsthm-style). */
+.rps-block-body .rps-callout-banner{ border:1.2pt solid ${t.colors.heading}; border-left-width:1.2pt; padding:0; overflow:hidden; }
+.rps-block-body .rps-callout-banner > .rps-callout-title{ display:block; background:${t.colors.heading}; color:#fff; font-weight:700; padding:1.5mm 3mm; margin:0; line-height:1.25; }
+.rps-block-body .rps-callout-banner > :not(.rps-callout-title){ padding-left:3mm; padding-right:3mm; }
+.rps-block-body .rps-callout-banner > .rps-callout-title + *{ margin-top:2.5mm; }
+.rps-block-body .rps-callout-banner > :last-child{ margin-bottom:2.5mm; }
+.rps-block-body .rps-callout-theorem{ background:color-mix(in srgb, ${t.colors.heading} 7%, ${t.colors.background}); }
+.rps-block-body .rps-callout-boxed{ background:${t.colors.background}; }
 .rps-figure{ margin:3mm 0; text-align:center; }
 .rps-figure img{ max-width:100%; height:auto; }
 .rps-figcaption{ font-size:${t.font_size.caption}; color:${t.colors.muted}; margin-top:1.5mm; }

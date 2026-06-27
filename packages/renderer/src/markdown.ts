@@ -42,6 +42,15 @@ function escapeHtml(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
+/** Allow only safe colour values (hex / rgb[a] / plain named) for inline style. */
+function safeColor(v: string | undefined): string | null {
+  const c = (v ?? "").trim();
+  if (/^#[0-9a-fA-F]{3,8}$/.test(c)) return c;
+  if (/^rgba?\([\d.,\s%]+\)$/.test(c)) return c;
+  if (/^[a-zA-Z]{1,20}$/.test(c)) return c;
+  return null;
+}
+
 /** Render CSV text as a simple table (first row = header). */
 export function csvTableHtml(text: string): string {
   const rows = parseCsv(text);
@@ -77,22 +86,49 @@ md.use({
         // `::: <type> [label...]` — type = note/warning/muted/heading; the rest
         // of the line is an optional label rendered as a tab chip (N14, for the
         // "Important / Challenge 1 / Main Idea" boxes common in STEM posters).
+        // `theorem` / `boxed` render the label as a full-width title BAR instead
+        // (amsthm-style). Colours via `::: {theorem title_bg=#1c3d5a title_color=#fff bg=#eef} Theorem 1`.
         const m = /^::: *([A-Za-z0-9_-]+|\{[^}]*\})?[ \t]*([^\n]*)\n([\s\S]*?)\n::: *(?:\n+|$)/.exec(src);
         if (!m) return undefined;
-        const cls = (m[1] ?? "note").replace(/[{}.#]/g, "").trim() || "note";
+        let cls = "note";
+        const attrs: Record<string, string> = {};
+        const head = (m[1] ?? "").trim();
+        if (head.startsWith("{")) {
+          const parts = head.replace(/^\{|\}$/g, "").trim().split(/\s+/);
+          cls = (parts.shift() ?? "note").replace(/[.#]/g, "") || "note";
+          for (const p of parts) {
+            const i = p.indexOf("=");
+            if (i > 0) attrs[p.slice(0, i)] = p.slice(i + 1);
+          }
+        } else {
+          cls = head.replace(/[{}.#]/g, "") || "note";
+        }
         const label = (m[2] ?? "").trim();
-        const token: any = { type: "calloutDiv", raw: m[0], cls, label, tokens: [] };
+        const token: any = { type: "calloutDiv", raw: m[0], cls, label, attrs, tokens: [] };
         this.lexer.blockTokens(m[3], token.tokens);
         return token;
       },
       renderer(this: any, token: any) {
         const cls = String(token.cls).replace(/[^A-Za-z0-9_-]/g, "");
         const label = String(token.label ?? "").trim();
-        const labelHtml = label
-          ? `<span class="rps-callout-label">${escapeHtml(label)}</span>`
-          : "";
-        const labeled = label ? " rps-callout-labeled" : "";
-        return `<div class="rps-callout rps-callout-${cls}${labeled}">${labelHtml}${this.parser.parse(token.tokens)}</div>`;
+        const a = (token.attrs ?? {}) as Record<string, string>;
+        const banner = cls === "theorem" || cls === "boxed" || a.title_full_width === "true";
+        const sty = (pairs: [string, string | undefined][]) => {
+          const css = pairs
+            .map(([k, v]) => (v && safeColor(v) ? `${k}:${safeColor(v)}` : ""))
+            .filter(Boolean)
+            .join(";");
+          return css ? ` style="${css}"` : "";
+        };
+        let head = "";
+        if (label && banner) {
+          head = `<div class="rps-callout-title"${sty([["background", a.title_bg], ["color", a.title_color]])}>${escapeHtml(label)}</div>`;
+        } else if (label) {
+          head = `<span class="rps-callout-label">${escapeHtml(label)}</span>`;
+        }
+        const variant = banner ? " rps-callout-banner" : label ? " rps-callout-labeled" : "";
+        const boxStyle = sty([["background", a.bg], ["border-color", a.border]]);
+        return `<div class="rps-callout rps-callout-${cls}${variant}"${boxStyle}>${head}${this.parser.parse(token.tokens)}</div>`;
       },
     },
   ],
