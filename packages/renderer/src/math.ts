@@ -25,9 +25,11 @@ function getDoc(): MJDoc {
     adaptor = liteAdaptor();
     RegisterHTMLHandler(adaptor);
     const tex = new TeX({ packages: AllPackages });
-    // fontCache 'local' keeps each equation's glyph paths inside its own <svg>
-    // (self-contained, no shared <defs> across the document).
-    const svg = new SVG({ fontCache: "local" });
+    // fontCache 'none' inlines every glyph as a direct <path> (no <defs>/<use>).
+    // 'local' would reference glyphs via <use xlink:href="#…">, which the SVG
+    // sanitizer strips — leaving the equation blank. 'none' is self-contained and
+    // survives sanitization at the cost of slightly larger SVG.
+    const svg = new SVG({ fontCache: "none" });
     mjDoc = mathjax.document("", { InputJax: tex, OutputJax: svg });
   }
   return mjDoc;
