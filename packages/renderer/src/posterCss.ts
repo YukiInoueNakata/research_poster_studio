@@ -154,6 +154,9 @@ ${fancyListCss(paraMm)}
 .rps-math-error{ color:${t.colors.warning}; border-bottom:1px dotted ${t.colors.warning}; }
 .rps-qr{ text-align:center; margin:0 0 var(--rps-para, ${paraMm}mm); }
 .rps-qr svg{ width:32mm; height:32mm; max-width:100%; display:inline-block; }
+/* C3: sized QR (size: N mm) renders inline-block so several wrap into a row/grid */
+.rps-qr-sized{ display:inline-block; margin:1mm 1.5mm; vertical-align:top; }
+.rps-qr-sized svg{ width:100%; height:100%; }
 .rps-gallery{ display:inline-flex; flex-direction:column; gap:2mm; vertical-align:top; max-width:100%; }
 .rps-gallery-row{ display:flex; gap:2mm; align-items:stretch; width:100%; }
 .rps-gallery-item{ flex-basis:0; flex-shrink:1; min-width:0; }

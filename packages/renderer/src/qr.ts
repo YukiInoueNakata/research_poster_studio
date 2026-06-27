@@ -13,6 +13,9 @@ export interface QrSpec {
   /** foreground / background colors */
   dark?: string;
   light?: string;
+  /** rendered size in mm (default 32 via CSS); also makes the QR inline so
+   *  several sized QRs sit side-by-side / wrap into a grid (C3) */
+  size?: number;
 }
 
 /** Parse a ```qr block: first non-empty line is the URL/text; `key: value`
@@ -24,14 +27,17 @@ export function parseQrSpec(src: string): QrSpec {
   for (const raw of lines) {
     const line = raw.trim();
     if (!line) continue;
-    const m = /^(ecc|dark|light|text|url)\s*:\s*(.+)$/i.exec(line);
+    const m = /^(ecc|dark|light|size|text|url)\s*:\s*(.+)$/i.exec(line);
     if (m) {
       const k = m[1].toLowerCase();
       const v = m[2].trim();
       if (k === "ecc") spec.ecc = v.toUpperCase() as QrSpec["ecc"];
       else if (k === "dark") spec.dark = v;
       else if (k === "light") spec.light = v;
-      else textParts.push(v);
+      else if (k === "size") {
+        const num = parseFloat(v);
+        if (num > 0) spec.size = num;
+      } else textParts.push(v);
     } else {
       textParts.push(line);
     }

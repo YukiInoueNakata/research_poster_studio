@@ -154,8 +154,9 @@ title: Comments per term
 
 Other fenced blocks: `csv` (table), `mermaid`, `dot`/`graphviz` (diagrams —
 desktop / CLI render; see Export Targets), `qr` (QR code: first line is the
-URL/text; optional `ecc: L|M|Q|H`, `dark:`, `light:` lines — renders a crisp
-self-contained SVG, e.g. a paper/demo link in the header) (N18).
+URL/text; optional `ecc: L|M|Q|H`, `dark:`, `light:`, `size: <mm>` lines — renders a
+crisp self-contained SVG. `size:` also makes the QR inline-block so several sized
+QRs sit side-by-side / wrap into a grid) (N18 / C3).
 
 Markdown table cells: wrap a cell in `==…==` to highlight it (tinted box +
 accent border) — e.g. `| ==**0.79**== |` for a best value in a results table (N15).

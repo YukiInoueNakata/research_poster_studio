@@ -211,8 +211,12 @@ md.use({
       const lang = (token.lang ?? "").trim().toLowerCase();
       if (lang === "csv") return csvTableHtml(token.text);
       if (lang === "qr") {
-        diagramSlots.push(qrSvg(parseQrSpec(token.text)));
-        return `<div class="rps-qr" data-rps-slot="${diagramSlots.length - 1}"></div>`;
+        const spec = parseQrSpec(token.text);
+        diagramSlots.push(qrSvg(spec));
+        const sized = spec.size
+          ? ` rps-qr-sized" style="width:${spec.size}mm;height:${spec.size}mm`
+          : "";
+        return `<div class="rps-qr${sized}" data-rps-slot="${diagramSlots.length - 1}"></div>`;
       }
       if (lang === "chart" && currentOpts.colors) {
         const svg = chartSvg(parseChartSpec(token.text), currentOpts.colors);
@@ -273,9 +277,12 @@ export function renderMarkdown(src: string, opts?: MarkdownOptions): string {
         ADD_TAGS: ["foreignObject"],
         ADD_ATTR: ["dominant-baseline", "transform-origin"],
       });
-      const clsMatch = (pre + post).match(/class="([^"]*)"/);
+      const attrs = pre + post;
+      const clsMatch = attrs.match(/class="([^"]*)"/);
       const cls = clsMatch ? clsMatch[1] : tag === "span" ? "rps-math" : "rps-diagram";
-      return `<${tag} class="${cls}">${safe}</${tag}>`;
+      const styleMatch = attrs.match(/style="([^"]*)"/);
+      const style = styleMatch ? ` style="${styleMatch[1]}"` : "";
+      return `<${tag} class="${cls}"${style}>${safe}</${tag}>`;
     },
   );
 }
