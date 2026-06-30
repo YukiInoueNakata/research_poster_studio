@@ -51,7 +51,7 @@ export function posterCss(doc: PosterDoc): string {
 .rps-follow-fill > .rps-block{ flex:1 1 auto; min-height:0; }
 .rps-keywords{ font-size:${t.font_size.caption}; color:${t.colors.muted}; margin-top:2mm; }
 .rps-block{ display:flex; flex-direction:column; min-height:0; }
-.rps-block-title{ font-family:${t.font_family.heading}; font-size:${t.font_size.heading1}; color:${t.colors.heading}; margin:0 0 2mm; line-height:1.15; font-weight:700; border-left:6pt solid ${t.colors.accent}; padding-left:4mm; white-space:pre-line; }
+.rps-block-title{ font-family:${t.font_family.heading}; font-size:${t.font_size.heading1}; color:${t.colors.heading}; margin:0 0 2mm; line-height:1.15; font-weight:700; border-left:6pt solid ${t.colors.accent}; padding-left:4mm; white-space:pre-line; text-wrap:balance; overflow-wrap:break-word; }
 .rps-section-num{ margin-right:0.5em; }
 .rps-heading-badge{ vertical-align:0.02em; box-sizing:border-box; }
 /* N2 card: title bar bleeds flush to top/edges (section padding is 0); the
@@ -95,7 +95,7 @@ ${fancyListCss(paraMm)}
 .rps-block-body .rps-callout-heading .rps-callout-label{ background:${t.colors.heading}; }
 /* A4: theorem / boxed callout — full-width title bar (amsthm-style). */
 .rps-block-body .rps-callout-banner{ border:1.2pt solid ${t.colors.heading}; border-left-width:1.2pt; padding:0; overflow:hidden; }
-.rps-block-body .rps-callout-banner > .rps-callout-title{ display:block; background:${t.colors.heading}; color:#fff; font-weight:700; padding:1.5mm 3mm; margin:0; line-height:1.25; }
+.rps-block-body .rps-callout-banner > .rps-callout-title{ display:block; background:${t.colors.heading}; color:#fff; font-weight:700; padding:1.5mm 3mm; margin:0; line-height:1.25; text-wrap:balance; overflow-wrap:break-word; }
 .rps-block-body .rps-callout-banner > :not(.rps-callout-title){ padding-left:3mm; padding-right:3mm; }
 .rps-block-body .rps-callout-banner > .rps-callout-title + *{ margin-top:2.5mm; }
 .rps-block-body .rps-callout-banner > :last-child{ margin-bottom:2.5mm; }
