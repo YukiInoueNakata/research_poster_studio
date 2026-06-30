@@ -365,12 +365,18 @@ export function normalizeDoc(raw: any): PosterDoc {
   );
   syncStandaloneFigureBlocks(blocks, figures);
 
-  // A2: resolve style_preset — merge theme.block_styles[preset] UNDER the
-  // block's inline style (inline wins), recursively through child-blocks.
+  // F1 + A2: each block's effective style is
+  //   theme.heading_style  <  theme.block_styles[style_preset]  <  block.style
+  // (later wins), recursively through child-blocks.
   const presets = (theme.block_styles ?? {}) as Record<string, BlockStyle>;
+  const base = (theme.heading_style ?? {}) as BlockStyle;
+  const hasBase = Object.keys(base).length > 0;
   const applyPreset = (b: Block): Block => {
     const preset = b.style_preset ? presets[b.style_preset] : undefined;
-    const style = preset ? { ...preset, ...(b.style ?? {}) } : b.style;
+    const style =
+      hasBase || preset
+        ? { ...base, ...(preset ?? {}), ...(b.style ?? {}) }
+        : b.style;
     return b.children?.length
       ? { ...b, style, children: b.children.map(applyPreset) }
       : { ...b, style };

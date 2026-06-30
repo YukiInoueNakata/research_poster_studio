@@ -152,6 +152,10 @@ export interface Theme {
    *  `style` (inline wins). Lets a multi-colour poster define each section
    *  colour once instead of repeating heading_background on every block. */
   block_styles?: Record<string, BlockStyle>;
+  /** F1: default block style applied to EVERY block (typically heading
+   *  defaults like heading_bold / heading_font_size / heading_accent_bar).
+   *  Merge order: heading_style < style_preset < block.style (later wins). */
+  heading_style?: BlockStyle;
 }
 
 export interface LogoConfig {

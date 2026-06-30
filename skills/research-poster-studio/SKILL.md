@@ -77,6 +77,9 @@ files, never the generated PDF/PNG/SVG/PPTX.
   and reference from a block with `style_preset: "<name>"`. The preset merges UNDER
   the block's inline `style` (inline wins). Define each section colour once instead
   of repeating `heading_background` on every block of a multi-colour poster.
+- Global heading defaults (F1): `theme.heading_style: { …BlockStyle }` applies to
+  EVERY block (e.g. `{ heading_bold: true, heading_font_size: "40pt", heading_accent_bar: false }`).
+  Merge order: `heading_style` < `style_preset` < block `style` (later wins).
 - Header (`header`): `background`, `title_color`, `accent_color` (subtitle),
   `text_color` (authors/affiliation/conference, e.g. white on a colored band),
   `affiliation_inline: true` (show "Name (Affiliation)" on the authors line),

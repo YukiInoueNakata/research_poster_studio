@@ -248,6 +248,10 @@
           "type": "object",
           "description": "A2 名前付き block-style プリセット（block.style_preset から参照）",
           "additionalProperties": { "$ref": "#/$defs/blockStyle" }
+        },
+        "heading_style": {
+          "$ref": "#/$defs/blockStyle",
+          "description": "F1 全ブロックに適用する既定 block-style（見出し既定．merge: heading_style < style_preset < block.style）"
         }
       }
     },
