@@ -92,6 +92,7 @@
         "style": { "$ref": "#/$defs/blockStyle" },
         "style_preset": { "type": "string", "description": "A2 theme.block_styles のプリセット名（style の下にマージ）" },
         "figures": { "type": "array", "items": { "type": "string" } },
+        "figure_columns": { "type": "integer", "minimum": 2, "description": "C2 ブロック内の図を N 列グリッドでタイル配置" },
         "overflow": {
           "type": "object",
           "properties": { "action": { "enum": ["warn", "clip", "scroll"] } }

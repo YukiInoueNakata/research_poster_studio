@@ -172,6 +172,10 @@ export function syncOwnedFigureChildBlocks(blocks: Block[], figures: Figure[]): 
       .sort((a, c) => (a.order ?? 0) - (c.order ?? 0));
     if (owned.length === 0) return nb;
 
+    // C2: figure_columns N tiles the owned figures in an N-column grid — each
+    // figure child is assigned to col1..colN cyclically and the child layout
+    // switches to N custom columns, so the band system lays them out as a grid.
+    const figCols = nb.figure_columns && nb.figure_columns > 1 ? Math.floor(nb.figure_columns) : 0;
     const children: Block[] = [];
     if (nb.source) {
       children.push(childDefaults(`${nb.id}__text`, "wide", -100, { source: nb.source }));
@@ -179,8 +183,9 @@ export function syncOwnedFigureChildBlocks(blocks: Block[], figures: Figure[]): 
     owned.forEach((f, k) => {
       const cid = `${nb.id}__fig_${f.id}`;
       f.block = cid; // figure now belongs to its figure child block
+      const col = figCols ? `col${(k % figCols) + 1}` : (f.column as string) ?? "wide";
       children.push(
-        childDefaults(cid, (f.column as string) ?? "wide", -99 + k, {
+        childDefaults(cid, col, -99 + k, {
           type: "figure",
           figure_id: f.id,
         }),
@@ -188,7 +193,10 @@ export function syncOwnedFigureChildBlocks(blocks: Block[], figures: Figure[]): 
     });
     if (nb.children?.length) children.push(...nb.children);
 
-    return { ...nb, source: undefined, figures: [], children };
+    const child_layout = figCols
+      ? { mode: "custom" as const, count: figCols, width_mode: "ratio" as const, ratio: Array(figCols).fill(1) }
+      : nb.child_layout;
+    return { ...nb, source: undefined, figures: [], children, child_layout };
   };
 
   return prune(blocks).map(migrate);
@@ -346,6 +354,10 @@ export function normalizeDoc(raw: any): PosterDoc {
       style: b.style ?? {},
       style_preset: b.style_preset,
       figures: b.figures ?? [],
+      figure_columns:
+        typeof b.figure_columns === "number" && b.figure_columns > 1
+          ? Math.floor(b.figure_columns)
+          : undefined,
       overflow: { action: b.overflow?.action ?? "warn" },
       references_list: b.references_list === true ? true : undefined,
       figure_id: b.figure_id,

@@ -315,6 +315,9 @@ export interface Block {
   /** A2: name of a theme.block_styles preset to apply under `style`. */
   style_preset?: string;
   figures?: string[]; // figure ids placed inside this block
+  /** C2: tile this block's (non-floated) figures in an N-column grid instead of
+   *  stacking them. */
+  figure_columns?: number;
   overflow?: BlockOverflow;
   /** for type "figure" blocks: the figure id they render */
   figure_id?: string;

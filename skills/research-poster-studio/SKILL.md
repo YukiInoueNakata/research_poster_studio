@@ -220,6 +220,9 @@ taller), `crop`.
 
 - **Float / text wrap**: `float: left|right` — the figure sits at the side of its
   owning block and the body text wraps around it (flow-based, not absolute).
+- **Figure grid (C2)**: put several *distinct* figures in one block (each with
+  `block: <id>`) and set `figure_columns: N` on the block — they tile in an
+  N-column grid (each keeps its own caption) instead of stacking.
 - **Gallery**: `images: [..]` + `gallery_columns: N` share one caption.
   Per-image crop via `image_crops: { "figures/x.png": { enabled, top, right,
   bottom, left } }` (trim whitespace on selected images; the desktop figure
