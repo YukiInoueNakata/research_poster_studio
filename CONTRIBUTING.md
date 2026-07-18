@@ -26,9 +26,11 @@ npm run build:libs     # build shared libraries (@rps/core, @rps/renderer, @rps/
 npm run dev            # build:libs → tauri dev (desktop GUI)
 ```
 
-The CLI and shared libraries can be developed without the desktop app:
+The CLI and shared libraries can be developed without the desktop app (`build:libs`
+must have been run first; paths are relative to the repository root):
 
 ```bash
+npm run build:libs
 npm run rps -- validate examples/sample-poster   # run the CLI against a sample
 ```
 

@@ -93,7 +93,14 @@ open an existing `poster.yaml`, or reopen a recent project.*
 
 ## CLI（`rps`）
 
+CLI は共有ライブラリを使うため、**先に `npm run build:libs` が必要**です（`npm install`
+の直後に一度実行すれば以降は不要）。パスはリポジトリルートからの相対で指定できます。
+*The CLI uses the shared libraries, so run `npm run build:libs` once first. Paths are
+resolved relative to the repository root.*
+
 ```bash
+npm run build:libs                             # 初回のみ / once
+
 npm run rps -- validate <project-dir>          # スキーマ＋警告チェック / validate
 npm run rps -- explain  <project-dir> [--json] # Agent 向け構造要約 / structure summary
 npm run rps -- export   pdf <project-dir>      # exports/ に出力 / export
@@ -104,6 +111,25 @@ HTML / SVG / Marp は追加依存なしで出力できます。PDF / PNG は初�
 `npx playwright install chromium` が必要です。
 *(HTML/SVG/Marp need no extra deps; PDF/PNG require `npx playwright install
 chromium` once.)*
+
+### 動作確認 / Quick verification
+
+インストールが成功したかは、同梱サンプルを検証して PDF に書き出すと確認できます。
+*To confirm a working installation, validate a bundled sample and export it to PDF:*
+
+```bash
+git clone https://github.com/YukiInoueNakata/research_poster_studio.git
+cd research_poster_studio
+npm install
+npm run build:libs
+npx playwright install chromium                # PDF/PNG 出力に必要 / needed for PDF
+
+npm run rps -- validate examples/sample-full   # → ✓ 0 errors, 0 warnings
+npm run rps -- export pdf examples/sample-full # → examples/sample-full/exports/poster.pdf
+```
+
+最後のコマンドで `examples/sample-full/exports/poster.pdf`（A0 実寸）が生成されます。
+*The last command writes `examples/sample-full/exports/poster.pdf` at full A0 size.*
 
 ## ビルド・検証 / Build & test
 

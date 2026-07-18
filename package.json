@@ -20,6 +20,6 @@
     "typecheck": "npm run typecheck -ws --if-present",
     "smoke": "node scripts/smoke-columns.mjs && node scripts/smoke-cli.mjs",
     "tauri": "npm run tauri -w @rps/desktop-app --",
-    "rps": "npm run rps -w @rps/cli --"
+    "rps": "tsx packages/cli/src/index.ts"
   }
 }
