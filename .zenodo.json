@@ -1,0 +1,24 @@
+{
+  "title": "Research Poster Studio",
+  "description": "A desktop GUI and command-line application for structured layout authoring of academic research posters from text files (YAML + Markdown + BibTeX), with export to PDF, PNG, HTML, SVG, PPTX, and Marp. Implemented with Tauri v2, React, TypeScript, and Rust; runs on Windows, macOS, and Linux.",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "Apache-2.0",
+  "creators": [
+    {
+      "name": "Nakata, Yuki Inoue",
+      "affiliation": "College of Comprehensive Psychology, Ritsumeikan University"
+    }
+  ],
+  "keywords": [
+    "academic poster",
+    "authoring tool",
+    "layout",
+    "scientific communication",
+    "desktop application",
+    "command-line interface",
+    "Markdown",
+    "Tauri",
+    "TypeScript"
+  ]
+}

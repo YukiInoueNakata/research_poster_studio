@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Usage question / 使い方の質問
+    url: https://github.com/YukiInoueNakata/research_poster_studio/issues
+    about: For how-to and usage questions, see SUPPORT.md or open a regular issue.
+  - name: Email the author / 作者へメール
+    url: mailto:dj.y.nakata@gmail.com
+    about: For private or security-related matters, contact the author directly.
