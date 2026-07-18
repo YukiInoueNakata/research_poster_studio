@@ -2,6 +2,36 @@
   "name": "@rps/cli",
   "version": "0.1.0",
   "description": "rps - command line for Research Poster Studio (init / validate / preview / export / info)",
+  "license": "Apache-2.0",
+  "author": "Yuki Inoue Nakata <dj.y.nakata@gmail.com>",
+  "homepage": "https://github.com/YukiInoueNakata/research_poster_studio#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YukiInoueNakata/research_poster_studio.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/YukiInoueNakata/research_poster_studio/issues"
+  },
+  "keywords": [
+    "academic-poster",
+    "poster",
+    "cli",
+    "yaml",
+    "markdown",
+    "pdf"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "NOTICE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "bin": {
     "rps": "./dist/index.js"
@@ -9,12 +39,13 @@
   "scripts": {
     "rps": "tsx src/index.ts",
     "build": "tsup",
+    "prepublishOnly": "npm run build",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@rps/core": "*",
-    "@rps/exporter": "*",
-    "@rps/renderer": "*",
+    "@rps/core": "^0.1.0",
+    "@rps/exporter": "^0.1.0",
+    "@rps/renderer": "^0.1.0",
     "@viz-js/viz": "^3.28.0",
     "chokidar": "^4.0.1",
     "commander": "^12.1.0",
