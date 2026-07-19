@@ -20,7 +20,7 @@ git diff / commit
 
 | command | purpose |
 |---|---|
-| `rps init --template <name>` | scaffold a project (quantitative / qualitative / multi-study / method-tool) |
+| `rps init --template <name>` | scaffold a project (quantitative / qualitative / multi-study) |
 | `rps validate` | Zod schema check + readability / caption / duplicate-id warnings; non-zero exit on errors |
 | `rps info` | size / columns / blocks / figures / bands / warning count |
 | `rps preview [--watch] [--port N]` | local server; `--watch` reloads the browser on source changes |

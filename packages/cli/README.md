@@ -14,7 +14,7 @@ npm install -g @rps/cli
 ## Usage
 
 ```bash
-rps init     <dir> --template quantitative   # scaffold a new poster project
+rps init     <dir> --template quantitative   # scaffold (quantitative|qualitative|multi-study)
 rps validate <project-dir>                   # schema + layout warnings
 rps explain  <project-dir> [--json]          # structure summary (for agents)
 rps info     <project-dir>                   # paper size, columns, block list

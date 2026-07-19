@@ -34,12 +34,12 @@
   },
   "type": "module",
   "bin": {
-    "rps": "./dist/index.js"
+    "rps": "dist/index.js"
   },
   "scripts": {
     "rps": "tsx src/index.ts",
     "build": "tsup",
-    "prepublishOnly": "npm run build",
+    "prepack": "npm run build",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

@@ -1,5 +1,7 @@
 # dependencies & build output
 node_modules/
+# npm pack output
+*.tgz
 dist/
 dist-ssr/
 build/

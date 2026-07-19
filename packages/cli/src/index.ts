@@ -8,7 +8,7 @@
 
 import { Command } from "commander";
 import { createServer } from "node:http";
-import { promises as fs } from "node:fs";
+import { promises as fs, existsSync, readdirSync } from "node:fs";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
 import chokidar from "chokidar";
@@ -21,8 +21,27 @@ import { prepareForRender, hasUnconvertibleDiagrams } from "./convert.js";
 import { buildExplain, formatExplainText } from "./explain.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-// packages/cli/{src,dist} -> repo root is three levels up
-const TEMPLATES_DIR = path.resolve(here, "../../../skills/research-poster-studio/templates");
+
+// Templates are authored under skills/research-poster-studio/templates (the Agent
+// Skill reads them from there) and copied into dist/templates at build time so the
+// published npm package is self-contained. Prefer the bundled copy; fall back to the
+// repository layout when running from src during development.
+const TEMPLATES_DIR = [
+  path.resolve(here, "templates"),
+  path.resolve(here, "../../../skills/research-poster-studio/templates"),
+].find((p) => existsSync(p)) ?? path.resolve(here, "templates");
+
+/** Template names actually available to this installation. */
+function availableTemplates(): string[] {
+  try {
+    return readdirSync(TEMPLATES_DIR)
+      .filter((f) => f.endsWith(".yaml"))
+      .map((f) => path.basename(f, ".yaml"))
+      .sort();
+  } catch {
+    return [];
+  }
+}
 
 async function readYaml(dir: string): Promise<string> {
   return fs.readFile(path.join(dir, "poster.yaml"), "utf8");
@@ -35,7 +54,7 @@ program.name("rps").description("Research Poster Studio CLI").version("0.1.0");
 program
   .command("init")
   .argument("[dir]", "target directory", ".")
-  .requiredOption("-t, --template <name>", "quantitative | qualitative | multi-study | method-tool")
+  .requiredOption("-t, --template <name>", `template name (${availableTemplates().join(" | ") || "none found"})`)
   .description("Scaffold a new poster project from a template")
   .action(async (dir: string, opts: { template: string }) => {
     const tplPath = path.join(TEMPLATES_DIR, `${opts.template}.yaml`);
@@ -43,7 +62,13 @@ program
     try {
       tpl = await fs.readFile(tplPath, "utf8");
     } catch {
-      console.error(`✗ template not found: ${opts.template} (${tplPath})`);
+      const avail = availableTemplates();
+      console.error(`✗ template not found: ${opts.template}`);
+      console.error(
+        avail.length
+          ? `  available templates: ${avail.join(", ")}`
+          : `  no templates found in ${TEMPLATES_DIR}`,
+      );
       process.exit(1);
     }
     await fs.mkdir(path.join(dir, "content"), { recursive: true });
