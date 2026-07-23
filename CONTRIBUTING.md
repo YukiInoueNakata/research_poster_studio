@@ -16,7 +16,7 @@ This project follows our [Code of Conduct](./CODE_OF_CONDUCT.md). By participati
 
 Prerequisites（前提）:
 
-- Node.js 18+（開発は 22 で確認 / tested on 22）
+- Node.js 20.19+（依存の jsdom / isomorphic-dompurify が要求。CI・開発は 22 / tested on 22）
 - Rust / Cargo (stable) — desktop app build にのみ必要 / required only for building the desktop app
 - OS-specific Tauri prerequisites (Windows: WebView2, Linux: webkit2gtk, macOS: Xcode CLT)
 

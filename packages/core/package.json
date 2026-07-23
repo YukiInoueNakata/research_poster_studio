@@ -21,7 +21,7 @@
     "research"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=20.19"
   },
   "files": [
     "dist",

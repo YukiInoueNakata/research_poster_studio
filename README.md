@@ -73,7 +73,7 @@ DTP, so it stays robust as the amount of content changes.*
 
 ## 必要環境 / Requirements
 
-- Node.js 18+（開発時 22 で確認 / tested on 22）
+- Node.js 20.19+（依存の jsdom / isomorphic-dompurify が要求。CI・開発は 22 / tested on 22）
 - Rust / Cargo（stable）
 - OS ごとの Tauri 前提 / Tauri prerequisites（Windows: WebView2、Linux: webkit2gtk、
   macOS: Xcode CLT）
