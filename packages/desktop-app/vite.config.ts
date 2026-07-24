@@ -8,6 +8,17 @@ const host = process.env.TAURI_DEV_HOST;
 export default defineConfig(async () => ({
   plugins: [react()],
 
+  // mathjax-full (pulled in via @rps/renderer for LaTeX math) ships a CommonJS
+  // build whose components/version.js reads its own package.json through
+  // `eval('require')` unless the global PACKAGE_VERSION is defined. In a browser
+  // bundle `require` is undefined, so that eval throws "require is not defined"
+  // at module load — which blanks the whole app (the React root never renders).
+  // Defining PACKAGE_VERSION makes version.js take its constant branch and skip
+  // the eval, both in dev (esbuild pre-bundle) and in the production build.
+  define: {
+    PACKAGE_VERSION: JSON.stringify("3.2.1"),
+  },
+
   // Split heavy, independently-loaded libraries into their own chunks so the
   // main app bundle stays small and the big exporters (pptx) load lazily.
   build: {
