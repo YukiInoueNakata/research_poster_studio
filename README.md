@@ -1,5 +1,12 @@
 # Research Poster Studio
 
+[![CI](https://github.com/YukiInoueNakata/research_poster_studio/actions/workflows/ci.yml/badge.svg)](https://github.com/YukiInoueNakata/research_poster_studio/actions/workflows/ci.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
+<!-- DOI badge (add after archiving a release on Zenodo — see Citation below):
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX) -->
+<!-- npm badge (add if @rps/cli is published):
+[![npm](https://img.shields.io/npm/v/@rps/cli.svg)](https://www.npmjs.com/package/@rps/cli) -->
+
 研究ポスター専用の**構造化レイアウトエディタ**です。A0 / A1 などの学会ポスターを
 YAML + Markdown で管理し、GUI でプレビューしながら **PDF / PNG / HTML / SVG /
 PPTX / Marp** に書き出せます。
@@ -23,6 +30,33 @@ PowerPoint のような自由配置ではなく、内容を「ブロック / カ
 DTP, so it stays robust as the amount of content changes.*
 
 技術構成 / Stack: **Tauri v2 + React + TypeScript + Vite**（Windows / macOS / Linux）。
+
+<!-- Screenshot placeholder: drop the editing-screen image at docs/screenshot.png,
+     then replace this comment with:
+![Research Poster Studio の編集画面 / editing the poster in the desktop app](docs/screenshot.png)
+-->
+
+## 背景と目的 / Statement of need
+
+学会ポスターは A0・A1 など大判で、多数のブロックと図表を限られた面積に収める必要が
+あります。PowerPoint や Illustrator などの自由配置 DTP では、テキスト量や図表数が変わる
+たびに要素の位置とサイズを手作業で調整することになり、レイアウトが崩れやすく、変更履歴の
+追跡や再現も困難です。Research Poster Studio は、ポスターをカラム・ブロック・高さモードで
+**構造的に**記述し、内容量が変わってもレイアウトが破綻しにくくします。ポスターの実体は
+プレーンテキスト（YAML + Markdown + BibTeX）と図表ファイルなので、Git でバージョン管理でき、
+差分レビューや AI エージェント（Claude Code / Codex 等）による編集にも適します。想定利用者は、
+学会ポスターを作成する研究者、とりわけ再現可能・版管理された制作フローや LLM 支援を求める
+利用者です。
+
+*Conference posters are large-format (A0/A1) and must fit many blocks and figures into a
+fixed area. In free-placement DTP tools such as PowerPoint or Illustrator, every change in
+text length or figure count forces manual repositioning and resizing, so layouts break
+easily and are hard to version or reproduce. Research Poster Studio describes a poster
+**structurally** through columns, blocks, and height modes, keeping the layout robust as
+content changes. Because a poster is plain text (YAML + Markdown + BibTeX) plus figure
+files, it is Git-versionable and amenable to diff review and AI-agent editing (Claude Code,
+Codex). Target users are researchers preparing conference posters — especially those who
+want a reproducible, version-controlled workflow or LLM-assisted authoring.*
 
 ## 主な機能 / Features
 
@@ -190,6 +224,18 @@ poster-project/
   デスクトップアプリでのみ変換されます（CLI ではプレースホルダ）。
   *In the CLI, Mermaid and embedded PDFs render only in the desktop app.*
 
+## 貢献・サポート / Contributing & support
+
+- **貢献 / Contributing** — 開発環境・PR の出し方は [`CONTRIBUTING.md`](./CONTRIBUTING.md)、
+  行動規範は [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md) を参照してください。
+  *How to set up and open a PR: [`CONTRIBUTING.md`](./CONTRIBUTING.md); conduct: [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md).*
+- **不具合報告・機能要望 / Issues** — [GitHub Issues](https://github.com/YukiInoueNakata/research_poster_studio/issues)
+  にテンプレートから登録してください。
+  *Report bugs or request features via [GitHub Issues](https://github.com/YukiInoueNakata/research_poster_studio/issues).*
+- **使い方の相談 / Support** — 相談先は [`SUPPORT.md`](./SUPPORT.md)（GitHub Issues と
+  作者メール dj.y.nakata@gmail.com）。
+  *Where to get help: [`SUPPORT.md`](./SUPPORT.md) (GitHub Issues, or email dj.y.nakata@gmail.com).*
+
 ## ライセンス / License & attribution
 
 作者 / Author: 中田友貴（Yuki Inoue Nakata）。研究・教育用途を想定したツールです。
@@ -207,3 +253,24 @@ poster-project/
   *Retain notices; state changes; include `LICENSE` and `NOTICE` in redistributions.*
 
 連絡先 / contact: dj.y.nakata@gmail.com
+
+## 引用 / Citation
+
+本ソフトウェアを利用した場合は引用してください。機械可読なメタデータは
+[`CITATION.cff`](./CITATION.cff) にあります（GitHub の "Cite this repository" からも取得できます）。
+*If you use this software, please cite it. Machine-readable metadata is in
+[`CITATION.cff`](./CITATION.cff) (also via GitHub's "Cite this repository").*
+
+リリースを Zenodo にアーカイブして DOI を取得したら、下記の `DOI` を確定値に置き換えてください。
+*After archiving a release on Zenodo, replace the `DOI` placeholder below with the minted value.*
+
+```bibtex
+@software{nakata_research_poster_studio,
+  author  = {Nakata, Yuki Inoue},
+  title   = {Research Poster Studio},
+  year    = {2026},
+  url     = {https://github.com/YukiInoueNakata/research_poster_studio},
+  version = {0.1.0},
+  doi     = {10.5281/zenodo.XXXXXXX}
+}
+```
