@@ -31,10 +31,7 @@ DTP, so it stays robust as the amount of content changes.*
 
 技術構成 / Stack: **Tauri v2 + React + TypeScript + Vite**（Windows / macOS / Linux）。
 
-<!-- Screenshot placeholder: drop the editing-screen image at docs/screenshot.png,
-     then replace this comment with:
-![Research Poster Studio の編集画面 / editing the poster in the desktop app](docs/screenshot.png)
--->
+![Research Poster Studio の編集画面。左にブロックのツリー、中央に A0 ポスターの実寸プレビュー、右にブロック設定のインスペクタ。 / The desktop app: block tree on the left, a real-size A0 poster preview in the center, and the block inspector on the right.](docs/screenshot.png)
 
 ## 背景と目的 / Statement of need
 
