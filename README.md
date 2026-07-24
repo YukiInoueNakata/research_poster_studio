@@ -107,17 +107,71 @@ want a reproducible, version-controlled workflow or LLM-assisted authoring.*
 
 ## 必要環境 / Requirements
 
-- Node.js 20.19+（依存の jsdom / isomorphic-dompurify が要求。CI・開発は 22 / tested on 22）
-- Rust / Cargo（stable）
-- OS ごとの Tauri 前提 / Tauri prerequisites（Windows: WebView2、Linux: webkit2gtk、
-  macOS: Xcode CLT）
+まず用途を選んでください。必要なものが変わります。
+*Pick your use case first — the prerequisites differ.*
+
+- **アプリを使うだけ / Just use the app** → 上の [Download](#ダウンロード--download) から
+  インストーラを入れるだけです。以下は何もインストール不要。
+  *Install from the Releases page. Nothing below is required.*
+- **CLI（`rps`）を使う／ソースから動かす / Use the CLI or run from source** → 下の
+  「1. Node.js」を入れてください。
+  *Install Node.js (step 1 below).*
+- **デスクトップアプリを自分でビルド / Build the desktop app yourself** → 「1」に加えて
+  「2. Rust」と「3. Tauri 前提」も入れてください。
+  *Additionally install Rust (step 2) and the Tauri prerequisites (step 3).*
+
+### 1. Node.js（CLI・ソース利用に必須 / required for the CLI and source）
+
+Node.js を入れると **`npm` も一緒に入ります**（npm は Node.js に同梱のコマンドなので、
+別途インストールは不要です）。
+*Installing Node.js also installs `npm` — npm ships with Node.js, so you do not install it
+separately.*
+
+- **インストール / Install**: 公式サイト <https://nodejs.org/> から **LTS 版（20 以上）** を入れる。
+  - Windows: ダウンロードした `.msi` を実行。または PowerShell で `winget install OpenJS.NodeJS.LTS`
+  - macOS: 公式インストーラ、または `brew install node`
+  - Linux: 各ディストリのパッケージ、または [nvm](https://github.com/nvm-sh/nvm)
+- **必要バージョン / Version**: **Node.js 20.19 以上**（開発・CI は 22 で確認 / tested on 22）。
+- **確認 / Verify**: ターミナル（Windows は PowerShell）で次を実行し、両方がバージョン番号を
+  表示すれば準備完了です。
+  ```bash
+  node -v      # 例 / e.g. v22.x.x
+  npm -v       # 例 / e.g. 10.x.x
+  ```
+
+### 2. Rust / Cargo（デスクトップアプリをソースからビルドする場合のみ / only to build the app）
+
+CLI やビルド済みアプリの利用には不要です。
+*Not needed for the CLI or the prebuilt app.*
+
+- <https://rustup.rs/> から stable を入れる。確認 / verify: `cargo --version`
+
+### 3. OS ごとの Tauri 前提（同じくビルドする場合のみ / only when building）
+
+- **Windows**: WebView2（Windows 11 は標準搭載。無ければ Microsoft の Evergreen ランタイム）
+- **macOS**: Xcode Command Line Tools（`xcode-select --install`）
+- **Linux**: webkit2gtk（例: Ubuntu は `libwebkit2gtk-4.1-dev`）
 
 ## クイックスタート / Quick start
 
+「1. Node.js」まで済んでいる前提です。ターミナル（Windows は PowerShell）で、まず
+リポジトリを取得し、そのフォルダの中で各コマンドを実行します。
+*Assuming Node.js (step 1) is installed. In a terminal, get the repository and run the
+commands inside that folder.*
+
 ```bash
-npm install        # 初回のみ / first time (npm workspaces)
-npm run dev        # build:libs → tauri dev（共有ライブラリを建ててから GUI 起動）
+git clone https://github.com/YukiInoueNakata/research_poster_studio.git
+cd research_poster_studio     # 以降のコマンドはこのフォルダ内で / run everything here
+npm install                   # 依存をまとめて取得（初回のみ）/ install deps (first time)
+npm run dev                   # 共有ライブラリを建てて GUI を起動 / build libs, then launch the GUI
 ```
+
+`npm run dev` はソースからデスクトップアプリを起動するため、上の「2. Rust」「3. Tauri 前提」も
+必要です。GUI ではなく `rps` コマンドだけ使いたい場合は Rust なしで動きます（下の
+[CLI](#clirps) 参照）。
+*`npm run dev` runs the desktop app from source, so it also needs Rust (step 2) and the
+Tauri prerequisites (step 3). If you only want the `rps` command, no Rust is needed — see
+[CLI](#clirps) below.*
 
 起動直後のダイアログから、新規作成（設定ウィザード）・サンプルを開く・
 ファイルを開く・最近開いた一覧を選べます。
@@ -127,10 +181,21 @@ open an existing `poster.yaml`, or reopen a recent project.*
 
 ## CLI（`rps`）
 
-CLI は共有ライブラリを使うため、**先に `npm run build:libs` が必要**です（`npm install`
-の直後に一度実行すれば以降は不要）。パスはリポジトリルートからの相対で指定できます。
-*The CLI uses the shared libraries, so run `npm run build:libs` once first. Paths are
-resolved relative to the repository root.*
+`rps` は Rust なしで使えます（デスクトップアプリのビルドは不要）。「1. Node.js」だけ
+入っていれば動きます。まだの場合は先にコードを取得して依存を入れてください。
+*The `rps` CLI needs no Rust — only Node.js (step 1). If you have not done so yet, get the
+code and install dependencies first:*
+
+```bash
+git clone https://github.com/YukiInoueNakata/research_poster_studio.git
+cd research_poster_studio
+npm install
+```
+
+CLI は共有ライブラリを使うため、**続けて `npm run build:libs` を一度実行**します（以降は
+不要）。パスはリポジトリルートからの相対で指定できます。
+*Then run `npm run build:libs` once (the CLI uses the shared libraries). Paths are resolved
+relative to the repository root.*
 
 ```bash
 npm run build:libs                             # 初回のみ / once
@@ -140,6 +205,13 @@ npm run rps -- explain  <project-dir> [--json] # Agent 向け構造要約 / stru
 npm run rps -- export   pdf <project-dir>      # exports/ に出力 / export
 npm run rps -- init     <dir> --template quantitative
 ```
+
+`npm run rps --` が `rps` コマンド本体で、`--` の後ろに `rps` の引数を書きます
+（例: `npm run rps -- validate examples/sample-full`）。`<project-dir>` は
+poster.yaml のあるフォルダに置き換えてください。同梱サンプルは `examples/sample-full` です。
+*`npm run rps --` invokes the CLI; put the `rps` arguments after `--`. Replace
+`<project-dir>` with a folder containing `poster.yaml` (a bundled sample is
+`examples/sample-full`).*
 
 HTML / SVG / Marp は追加依存なしで出力できます。PDF / PNG は初回のみ
 `npx playwright install chromium` が必要です。
