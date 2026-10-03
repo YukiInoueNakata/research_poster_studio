@@ -2,8 +2,7 @@
 
 [![CI](https://github.com/YukiInoueNakata/research_poster_studio/actions/workflows/ci.yml/badge.svg)](https://github.com/YukiInoueNakata/research_poster_studio/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
-<!-- DOI badge (add after archiving a release on Zenodo — see Citation below):
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX) -->
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23114417.svg)](https://doi.org/10.5281/zenodo.23114417)
 <!-- npm badge (add if @rps/cli is published):
 [![npm](https://img.shields.io/npm/v/@rps/cli.svg)](https://www.npmjs.com/package/@rps/cli) -->
 
@@ -330,8 +329,8 @@ poster-project/
 *If you use this software, please cite it. Machine-readable metadata is in
 [`CITATION.cff`](./CITATION.cff) (also via GitHub's "Cite this repository").*
 
-リリースを Zenodo にアーカイブして DOI を取得したら、下記の `DOI` を確定値に置き換えてください。
-*After archiving a release on Zenodo, replace the `DOI` placeholder below with the minted value.*
+下記の DOI は全バージョン共通の concept DOI です（常に最新版に解決）。特定の版を引用する場合は版ごとの DOI（v0.1.0: [10.5281/zenodo.23114418](https://doi.org/10.5281/zenodo.23114418)）を使ってください。
+*The DOI below is the concept DOI, which always resolves to the latest version. To cite a specific version, use its version DOI (v0.1.0: [10.5281/zenodo.23114418](https://doi.org/10.5281/zenodo.23114418)).*
 
 ```bibtex
 @software{nakata_research_poster_studio,
@@ -340,6 +339,6 @@ poster-project/
   year    = {2026},
   url     = {https://github.com/YukiInoueNakata/research_poster_studio},
   version = {0.1.0},
-  doi     = {10.5281/zenodo.XXXXXXX}
+  doi     = {10.5281/zenodo.23114417}
 }
 ```

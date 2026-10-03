@@ -19,7 +19,14 @@ repository-code: "https://github.com/YukiInoueNakata/research_poster_studio"
 url: "https://github.com/YukiInoueNakata/research_poster_studio"
 license: Apache-2.0
 version: "0.1.0"
-# doi: "10.5281/zenodo.XXXXXXX"      # TODO: add after archiving a release on Zenodo
+doi: "10.5281/zenodo.23114417"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23114417"
+    description: "Concept DOI (resolves to the latest version)"
+  - type: doi
+    value: "10.5281/zenodo.23114418"
+    description: "Version DOI for v0.1.0"
 date-released: "2026-10-03"
 keywords:
   - academic poster
