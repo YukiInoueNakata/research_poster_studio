@@ -19,6 +19,9 @@ people like any other document from an untrusted source.
 - A Content Security Policy only allows the app's own scripts (plus WebAssembly for
   Graphviz); inline scripts, `data:` scripts and event-handler attributes are blocked and
   no remote resources are loaded.
+- On macOS and Linux (WebKit) the policy also allows `'unsafe-eval'`, because older WebKit
+  (Safari 15 / macOS 12) does not understand `'wasm-unsafe-eval'` and refuses to compile
+  Graphviz's WebAssembly otherwise. Injected inline / `data:` scripts stay blocked there too.
 - Remaining limitation: the file commands behind the UI (read/write/list) accept any path
   the user can access, because projects and exports may live anywhere. They are reachable
   only from the app's own code, which the two layers above protect.

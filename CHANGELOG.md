@@ -30,6 +30,8 @@ follow [Semantic Versioning](https://semver.org/).
   catches the blank-window regression (`npm run smoke:desktop`).
 
 ### Fixed
+- macOS 12: Graphviz figures were not converted (the CSP keyword `wasm-unsafe-eval` is unknown
+  to Safari 15, which then refuses WebAssembly); macOS/Linux builds also allow `unsafe-eval`.
 - Titles and headings fell back to the browser default (a serif face in WebKit, e.g. Times on
   macOS) when the requested font was missing; every theme and block font now gets platform
   fallbacks and a generic family (sans or serif to match).
