@@ -1,6 +1,6 @@
 // Type model for a Research Poster Studio project.
 //
-// These mirror the `poster.yaml` schema in the design document (設計書.md §7).
+// These mirror the `poster.yaml` schema in the design document (docs/design.md §7).
 // All layout-affecting fields are optional with sensible defaults applied in
 // `lib/normalize.ts`, so partial / Agent-generated YAML still loads.
 
