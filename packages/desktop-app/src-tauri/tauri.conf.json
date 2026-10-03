@@ -35,7 +35,10 @@
     ],
     "resources": {
       "../../../examples/sample-cat-paws-en/": "examples/sample-cat-paws-en/",
-      "../../../examples/sample-cat-paws-ja/": "examples/sample-cat-paws-ja/"
+      "../../../examples/sample-cat-paws-ja/": "examples/sample-cat-paws-ja/",
+      "../../../LICENSE": "LICENSE",
+      "../../../NOTICE": "NOTICE",
+      "../../../THIRD_PARTY_NOTICES.md": "THIRD_PARTY_NOTICES.md"
     }
   }
 }

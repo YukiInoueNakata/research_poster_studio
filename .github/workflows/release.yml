@@ -108,6 +108,9 @@ jobs:
       - name: Build shared libraries (@rps/core, renderer, exporter)
         run: npm run build:libs
 
+      - name: Regenerate THIRD_PARTY_NOTICES.md (bundled with the installer)
+        run: node scripts/third-party-notices.mjs
+
       - name: Build app and publish release
         uses: tauri-apps/tauri-action@v0
         env:
