@@ -42,7 +42,7 @@ interface Props {
 }
 
 export default function NewProjectWizard({ onCancel, onCreate }: Props) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [step, setStep] = useState(0);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -76,7 +76,8 @@ export default function NewProjectWizard({ onCancel, onCreate }: Props) {
   const [columns, setColumns] = useState(0); // 0 = 構成の既定
   // step 4: structure + language
   const [structureId, setStructureId] = useState<StructureId>("single");
-  const [language, setLanguage] = useState<WizardLang>("ja");
+  // headings/body language defaults to the UI language
+  const [language, setLanguage] = useState<WizardLang>(lang === "en" ? "en" : "ja");
   // step 5: theme
   const [themePresetId, setThemePresetId] = useState<string>(""); // "" = 既定
 
@@ -349,8 +350,8 @@ export default function NewProjectWizard({ onCancel, onCreate }: Props) {
                       onChange={() => setStructureId(s.id)}
                     />
                     <span>
-                      <strong>{s.label}</strong>
-                      <span className="wizard-card-desc">{s.description}</span>
+                      <strong>{t(`wizard.struct.${s.id}`)}</strong>
+                      <span className="wizard-card-desc">{t(`wizard.struct.${s.id}.desc`)}</span>
                     </span>
                   </label>
                 ))}

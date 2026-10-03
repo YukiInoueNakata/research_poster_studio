@@ -46,7 +46,18 @@ export interface PosterCanvasProps {
   selectedIds?: string[];
   /** rendered SVG lookup for ```mermaid / ```dot code blocks (env-specific) */
   diagram?: DiagramResolver;
+  /** text of the preview-only badges, in the UI language (default: Japanese) */
+  badgeLabels?: BadgeLabels;
 }
+
+/** Text of the preview-only badges ("body 22pt", "too small", "overflow"). */
+export interface BadgeLabels {
+  body: string;
+  tooSmall: string;
+  overflow: string;
+}
+
+const DEFAULT_BADGE_LABELS: BadgeLabels = { body: "本文", tooSmall: "小", overflow: "はみ出し" };
 
 interface RenderCtx {
   project: PosterProject;
@@ -68,6 +79,7 @@ interface RenderCtx {
   cite: CitationPrep;
   /** rendered SVG lookup for diagram code blocks */
   diagram?: DiagramResolver;
+  badgeLabels: BadgeLabels;
   /** opt-in section numbers: blockId -> "1" / "1.1" (empty when off) */
   sectionNums: Map<string, string>;
   /** opt-in figure renumbering: figureId -> rewritten caption (empty when off) */
@@ -366,7 +378,7 @@ function FigureView({
 
 function BlockView({ block }: { block: Block }) {
   const ctx = useCtx();
-  const { project, mode, k, selSet, overflowIds, showBoundaries, showFontBadges, onSelectBlock, onEditBlock, rowGap, cite } =
+  const { project, mode, k, selSet, overflowIds, showBoundaries, showFontBadges, onSelectBlock, onEditBlock, rowGap, cite, badgeLabels } =
     ctx;
   const theme = project.doc.theme;
   const selected = selSet.has(block.id);
@@ -513,7 +525,7 @@ function BlockView({ block }: { block: Block }) {
             background: tooSmall ? "#e05252" : "rgba(31,95,153,0.85)",
           }}
         >
-          本文 {Math.round(bodyPt)}pt{tooSmall ? " ⚠小" : ""}
+          {badgeLabels.body} {Math.round(bodyPt)}pt{tooSmall ? ` ⚠${badgeLabels.tooSmall}` : ""}
         </span>
       ) : null}
       {mode === "preview" && overflowing ? (
@@ -521,7 +533,7 @@ function BlockView({ block }: { block: Block }) {
           className="rps-overflow-badge"
           style={{ fontSize: `${11 * k}px`, padding: `${2 * k}px ${5 * k}px`, borderRadius: `${3 * k}px` }}
         >
-          はみ出し
+          {badgeLabels.overflow}
         </span>
       ) : null}
       {isFigureBlock ? (
@@ -719,6 +731,7 @@ export default function PosterCanvas({
   showFontBadges = true,
   selectedIds,
   diagram,
+  badgeLabels = DEFAULT_BADGE_LABELS,
 }: PosterCanvasProps) {
   const { doc } = project;
   const selSet = new Set(selectedIds ?? (selectedBlockId ? [selectedBlockId] : []));
@@ -756,6 +769,7 @@ export default function PosterCanvas({
     rowGap,
     cite,
     diagram,
+    badgeLabels,
     sectionNums,
     captionNums,
   };

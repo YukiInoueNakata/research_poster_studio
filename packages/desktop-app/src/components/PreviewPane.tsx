@@ -331,6 +331,7 @@ export default function PreviewPane({
           onSelectFigure={onSelectFigure}
           showFontBadges={showFontBadges}
           diagram={diagram}
+          badgeLabels={{ body: t("preview.badgeBody"), tooSmall: t("preview.badgeTooSmall"), overflow: t("preview.badgeOverflow") }}
         />
       </div>
       {editingBlockId && editRect ? (

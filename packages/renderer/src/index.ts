@@ -5,7 +5,7 @@ import type { PosterProject } from "@rps/core";
 import { buildHtml } from "./html";
 
 export { default as PosterCanvas } from "./PosterCanvas";
-export type { PosterCanvasProps } from "./PosterCanvas";
+export type { PosterCanvasProps, BadgeLabels } from "./PosterCanvas";
 export * from "./style";
 export * from "./posterCss";
 export * from "./markdown";

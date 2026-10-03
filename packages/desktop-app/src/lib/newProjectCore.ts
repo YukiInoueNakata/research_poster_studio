@@ -109,12 +109,13 @@ export function findStructure(id: StructureId): StructureSpec {
 /** Build the raw (un-normalized) poster doc object for a structure + language. */
 export function buildBaseDoc(structureId: StructureId, language: WizardLang): any {
   const spec = findStructure(structureId);
+  const en = language === "en";
   return {
     project: {
-      title: "（タイトル）",
+      title: en ? "(Title)" : "（タイトル）",
       poster_size: "A0",
       orientation: "portrait",
-      authors: [{ name: "（著者）", affiliation: "（所属）" }],
+      authors: [{ name: en ? "(Author)" : "（著者）", affiliation: en ? "(Affiliation)" : "（所属）" }],
       content_file: CONTENT_FILE,
     },
     layout: {
