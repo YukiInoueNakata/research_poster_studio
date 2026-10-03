@@ -558,6 +558,7 @@ export const lang_jp: Record<string, string> = {
   "proof.unify_full_title": "ポスター全文で全角に変換（コード・URL・リンク先・番号付きリストの記号は対象外）",
   "proof.jump": "該当項目へジャンプ",
   "proof.ok_message": "OK: 句読点の混在・半角括弧/記号の隣接は見つかりませんでした．",
+  "preview.font_missing": "フォント「{font}」がこの環境にありません．代替フォントで表示しているため，他の環境とは行数・はみ出しが変わることがあります．",
   "preview.overflow_poster": "ポスター全体が {size} の枠からはみ出しています（青枠の外に内容があります）．",
   "preview.overflow_block": "ブロック「{title}」の内容がはみ出しています（文字を短くするか高さを増やしてください）．",
   "preview.column_imbalance": "左右カラムの高さ差が大きいです（高さ連動や配分の調整を検討してください）．",

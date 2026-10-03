@@ -112,6 +112,13 @@ program
             message: `ポスター全体が版面からはみ出しています（内容 ${m.page.contentMm} mm / 版面 ${m.page.pageMm} mm）`,
           });
         }
+        for (const f of m.missingFonts) {
+          res.warnings.push({
+            level: "warn",
+            code: "font-missing",
+            message: `フォント「${f}」がこの環境にありません．代替フォントで組版したため，他の環境とは行数・はみ出しが変わることがあります`,
+          });
+        }
         for (const id of m.blocks) {
           const title = project.doc.blocks.find((b) => b.id === id)?.title || id;
           res.warnings.push({

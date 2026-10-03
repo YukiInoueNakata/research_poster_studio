@@ -557,6 +557,7 @@ export const lang_en: Record<string, string> = {
   "proof.unify_full_title": "Convert to full-width across the whole poster (excludes code, URLs, link targets, and ordered-list markers)",
   "proof.jump": "Jump to this item",
   "proof.ok_message": "OK: no mixed punctuation or adjacent half-width brackets/symbols found.",
+  "preview.font_missing": "Font \"{font}\" is not installed here; a fallback font is used, so line breaks and overflow may differ on other machines.",
   "preview.overflow_poster": "The poster overflows the {size} frame (content extends beyond the blue border).",
   "preview.overflow_block": "Block \"{title}\" overflows (shorten the text or increase its height).",
   "preview.column_imbalance": "The columns differ greatly in height (consider height linking or adjusting the distribution).",

@@ -23,6 +23,9 @@ follow [Semantic Versioning](https://semver.org/).
   unchanged. Comfortable distances are about 5% shorter.
 
 ### Added
+- Missing-font warning in `rps validate` and the desktop preview: if a font the poster
+  asks for is not installed, text silently falls back to another font and may overflow on
+  that machine only (seen on macOS, where "Noto Sans JP" fell back to Helvetica).
 - Unit tests with vitest (`npm test`, run in CI) and a desktop UI smoke test that
   catches the blank-window regression (`npm run smoke:desktop`).
 

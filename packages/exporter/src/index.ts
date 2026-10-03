@@ -55,6 +55,8 @@ export interface OverflowReport {
   page: { contentMm: number; pageMm: number } | null;
   /** ids of blocks whose content is taller than the block box */
   blocks: string[];
+  /** requested font families not installed here (text falls back to another font) */
+  missingFonts: string[];
 }
 
 /**
@@ -66,16 +68,34 @@ export async function measureOverflow(html: string): Promise<OverflowReport> {
     page.evaluate(() => {
       const pxToMm = (px: number) => Math.round((px * 25.4) / 96);
       const root = document.querySelector("[data-poster-root]") as HTMLElement | null;
-      if (!root) return { page: null, blocks: [] };
+      if (!root) return { page: null, blocks: [], missingFonts: [] };
       const pageOver = root.scrollHeight > root.clientHeight + 2;
       const blocks: string[] = [];
       root.querySelectorAll<HTMLElement>("[data-block-id]").forEach((el) => {
         const id = el.getAttribute("data-block-id")!;
         if (id !== "__header__" && el.scrollHeight > el.clientHeight + 2) blocks.push(id);
       });
+      // A family that renders exactly like the generic fallback is not installed.
+      // (document.fonts.check() reports system fonts as available, so measure.)
+      const GENERIC = /^(serif|sans-serif|monospace|cursive|fantasy|system-ui|ui-.*|emoji|math|fangsong)$/i;
+      const families = new Set<string>();
+      root.querySelectorAll<HTMLElement>("*").forEach((el) => {
+        const f = getComputedStyle(el).fontFamily.split(",")[0].trim().replace(/^["']|["']$/g, "");
+        if (f && !GENERIC.test(f)) families.add(f);
+      });
+      const ctx = document.createElement("canvas").getContext("2d")!;
+      const sample = "mmmmmmmmmmlli1WWあいう漢字";
+      const width = (font: string) => {
+        ctx.font = `72px ${font}`;
+        return ctx.measureText(sample).width;
+      };
+      const missingFonts = [...families].filter((f) =>
+        ["monospace", "serif"].every((g) => width(`"${f}", ${g}`) === width(g)),
+      );
       return {
         page: pageOver ? { contentMm: pxToMm(root.scrollHeight), pageMm: pxToMm(root.clientHeight) } : null,
         blocks,
+        missingFonts,
       };
     }),
   );

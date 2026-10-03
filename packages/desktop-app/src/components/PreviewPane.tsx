@@ -34,6 +34,28 @@ interface Props {
 
 const clampZoom = (z: number) => Math.min(2, Math.max(0.05, z));
 
+/** Families requested in the poster that render like the generic fallback (not installed). */
+const fontCache = new Map<string, boolean>();
+function missingFonts(root: HTMLElement): string[] {
+  const GENERIC = /^(serif|sans-serif|monospace|cursive|fantasy|system-ui|ui-.*|emoji|math|fangsong)$/i;
+  const families = new Set<string>();
+  root.querySelectorAll<HTMLElement>("*").forEach((el) => {
+    const f = getComputedStyle(el).fontFamily.split(",")[0].trim().replace(/^["']|["']$/g, "");
+    if (f && !GENERIC.test(f)) families.add(f);
+  });
+  const ctx = document.createElement("canvas").getContext("2d");
+  if (!ctx) return [];
+  const sample = "mmmmmmmmmmlli1WWあいう漢字";
+  const width = (font: string) => {
+    ctx.font = `72px ${font}`;
+    return ctx.measureText(sample).width;
+  };
+  return [...families].filter((f) => {
+    if (!fontCache.has(f)) fontCache.set(f, ["monospace", "serif"].every((g) => width(`"${f}", ${g}`) === width(g)));
+    return fontCache.get(f);
+  });
+}
+
 /** preview-only overlays excluded from overflow measurement */
 const PREVIEW_CHROME =
   ".rps-fontbadge, .rps-overflow-badge, .rps-page-frame, .rps-margin-guide, .rps-scalebar";
@@ -178,6 +200,12 @@ export default function PreviewPane({
       }
     });
     chrome.forEach((e, i) => (e.style.display = chromeDisplay[i]));
+
+    // fonts the poster asks for but this machine lacks: text silently falls
+    // back, so line breaks / overflow differ from other machines
+    for (const f of missingFonts(root)) {
+      warnings.push({ level: "warn", code: "font-missing", message: t("preview.font_missing", { font: f }) });
+    }
 
     // capture intrinsic figure sizes (needed for crop geometry + export)
     const natSizes: Record<string, { w: number; h: number }> = {};
