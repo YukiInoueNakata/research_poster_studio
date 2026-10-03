@@ -42,6 +42,8 @@ export function buildHtml(project: PosterProject, opts?: RenderMarkupOptions): s
 <style>
 @page { size: ${size.w}mm ${size.h}mm; margin: 0; }
 html,body{ margin:0; padding:0; }
+/* print header/column backgrounds even when "Background graphics" is off in the print dialog */
+*{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 @media screen { body{ background:#444; padding:20px; } .rps-poster{ margin:0 auto; box-shadow:0 0 30px rgba(0,0,0,0.5);} }
 ${css}
 </style>
