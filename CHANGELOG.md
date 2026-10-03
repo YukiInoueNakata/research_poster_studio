@@ -56,6 +56,11 @@ follow [Semantic Versioning](https://semver.org/).
   flattened to plain text. Each block now gets its own title/body boxes, backgrounds and
   borders from the rendered styles, formatted runs (bold, italic, underline, sub/super,
   colour, bullets / numbering) and native PowerPoint tables at their measured positions.
+- Linux (.deb) and macOS: buttons, selects and parts of the settings dialog were drawn as
+  light native widgets on the dark UI; controls are now styled by the app.
+- Ctrl+Z / Ctrl+Y did nothing while typing in the body editor (only after clicking the
+  preview); poster-bound fields now use the app's undo history.
+- README explains the print-dialog settings for PDF (paper size, margins, scale).
 - `validatePosterYaml` threw on structurally wrong input (e.g. `blocks` not a list) instead
   of returning errors; the CLI only exited 1 because it crashed.
 

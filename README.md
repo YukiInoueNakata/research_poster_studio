@@ -204,6 +204,23 @@ samples are fictional-study A0 posters ([`examples/sample-cat-paws-en`](examples
 [`examples/sample-cat-paws-ja`](examples/sample-cat-paws-ja)); opening one copies it to a
 writable folder under your Documents.*
 
+### デスクトップアプリから PDF を書き出す / PDF from the desktop app
+
+デスクトップアプリの PDF 出力は OS の印刷ダイアログを使います。ポスターが切れないよう、次のように設定してください
+（Ubuntu などでは用紙が A4 のままになりやすく、端が切れる原因になります）。
+*The desktop app's PDF export goes through the system print dialog. To avoid a cropped poster, set:*
+
+- **出力先 / Destination**: PDF に保存（Windows: 「PDF に保存」/「Microsoft Print to PDF」、Ubuntu: 「ファイルに出力」→ PDF）
+  *Save as PDF / Print to File (PDF).*
+- **用紙サイズ / Paper size**: ポスターと同じ（A0 = 841 × 1189 mm、A1 = 594 × 841 mm）。一覧に無ければユーザー定義サイズを作る
+  *the poster's size (A0 = 841 × 1189 mm, A1 = 594 × 841 mm); create a custom size if it is not listed.*
+- **余白 / Margins**: なし / None、**倍率 / Scale**: 100%（「ページに合わせる」はオフ / no "fit to page"）
+
+背景色は「背景のグラフィックス」を選ばなくても印刷されます（v0.1.2 以降）。実寸の PDF を確実に作るには CLI の
+`npm run rps -- export pdf <project-dir>` も使えます（[CLI](#clirps) 参照）。
+*Backgrounds print without the "Background graphics" option (v0.1.2+). For an exact-size PDF
+without the dialog, use the CLI: `npm run rps -- export pdf <project-dir>`.*
+
 ## Windows でゼロからセットアップする / Windows setup from scratch
 
 ビルド済みインストーラを使わず、**Windows でソースからビルドして起動する**ための手順を、
