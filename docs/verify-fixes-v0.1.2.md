@@ -1,0 +1,45 @@
+# v0.1.2 修正の確認チェックリスト
+
+v0.1.1 で報告された不具合が直っているかを確かめるための手順．対象は main の最新（v0.1.2 候補）．
+結果は「OK / NG（症状）」で記入する．
+
+## 準備（ソースから起動）
+
+```bash
+git pull                     # 既存の clone を最新にする（初めてなら git clone https://github.com/YukiInoueNakata/research_poster_studio.git）
+npm ci                       # 依存を入れ直す（npm install でも可）
+npm run build:libs
+npm run dev                  # デスクトップアプリを起動
+```
+
+- v0.1.1 で開いたサンプルのコピーが `ドキュメント/Research Poster Studio/samples/` に残っていると，そのまま再利用される．
+  最新の状態から確かめるには，このフォルダを先に削除する．
+- CLI の確認には `npx playwright install chromium` も一度実行しておく．
+
+## デスクトップアプリ
+
+| # | 報告されていた症状 | 確認の操作 | 直っていれば |
+|---|---|---|---|
+| 1 | 縮小するとあふれのエラーが大量に出る | 日英のサンプルを開き，Zoom を 10%〜200% に変える（Ctrl+マウスホイール／ツールバー） | 警告の数が倍率で変わらない（Windows・Ubuntu では 0 件．フォント「Noto Sans JP」が無い環境ではフォント警告とはみ出しが出るのが正しい） |
+| 2 | 開始ダイアログ・Zoom 欄・全体設定の一部が白い（Linux） | 起動直後のダイアログ，ツールバーの選択欄，「全体設定」を見る | どれも暗い配色 |
+| 3 | 本文欄で Ctrl+Z が効かない | 本文欄に入力し，そのまま Ctrl+Z → Ctrl+Y（macOS は Cmd+Z → Cmd+Shift+Z） | 入力が取り消され，やり直せる．フォーカスは本文欄のまま |
+| 4 | 名前を付けて保存でファイルができない | 「名前を付けて保存」で別のフォルダを選び，名前を変えて保存 | 選んだフォルダに，その名前の yaml と本文・図・文献の一式ができる |
+| 5 | PNG で保存できない | PNG を押して保存 | A0・150dpi（4967×7022）の PNG ができ，図（手続きの流れ図も）が描かれている |
+| 6 | PDF で背景（ヘッダー）が白くなる | PDF を押し，「背景のグラフィックス」は選ばずに PDF 保存（用紙は A0，余白なし，100%） | ヘッダーの紺などの背景が出ている |
+| 7 | Marp 出力で本文が消える | ボタン名が「Markdown」に変わっている．押して保存 | `poster.md` に各節の本文と図のリンクが入っている |
+| 8 | PPTX のレイアウトが崩れる | PPTX を押して保存し，PowerPoint で開く | 文字の二重化がなく，ヘッダーの背景・節見出しの帯・箇条書き・太字・表が出ている |
+| 9 | 新規作成で `src-tauri` の中にフォルダができる | 「新規作成」を開く | 親フォルダの初期値が `ドキュメント/Research Poster Studio`．フォルダ名だけを入れるとエラーになり進めない |
+| 10 | サンプルを開くと見知らぬフォルダができる | サンプルフォルダを削除してから「サンプルを開く」 | 開始ダイアログにコピー先のパスが出る．ログに「サンプルを…にコピーしました」と出る |
+| 11 | 枠線を付けたブロックで箇条書きの・が枠に重なる | 1-1 のブロックに「書式」で枠線を付ける | ・が枠の内側に収まる |
+
+## CLI
+
+| # | 確認の操作 | 直っていれば |
+|---|---|---|
+| 12 | `npm run rps -- validate examples/sample-cat-paws-en` | `0 errors, 0 warnings`（Noto Sans JP が無い環境ではフォント警告とはみ出しが出る．これは正しい） |
+| 13 | `npm run rps -- export markdown examples/sample-cat-paws-en` | `examples/sample-cat-paws-en/exports/poster.md` に本文が入る（`export marp` も同じ動作） |
+| 14 | `npm test` と `npm run smoke` | すべて passed |
+
+## 起動時の警告（AppImage）
+
+端末に `canberra-gtk-module` や `libgvfscommon.so: undefined symbol` が出るのは無害（README 参照）．
