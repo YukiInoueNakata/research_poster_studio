@@ -5,6 +5,9 @@ Follow the screenshots and click the places marked with a red box, one step at a
 
 日本語版: [getting-started.ja.md](getting-started.ja.md)
 
+The screenshots of the Windows installer, the Windows settings, and the print dialog were taken on a Japanese-language Windows,
+and the Mac screenshots on a Japanese-language Mac; the buttons are in the same places in English.
+
 - [1. Which file to download](#1-which-file-to-download)
 - [2. Windows (.exe)](#2-windows-exe)
 - [3. Windows (.msi)](#3-windows-msi)
@@ -29,38 +32,62 @@ Open the newest release and pick one file from its "Assets" list.
 
 `0.1.2` is the version number; it changes with each release.
 
-<!-- img: win-01-releases.png / win-02-assets.png -->
+<!-- Screenshots of the Releases page will be added after the release -->
 
 ## 2. Windows (.exe)
 
 ### Install
 
 1. On the Releases page, click `…_x64-setup.exe` to download it.
-   <!-- img: win-03-downloaded.png -->
+
 2. Double-click the downloaded file.
-   <!-- img: win-04-open-installer.png -->
+
+   ![The downloaded .exe](images/getting-started/win-04-open-installer.png)
+
 3. If "Windows protected your PC" appears, click "More info".
    This screen appears because the app is not digitally signed.
-   <!-- img: win-05-smartscreen.png -->
+
+   ![Click More info](images/getting-started/win-05-smartscreen.png)
+
 4. Click "Run anyway".
-   <!-- img: win-06-smartscreen-run.png -->
+
+   ![Click Run anyway](images/getting-started/win-06-smartscreen-run.png)
+
 5. In the installer, click "Next" and "Install".
-   <!-- img: win-07a… -->
+
+   ![Welcome (Next)](images/getting-started/win-07a-setup.png)
+
+   ![Install location (Next)](images/getting-started/win-07b-setup.png)
+
+   ![Installation complete (Next)](images/getting-started/win-07c-setup.png)
+
 6. Click "Finish". If "Run Research Poster Studio" is checked, the app starts.
-   <!-- img: win-09-setup-finish.png -->
+
+   ![Finish](images/getting-started/win-09-setup-finish.png)
+
 
 ### Start
 
 Open the Start menu, type "Research", and click "Research Poster Studio".
 
-<!-- img: win-10-start-menu.png -->
+![Type Research in the Start menu](images/getting-started/win-10-start-menu.png)
 
 ### Uninstall
 
 1. Open Settings → Apps → Installed apps, find "Research Poster Studio", and click "…".
-   <!-- img: win-20-apps-list.png -->
+
+   ![The … button in Installed apps](images/getting-started/win-20-apps-list.png)
+
 2. Click "Uninstall" and follow the prompts.
-   <!-- img: win-21-uninstall-menu.png / win-22… -->
+
+   ![Click Uninstall](images/getting-started/win-21-uninstall-menu.png)
+
+   ![Confirm Uninstall](images/getting-started/win-22a-uninstall-confirm.png)
+
+   ![The uninstaller](images/getting-started/win-22b-uninstaller.png)
+
+   ![Done (Close)](images/getting-started/win-22d-uninstall-done.png)
+
 
 Your posters (for example in `Documents\Research Poster Studio`) are not removed. Delete them yourself if you no longer need them.
 If you leave "Delete the application data" unchecked in the uninstaller, the folder that stores display settings,
@@ -267,35 +294,87 @@ npm run dev
 
 1. When the app starts, a small "Research Poster Studio" window appears. Click "Open sample (English)".
    The sample is copied to `Documents\Research Poster Studio\samples`, where you can edit it freely.
-   <!-- img: app-01-start-en.png -->
+
+   ![Open the sample](images/getting-started/app-01-start-en.png)
+
 2. The sample poster opens. The parts of the screen are:
-   <!-- img: app-02-overview-en.png (with numbered labels) -->
+
+   ![Parts of the screen](images/getting-started/app-02-overview-en.png)
+
+   1. Toolbar (save, export, and other buttons)
+   2. Project pane (list of blocks)
+   3. Preview (the poster)
+   4. Block settings pane (editor for the selected block)
+   5. Warnings and log
+
+   The "日本語" button on the toolbar switches the interface to Japanese.
+
+   ![Language switch](images/getting-started/app-03-lang-en.png)
+
+   "Zoom" changes the preview size (Ctrl + mouse wheel also works).
+
+   ![Zoom](images/getting-started/app-04-zoom-en.png)
+
 
 ### Edit text
 
 1. In the poster in the middle, click the text you want to change.
-   <!-- img: app-10-click-block-en.png -->
+
+   ![Click the text](images/getting-started/app-10-click-block-en.png)
+
 2. An editor for that text appears on the right.
-   <!-- img: app-11-editor-en.png -->
+
+   ![The editor on the right](images/getting-started/app-11-editor-en.png)
+
 3. Edit the text; the poster updates right away.
-   <!-- img: app-12-typed-en.png -->
+
+   ![Edits show right away](images/getting-started/app-12-typed-en.png)
+
 4. To undo a mistake, click "Undo" (or press Ctrl+Z).
-   <!-- img: app-13-undo-en.png -->
+
+   ![Undo](images/getting-started/app-13-undo-en.png)
+
 5. Click "Save" (or press Ctrl+S).
-   <!-- img: app-14-save-en.png -->
+
+   ![Save](images/getting-started/app-14-save-en.png)
+
+### Change the overall settings
+
+Paper size, columns, colours, and so on are under "Settings".
+
+![Settings button](images/getting-started/app-20-settings-button-en.png)
+
+![Settings (1 paper, 2 columns)](images/getting-started/app-21-settings-en.png)
+
+![Settings (3 theme colours)](images/getting-started/app-21b-settings-en.png)
+
 
 ### Make a PDF
 
 1. Click "PDF" at the top right.
-   <!-- img: app-30-export-buttons-en.png -->
+
+   ![Export buttons (1 PDF, 2 PNG, 3 HTML, 4 SVG, 5 PPTX, 6 Markdown)](images/getting-started/app-30-export-buttons-en.png)
+
 2. The print dialog opens. Click the "Printer" box and choose "Save as PDF" from the list.
    **A printer connected to your computer may be selected at first. Clicking "Print" then prints on paper, so always switch to "Save as PDF".**
-   <!-- img: app-31 / app-31a / app-32 -->
+
+   ![The print dialog](images/getting-started/app-31-print-dialog-ja.png)
+
+   ![Choose Save as PDF](images/getting-started/app-31a-print-printers-ja.png)
+
+   ![Save as PDF selected](images/getting-started/app-32-print-destination-ja.png)
+
 3. Leave paper size, margins and the other settings as they are (even if A4 is shown, the PDF is saved at the poster's size).
    Click "Save" and choose where to save the file and its name.
-   <!-- img: app-36 / app-37 -->
+
+   ![Click Save](images/getting-started/app-36-print-save-ja.png)
+
+   ![Where to save and the file name](images/getting-started/app-37-save-dialog-ja.png)
+
 4. Open the PDF and check that the whole poster fits on one page.
-   <!-- img: app-38-pdf-result-en.png -->
+
+   ![The PDF](images/getting-started/app-38-pdf-result-ja.png)
+
 
 On a Mac, A0 is not in the print dialog's paper sizes: use "Manage Custom Sizes" to create 841 × 1189 mm (zero margins) and select it.
 See [PDF from the desktop app](../README.md#デスクトップアプリから-pdf-を書き出す--pdf-from-the-desktop-app) in the README.
@@ -304,16 +383,38 @@ See [PDF from the desktop app](../README.md#デスクトップアプリから-pd
 
 Click "PNG", "PPTX", "Markdown", and so on to save the poster in that format.
 
-<!-- img: app-40〜42 -->
+![PNG button](images/getting-started/app-40-png-button-en.png)
+
+![Where to save](images/getting-started/app-41-png-save-en.png)
+
+If a file with the same name already exists (for example, the second time), Windows asks whether to replace it. Click "Yes" to overwrite it.
+
+![Replace the existing file](images/getting-started/app-41a-png-overwrite-en.png)
+
+![The log says it was exported](images/getting-started/app-42-done-log-en.png)
 
 ### Make a new poster
 
 1. Click "New".
-   <!-- img: app-50-new-button-en.png -->
+
+   ![New](images/getting-started/app-50-new-button-en.png)
+
 2. Answer the setup wizard's questions, clicking "Next" each time, and click "Create" at the end.
-   <!-- img: app-51… -->
+
+   ![1/5 Destination](images/getting-started/app-51a-wizard-folder-en.png)
+
+   ![2/5 Basic info](images/getting-started/app-51b-wizard-info-en.png)
+
+   ![3/5 Paper and columns](images/getting-started/app-51c-wizard-paper-en.png)
+
+   ![4/5 Structure](images/getting-started/app-51d-wizard-layout-en.png)
+
+   ![5/5 Theme (Create)](images/getting-started/app-51e-wizard-theme-en.png)
+
 3. The new poster opens. Write your text the same way as in "Edit text".
-   <!-- img: app-52-created-en.png -->
+
+   ![The new poster](images/getting-started/app-52-created-en.png)
+
 
 ### If something goes wrong
 

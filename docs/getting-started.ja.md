@@ -29,38 +29,62 @@ English version: [getting-started.en.md](getting-started.en.md)
 
 ファイル名の `0.1.2` は版の番号です．新しい版では数字が変わります．
 
-<!-- img: win-01-releases.png / win-02-assets.png -->
+<!-- Releases の画面の写真は，正式版の公開後に追加します -->
 
 ## 2. Windows（.exe）
 
 ### インストール
 
 1. Releases のページで `…_x64-setup.exe` を押して，ダウンロードします．
-   <!-- img: win-03-downloaded.png -->
+
 2. ダウンロードしたファイルをダブルクリックします．
-   <!-- img: win-04-open-installer.png -->
+
+   ![ダウンロードした .exe](images/getting-started/win-04-open-installer.png)
+
 3. 「Windows によって PC が保護されました」と出たら，「詳細情報」を押します．
    アプリに電子署名が付いていないため，この画面が出ます．
-   <!-- img: win-05-smartscreen.png -->
+
+   ![「詳細情報」を押す](images/getting-started/win-05-smartscreen.png)
+
 4. 「実行」を押します．
-   <!-- img: win-06-smartscreen-run.png -->
+
+   ![「実行」を押す](images/getting-started/win-06-smartscreen-run.png)
+
 5. インストーラの画面で，「次へ」や「インストール」を順に押します．
-   <!-- img: win-07a… -->
+
+   ![ようこそ（次へ）](images/getting-started/win-07a-setup.png)
+
+   ![インストール先（次へ）](images/getting-started/win-07b-setup.png)
+
+   ![インストールの完了（次へ）](images/getting-started/win-07c-setup.png)
+
 6. 終わったら「完了」を押します．「Research Poster Studio を実行」にチェックがあれば，そのまま起動します．
-   <!-- img: win-09-setup-finish.png -->
+
+   ![完了の画面](images/getting-started/win-09-setup-finish.png)
+
 
 ### 起動
 
 スタートメニューを開いて「Research」と入力し，「Research Poster Studio」を押します．
 
-<!-- img: win-10-start-menu.png -->
+![スタートメニューで Research と入力](images/getting-started/win-10-start-menu.png)
 
 ### アンインストール
 
 1. 「設定」→「アプリ」→「インストールされているアプリ」を開き，「Research Poster Studio」の「…」を押します．
-   <!-- img: win-20-apps-list.png -->
+
+   ![インストールされているアプリの「…」](images/getting-started/win-20-apps-list.png)
+
 2. 「アンインストール」を押し，表示に従って進めます．
-   <!-- img: win-21-uninstall-menu.png / win-22… -->
+
+   ![「アンインストール」を押す](images/getting-started/win-21-uninstall-menu.png)
+
+   ![確認の「アンインストール」](images/getting-started/win-22a-uninstall-confirm.png)
+
+   ![アンインストーラ](images/getting-started/win-22b-uninstaller.png)
+
+   ![完了（閉じる）](images/getting-started/win-22d-uninstall-done.png)
+
 
 作ったポスター（`ドキュメント\Research Poster Studio` など）は消えません．要らなければ自分で削除してください．
 アンインストーラの「アプリケーションデータを削除する」（英語の画面では Delete the application data）にチェックを入れないと，
@@ -267,35 +291,87 @@ npm run dev
 
 1. 起動すると，最初に「Research Poster Studio」の小さな画面が出ます．「サンプルを開く（日本語）」を押します．
    サンプルは `ドキュメント\Research Poster Studio\samples` にコピーされ，自由に書き換えられます．
-   <!-- img: app-01-start-ja.png -->
+
+   ![サンプルを開く](images/getting-started/app-01-start-ja.png)
+
 2. サンプルのポスターが開きます．画面の各部の名前は次のとおりです．
-   <!-- img: app-02-overview-ja.png（番号の説明を付ける） -->
+
+   ![画面の各部](images/getting-started/app-02-overview-ja.png)
+
+   1. ツールバー（保存・書き出しなどのボタン）
+   2. プロジェクトペイン（ブロックの一覧）
+   3. プレビュー（ポスター）
+   4. ブロック設定ペイン（選んだブロックの編集欄）
+   5. 警告とログ
+
+   表示言語は，ツールバーの「English」ボタンで英語に切り替えられます．
+
+   ![言語の切り替え](images/getting-started/app-03-lang-ja.png)
+
+   ポスターの表示の大きさは「ズーム」で変えられます（Ctrl+マウスのホイールでも変えられます）．
+
+   ![ズーム](images/getting-started/app-04-zoom-ja.png)
+
 
 ### 文字を直す
 
 1. 真ん中のポスターで，直したい文章をクリックします．
-   <!-- img: app-10-click-block-ja.png -->
+
+   ![文章をクリック](images/getting-started/app-10-click-block-ja.png)
+
 2. 右側に，その文章の編集欄が出ます．
-   <!-- img: app-11-editor-ja.png -->
+
+   ![右側の編集欄](images/getting-started/app-11-editor-ja.png)
+
 3. 編集欄で文章を書き換えると，ポスターにすぐ反映されます．
-   <!-- img: app-12-typed-ja.png -->
+
+   ![書き換えるとすぐ反映](images/getting-started/app-12-typed-ja.png)
+
 4. まちがえたときは「元に戻す」を押します（Ctrl+Z でも戻せます）．
-   <!-- img: app-13-undo-ja.png -->
+
+   ![元に戻す](images/getting-started/app-13-undo-ja.png)
+
 5. 「保存」を押して保存します（Ctrl+S でも保存できます）．
-   <!-- img: app-14-save-ja.png -->
+
+   ![保存](images/getting-started/app-14-save-ja.png)
+
+### 全体の設定を変える
+
+用紙の大きさ・カラム（段組み）・色などは「全体設定」で変えます．
+
+![全体設定ボタン](images/getting-started/app-20-settings-button-ja.png)
+
+![全体設定（1 用紙，2 カラム）](images/getting-started/app-21-settings-ja.png)
+
+![全体設定（3 テーマ色）](images/getting-started/app-21b-settings-ja.png)
+
 
 ### PDF にする
 
 1. 右上の「PDF」を押します．
-   <!-- img: app-30-export-buttons-ja.png -->
+
+   ![書き出しのボタン（1 PDF，2 PNG，3 HTML，4 SVG，5 PPTX，6 Markdown）](images/getting-started/app-30-export-buttons-ja.png)
+
 2. 印刷の画面が出ます．「プリンター」の欄を押して，一覧から「PDF として保存」を選びます．
    **最初はパソコンにつながったプリンターが選ばれていることがあります．そのまま「印刷」を押すと紙に印刷されるので，必ず「PDF として保存」に変えてください．**
-   <!-- img: app-31 / app-31a / app-32 -->
+
+   ![印刷の画面](images/getting-started/app-31-print-dialog-ja.png)
+
+   ![プリンターの一覧から「PDF として保存」](images/getting-started/app-31a-print-printers-ja.png)
+
+   ![「PDF として保存」になった](images/getting-started/app-32-print-destination-ja.png)
+
 3. 用紙サイズや余白などの欄は，変えなくてかまいません（A4 と出ていても，PDF はポスターの大きさで保存されます）．
    「保存」を押し，保存する場所と名前を決めます．
-   <!-- img: app-36 / app-37 -->
+
+   ![「保存」を押す](images/getting-started/app-36-print-save-ja.png)
+
+   ![保存する場所と名前](images/getting-started/app-37-save-dialog-ja.png)
+
 4. できた PDF を開いて，ポスター全体が 1 枚に入っていることを確かめます．
-   <!-- img: app-38-pdf-result-ja.png -->
+
+   ![できた PDF](images/getting-started/app-38-pdf-result-ja.png)
+
 
 Mac では，印刷の画面の「用紙サイズ」に A0 が無いので，「カスタムサイズを管理」で 841 × 1189 mm（余白 0）を作って選びます．
 くわしくは README の [デスクトップアプリから PDF を書き出す](../README.md#デスクトップアプリから-pdf-を書き出す--pdf-from-the-desktop-app) を見てください．
@@ -304,16 +380,38 @@ Mac では，印刷の画面の「用紙サイズ」に A0 が無いので，「
 
 「PNG」「PPTX」「Markdown」などのボタンを押すと，その形式で保存できます．
 
-<!-- img: app-40〜42 -->
+![PNG ボタン](images/getting-started/app-40-png-button-ja.png)
+
+![保存する場所](images/getting-started/app-41-png-save-ja.png)
+
+同じ名前のファイルがすでにあるとき（2 回目以降など）は，上書きの確認が出ます．「はい」を押すと新しい内容で置き換わります．
+
+![上書きの確認](images/getting-started/app-41a-png-overwrite-ja.png)
+
+![ログに「書き出しました」と出る](images/getting-started/app-42-done-log-ja.png)
 
 ### 新しいポスターを作る
 
 1. 「新規作成」を押します．
-   <!-- img: app-50-new-button-ja.png -->
+
+   ![新規作成](images/getting-started/app-50-new-button-ja.png)
+
 2. 設定ウィザードの質問に答えて，「次へ」を押していきます．最後に「作成」を押します．
-   <!-- img: app-51… -->
+
+   ![1/5 保存先](images/getting-started/app-51a-wizard-folder-ja.png)
+
+   ![2/5 基本情報](images/getting-started/app-51b-wizard-info-ja.png)
+
+   ![3/5 用紙とカラム](images/getting-started/app-51c-wizard-paper-ja.png)
+
+   ![4/5 構成](images/getting-started/app-51d-wizard-layout-ja.png)
+
+   ![5/5 着せ替え（作成）](images/getting-started/app-51e-wizard-theme-ja.png)
+
 3. 新しいポスターが開きます．あとは「文字を直す」と同じように書いていきます．
-   <!-- img: app-52-created-ja.png -->
+
+   ![新しいポスター](images/getting-started/app-52-created-ja.png)
+
 
 ### 困ったとき
 
