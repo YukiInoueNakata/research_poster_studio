@@ -301,6 +301,9 @@ export default function ProjectSettings({
             step={1}
             onChange={(v) => onChangeLayout({ row_gap_mm: v })}
           />
+        </div>
+        {/* own block: inside the .inline row the labels were squeezed to 1–2 chars per line */}
+        <div className="field">
           <label className="check" style={{ marginTop: 4 }}>
             <input
               type="checkbox"
