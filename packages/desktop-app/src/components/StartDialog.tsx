@@ -1,6 +1,8 @@
 // Startup dialog: shown right after launch (while no project is loaded) so the
 // first action — create / open / sample / recent — is obvious.
 
+import { useEffect, useState } from "react";
+import { documentDir, join } from "@tauri-apps/api/path";
 import type { RecentProject } from "../lib/recent";
 import { useLang } from "../i18n";
 
@@ -22,6 +24,14 @@ export default function StartDialog({
   onClose,
 }: Props) {
   const { t, lang, setLang } = useLang();
+  // where "Open sample" puts its editable copy (shown in the description)
+  const [sampleDir, setSampleDir] = useState("");
+  useEffect(() => {
+    documentDir()
+      .then((d) => join(d, "Research Poster Studio", "samples"))
+      .then(setSampleDir)
+      .catch(() => {});
+  }, []);
   return (
     <div className="modal-overlay">
       <div className="modal start-dialog">
@@ -49,11 +59,11 @@ export default function StartDialog({
             </button>
             <button className="start-action" onClick={() => onOpenSample("ja")}>
               <strong>{t("start.sample.ja")}</strong>
-              <span>{t("start.sample.desc")}</span>
+              <span>{t("start.sample.desc", { dir: sampleDir || "…" })}</span>
             </button>
             <button className="start-action" onClick={() => onOpenSample("en")}>
               <strong>{t("start.sample.en")}</strong>
-              <span>{t("start.sample.desc")}</span>
+              <span>{t("start.sample.desc", { dir: sampleDir || "…" })}</span>
             </button>
           </div>
           {recent.length > 0 ? (

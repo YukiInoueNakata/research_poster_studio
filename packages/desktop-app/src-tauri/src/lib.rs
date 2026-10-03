@@ -271,8 +271,15 @@ fn find_sample_source(app: &tauri::AppHandle, name: &str) -> Option<PathBuf> {
 /// The bundled copy may live in a read-only install dir, so it is copied to
 /// `<Documents>/Research Poster Studio/samples/<name>` on first use; an existing
 /// copy is reopened as-is so the user's edits are never overwritten.
+#[derive(Serialize)]
+struct SampleDir {
+    dir: String,
+    /// true when the sample was copied just now (first open)
+    copied: bool,
+}
+
 #[tauri::command]
-fn sample_project_dir(app: tauri::AppHandle, lang: Option<String>) -> Result<String, String> {
+fn sample_project_dir(app: tauri::AppHandle, lang: Option<String>) -> Result<SampleDir, String> {
     use tauri::Manager;
     let name = match lang.as_deref() {
         Some("en") => "sample-cat-paws-en",
@@ -285,11 +292,11 @@ fn sample_project_dir(app: tauri::AppHandle, lang: Option<String>) -> Result<Str
         .map_err(|e| format!("documents folder not found: {e}"))?;
     let dest = base.join("Research Poster Studio").join("samples").join(name);
     if dest.join("poster.yaml").exists() {
-        return Ok(dest.to_string_lossy().to_string());
+        return Ok(SampleDir { dir: dest.to_string_lossy().to_string(), copied: false });
     }
     let src = find_sample_source(&app, name).ok_or_else(|| format!("{name} not found"))?;
     copy_dir_all(&src, &dest).map_err(|e| format!("copy {} -> {}: {e}", src.display(), dest.display()))?;
-    Ok(dest.to_string_lossy().to_string())
+    Ok(SampleDir { dir: dest.to_string_lossy().to_string(), copied: true })
 }
 
 /// Read an image from the OS clipboard, save it as PNG under `<dir>/figures/`,

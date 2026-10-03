@@ -18,6 +18,9 @@ follow [Semantic Versioning](https://semver.org/).
   The remaining four are not reachable in the app; see `SECURITY.md`.
 
 ### Changed
+- "Open sample" says where the editable copy goes: the start dialog shows the
+  `Documents/Research Poster Studio/samples` path and the first copy is logged (later opens
+  reuse it; delete the folder to start over). README documents the locations.
 - "Marp" export renamed to **Markdown**: it is the poster text in reading order with a
   Marp-oriented front matter, not a Marp rendition of the layout. The ineffective
   `size: <mm>` line (Marp only accepts theme presets) is gone; the default file is

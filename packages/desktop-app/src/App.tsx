@@ -367,7 +367,11 @@ export default function App() {
 
   async function onOpenSample(sampleLang: "ja" | "en") {
     try {
-      const dir = await invoke<string>("sample_project_dir", { lang: sampleLang });
+      const { dir, copied } = await invoke<{ dir: string; copied: boolean }>("sample_project_dir", {
+        lang: sampleLang,
+      });
+      // first open: say where the editable copy now lives
+      if (copied) log("ok", t("log.sampleCopied", { dir }));
       await doLoad(dir);
     } catch (e: any) {
       log("error", t("log.sampleNotFound", { msg: e?.message ?? e }));

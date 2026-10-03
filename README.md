@@ -203,13 +203,17 @@ Tauri prerequisites (step 3). If you only want the `rps` command, no Rust is nee
 起動直後のダイアログから、新規作成（設定ウィザード）・サンプルを開く（日本語版／英語版）・
 ファイルを開く・最近開いた一覧を選べます。サンプルは架空研究の A0 ポスター
 （[`examples/sample-cat-paws-ja`](examples/sample-cat-paws-ja)・[`examples/sample-cat-paws-en`](examples/sample-cat-paws-en)）で、
-開くと書き込み可能なフォルダ（ドキュメント配下）にコピーされます。
+開くと編集できるように `ドキュメント/Research Poster Studio/samples/<サンプル名>` へコピーされ
+（Windows: `C:\Users\<名前>\Documents\…`、macOS: `~/Documents/…`、Ubuntu: `~/ドキュメント/…` など）、
+2 回目以降はそのコピーを開きます。最初の状態からやり直すには、このフォルダを削除してください。
+新規作成の保存先も、既定は `ドキュメント/Research Poster Studio` です。
 
 *On launch, a dialog lets you create a new project (a setup wizard), open a sample poster
 (Japanese or English), open an existing `poster.yaml`, or reopen a recent project. The
 samples are fictional-study A0 posters ([`examples/sample-cat-paws-en`](examples/sample-cat-paws-en),
 [`examples/sample-cat-paws-ja`](examples/sample-cat-paws-ja)); opening one copies it to a
-writable folder under your Documents.*
+folder you can edit, `Documents/Research Poster Studio/samples/<sample>`; later opens reuse that
+copy (delete the folder to start over). New projects also default to `Documents/Research Poster Studio`.*
 
 ### デスクトップアプリから PDF を書き出す / PDF from the desktop app
 
