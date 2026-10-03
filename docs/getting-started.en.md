@@ -63,6 +63,8 @@ Open the Start menu, type "Research", and click "Research Poster Studio".
    <!-- img: win-21-uninstall-menu.png / win-22… -->
 
 Your posters (for example in `Documents\Research Poster Studio`) are not removed. Delete them yourself if you no longer need them.
+If you leave "Delete the application data" unchecked in the uninstaller, the folder that stores display settings,
+`%LocalAppData%\io.github.yukiinouenakata.research-poster-studio`, is kept. It does no harm.
 
 > **If the uninstall is blocked**
 > The `.exe` uninstaller (`uninstall.exe`) is not digitally signed. On PCs with **Smart App Control** turned on,
@@ -286,14 +288,12 @@ npm run dev
 
 1. Click "PDF" at the top right.
    <!-- img: app-30-export-buttons-en.png -->
-2. The print dialog opens. Set:
-   - Destination: "Save as PDF"
-   - Paper size: the poster's size (A0 for an A0 poster)
-   - Margins: None
-   - Scale: 100%
-   <!-- img: app-31〜36 -->
-3. Click "Save" and choose where to save the file and its name.
-   <!-- img: app-37-save-dialog-en.png -->
+2. The print dialog opens. Click the "Printer" box and choose "Save as PDF" from the list.
+   **A printer connected to your computer may be selected at first. Clicking "Print" then prints on paper, so always switch to "Save as PDF".**
+   <!-- img: app-31 / app-31a / app-32 -->
+3. Leave paper size, margins and the other settings as they are (even if A4 is shown, the PDF is saved at the poster's size).
+   Click "Save" and choose where to save the file and its name.
+   <!-- img: app-36 / app-37 -->
 4. Open the PDF and check that the whole poster fits on one page.
    <!-- img: app-38-pdf-result-en.png -->
 

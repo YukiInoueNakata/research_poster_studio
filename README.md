@@ -222,15 +222,18 @@ copy (delete the folder to start over). New projects also default to `Documents/
 
 ### デスクトップアプリから PDF を書き出す / PDF from the desktop app
 
-デスクトップアプリの PDF 出力は OS の印刷ダイアログを使います。ポスターが切れないよう、次のように設定してください
-（Ubuntu などでは用紙が A4 のままになりやすく、端が切れる原因になります）。
-*The desktop app's PDF export goes through the system print dialog. To avoid a cropped poster, set:*
+デスクトップアプリの PDF 出力は OS の印刷ダイアログを使います。OS ごとに次のように設定してください。
+*The desktop app's PDF export goes through the system print dialog. Per OS:*
 
-- **出力先 / Destination**: PDF に保存（Windows: 「PDF に保存」/「Microsoft Print to PDF」、Ubuntu: 「ファイルに出力」→ PDF）
-  *Save as PDF / Print to File (PDF).*
-- **用紙サイズ / Paper size**: ポスターと同じ（A0 = 841 × 1189 mm、A1 = 594 × 841 mm）。一覧に無ければユーザー定義サイズを作る
-  *the poster's size (A0 = 841 × 1189 mm, A1 = 594 × 841 mm); create a custom size if it is not listed.*
-- **余白 / Margins**: なし / None、**倍率 / Scale**: 100%（「ページに合わせる」はオフ / no "fit to page"）
+- **Windows**: 「プリンター」を「PDF として保存」に変えて「保存」を押すだけです。用紙サイズ・余白・倍率は変えなくてかまいません
+  （欄が出ていなくても、A4 と表示されていても、PDF はポスターの大きさ（A0 など）で保存されます）。
+  「プリンター」の初期値は OS の通常使うプリンターなので、実機のプリンターのまま「印刷」を押すと紙に印刷されます。
+  *Windows: set "Printer" to "Save as PDF" and click "Save"; leave paper size, margins and scale as they are (the PDF
+  takes the poster's size even if the dialog shows A4). The default printer may be a real printer.*
+- **Ubuntu**: 「ファイルに出力」→ PDF を選び、用紙サイズをポスターと同じ（A0 = 841 × 1189 mm、A1 = 594 × 841 mm）にします。
+  一覧に無ければユーザー定義サイズを作ります。用紙が A4 のままだと端が切れます。
+  *Ubuntu: Print to File (PDF), and set the paper size to the poster's size (create a custom size if needed);
+  A4 crops the poster.*
 - **macOS**: 印刷ダイアログの「詳細を表示」→「用紙サイズ」→「カスタムサイズを管理」で 841 × 1189 mm（余白 0）を作って選び、
   左下の「PDF」→「PDF として保存」。macOS ではポスター側の用紙指定が効かず、既定の用紙（A4 など）に分割されるため。
   *macOS: Show Details → Paper Size → Manage Custom Sizes (841 × 1189 mm, zero margins), then PDF → Save as PDF;

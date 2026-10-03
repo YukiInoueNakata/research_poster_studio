@@ -63,6 +63,8 @@ English version: [getting-started.en.md](getting-started.en.md)
    <!-- img: win-21-uninstall-menu.png / win-22… -->
 
 作ったポスター（`ドキュメント\Research Poster Studio` など）は消えません．要らなければ自分で削除してください．
+アンインストーラの「アプリケーション データを削除する」（Delete the application data）にチェックを入れないと，
+表示の設定などを記録したフォルダ `%LocalAppData%\io.github.yukiinouenakata.research-poster-studio` が残ります．残っていても害はありません．
 
 > **アンインストールが止まる場合**
 > `.exe` 版のアンインストーラ（`uninstall.exe`）には電子署名が付いていません．そのため，
@@ -286,14 +288,12 @@ npm run dev
 
 1. 右上の「PDF」を押します．
    <!-- img: app-30-export-buttons-ja.png -->
-2. 印刷の画面が出ます．次のように設定します．
-   - 送信先: 「PDF に保存」
-   - 用紙サイズ: ポスターと同じ大きさ（A0 なら A0）
-   - 余白: なし
-   - 倍率: 100%
-   <!-- img: app-31〜36 -->
-3. 「保存」を押し，保存する場所と名前を決めます．
-   <!-- img: app-37-save-dialog-ja.png -->
+2. 印刷の画面が出ます．「プリンター」の欄を押して，一覧から「PDF として保存」を選びます．
+   **最初はパソコンにつながったプリンターが選ばれていることがあります．そのまま「印刷」を押すと紙に印刷されるので，必ず「PDF として保存」に変えてください．**
+   <!-- img: app-31 / app-31a / app-32 -->
+3. 用紙サイズや余白などの欄は，変えなくてかまいません（A4 と出ていても，PDF はポスターの大きさで保存されます）．
+   「保存」を押し，保存する場所と名前を決めます．
+   <!-- img: app-36 / app-37 -->
 4. できた PDF を開いて，ポスター全体が 1 枚に入っていることを確かめます．
    <!-- img: app-38-pdf-result-ja.png -->
 
