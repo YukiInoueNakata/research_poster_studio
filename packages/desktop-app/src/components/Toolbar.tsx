@@ -104,7 +104,9 @@ export default function Toolbar({
         <option value="en">{t("toolbar.sample.en")}</option>
       </select>
       <button onClick={onSave} disabled={!loaded || !dirty}>
-        {t("toolbar.save")}{dirty ? " *" : ""}
+        {t("toolbar.save")}
+        {/* keep the " *" width reserved so the toolbar does not re-wrap when editing */}
+        <span style={{ visibility: dirty ? "visible" : "hidden" }}> *</span>
       </button>
       <button onClick={onSaveAs} disabled={!loaded}>{t("toolbar.saveAs")}</button>
       <button onClick={onUndo} disabled={!loaded || !canUndo} title={t("toolbar.undo.title")}>
@@ -157,6 +159,8 @@ export default function Toolbar({
 
       <span className="spacer" />
 
+      {/* export buttons wrap as one group, so PDF stays next to PNG etc. */}
+      <span className="toolbar-group">
       <button className="primary" onClick={() => onExport("pdf")} disabled={!loaded || busy}>
         PDF
       </button>
@@ -165,6 +169,7 @@ export default function Toolbar({
       <button onClick={() => onExport("svg")} disabled={!loaded || busy}>SVG</button>
       <button onClick={() => onExport("pptx")} disabled={!loaded || busy}>PPTX</button>
       <button onClick={() => onExport("marp")} disabled={!loaded || busy}>Markdown</button>
+      </span>
     </div>
   );
 }

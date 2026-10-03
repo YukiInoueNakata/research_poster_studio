@@ -49,6 +49,7 @@ html, body, #root {
 }
 .toolbar .title { font-weight: 600; margin-right: 8px; }
 .toolbar .spacer { flex: 1; }
+.toolbar .toolbar-group { display: inline-flex; flex-wrap: nowrap; gap: inherit; align-items: center; }
 button {
   appearance: none;
   -webkit-appearance: none;
