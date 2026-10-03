@@ -1,5 +1,5 @@
 // 4+ カラム対応の smoke test（node scripts/smoke-columns.mjs で実行）
-import { columnOrder, resolveColumn, layoutBlocks, MAX_COLUMNS, normalizeDoc, docWarnings, parseBibtex } from "../packages/core/dist/index.js";
+import { columnOrder, resolveColumn, layoutBlocks, MAX_COLUMNS, normalizeDoc, docWarnings, parseBibtex, parseCombinedMarkdown, serializeCombinedMarkdown } from "../packages/core/dist/index.js";
 
 let pass = 0, fail = 0;
 const eq = (name, got, want) => {
@@ -64,6 +64,15 @@ eq("unknown-column target", wcodes[0]?.blockId, "x");
 
 // BibTeX: LaTeX quotes → typographic quotes
 const bq = parseBibtex("@article{q, title = {The ``wall of text'' and `single' quotes}}");
+// single content.md: save (serialize) is stable and emits "# {#id}" for untitled sections
+{
+  const md = "# {#notice}\n\nNote.\n\n# 1 Intro {#intro}\n\n## {#intro_l}\n\n- item\n";
+  const ser = (m) => serializeCombinedMarkdown(parseCombinedMarkdown(m).map((s) => ({ id: s.id, title: s.title, level: s.level, body: s.body })));
+  const once = ser(md);
+  eq("combined content round-trip", once, md);
+  eq("combined content idempotent", ser(once), once);
+}
+
 eq("bibtex latex quotes", bq.entries[0]?.fields.title, "The “wall of text” and ‘single’ quotes");
 
 console.log(`\n${pass} OK / ${fail} NG`);

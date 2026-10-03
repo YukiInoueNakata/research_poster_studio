@@ -112,7 +112,7 @@ export function indexSections(
 export function formatHeading(level: number, title: string, id: string): string {
   const hashes = "#".repeat(Math.max(1, Math.min(2, level)));
   const t = (title ?? "").trim();
-  return `${hashes} ${t} {#${id}}`;
+  return t ? `${hashes} ${t} {#${id}}` : `${hashes} {#${id}}`;
 }
 
 /** A unit to serialize: a heading + its body, in document order. */
@@ -128,7 +128,8 @@ export function serializeCombinedMarkdown(entries: CombinedEntry[]): string {
   const parts: string[] = [];
   for (const e of entries) {
     const body = (e.body ?? "").replace(/\s+$/, "");
-    parts.push(formatHeading(e.level, e.title, e.id) + "\n\n" + body + "\n");
+    const heading = formatHeading(e.level, e.title, e.id);
+    parts.push(body ? heading + "\n\n" + body + "\n" : heading + "\n");
   }
   return parts.join("\n");
 }
