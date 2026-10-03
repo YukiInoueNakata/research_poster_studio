@@ -34,6 +34,10 @@ interface Props {
 
 const clampZoom = (z: number) => Math.min(2, Math.max(0.05, z));
 
+/** preview-only overlays excluded from overflow measurement */
+const PREVIEW_CHROME =
+  ".rps-fontbadge, .rps-overflow-badge, .rps-page-frame, .rps-margin-guide, .rps-scalebar";
+
 export default function PreviewPane({
   project,
   zoom,
@@ -131,6 +135,14 @@ export default function PreviewPane({
     if (!root) return;
     const warnings: Warning[] = [];
 
+    // Preview-only chrome (pt / overflow badges, page frame, margin guide,
+    // scale bar) is counter-scaled by 1/zoom, so at low zoom it grows larger
+    // than small blocks and would count toward scrollHeight. Hide it while
+    // measuring so overflow is judged against the paper, not the zoom level.
+    const chrome = Array.from(root.querySelectorAll<HTMLElement>(PREVIEW_CHROME));
+    const chromeDisplay = chrome.map((e) => e.style.display);
+    chrome.forEach((e) => (e.style.display = "none"));
+
     // N11: page fill ratio (content height / page height)
     setFill(root.clientHeight > 0 ? root.scrollHeight / root.clientHeight : null);
 
@@ -165,6 +177,7 @@ export default function PreviewPane({
         });
       }
     });
+    chrome.forEach((e, i) => (e.style.display = chromeDisplay[i]));
 
     // capture intrinsic figure sizes (needed for crop geometry + export)
     const natSizes: Record<string, { w: number; h: number }> = {};

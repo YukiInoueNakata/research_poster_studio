@@ -4,6 +4,16 @@ All notable changes to Research Poster Studio are listed here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions
 follow [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+- The desktop preview reported false overflow errors (blocks and the whole page) when
+  zoomed out. Preview-only overlays (pt / overflow badges, page frame, margin guide,
+  scale bar) grow by 1/zoom and were counted as content; they are now excluded while
+  measuring, and preview borders keep their real width in the layout (the extra
+  on-screen thickness is drawn as an inset shadow). Overflow is judged against the paper
+  at every zoom level.
+
 ## [0.1.1] - 2026-10-03
 
 Archived on Zenodo: [10.5281/zenodo.23115929](https://doi.org/10.5281/zenodo.23115929).
@@ -36,8 +46,8 @@ Archived on Zenodo: [10.5281/zenodo.23115929](https://doi.org/10.5281/zenodo.231
 - LaTeX-style quotes in BibTeX fields (``` ``text'' ```) are rendered as typographic quotes.
 
 ### Known issues
-- At small preview zoom (about 20%) the desktop preview can report a block overflow that
-  does not occur at full size; `rps validate` measures at full size.
+- At small preview zoom the desktop preview can report overflow that does not occur on
+  paper (fixed in Unreleased); `rps validate` measures at full size.
 
 ## [0.1.0] - 2026-10-03
 

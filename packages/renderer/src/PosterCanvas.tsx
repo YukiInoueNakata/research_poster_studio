@@ -14,6 +14,19 @@ import { renderMarkdown } from "./markdown";
 import { boxStyle, bodyTextStyle, headingStyle, heightStyle, resolveColor } from "./style";
 import { posterCss } from "./posterCss";
 
+/**
+ * Preview border: the layout uses the real (print) width so overflow is
+ * measured against the paper at any zoom; the extra thickness that keeps the
+ * line visible when zoomed out (>= 1.2 screen px) is drawn as an inset
+ * box-shadow, which does not take up layout space.
+ */
+function previewBorder(realPx: number, k: number, color: string, shadow?: CSSProperties["boxShadow"]): CSSProperties {
+  const extra = Math.max(1.2 * k - realPx, 0);
+  if (extra <= 0) return { border: `${realPx}px solid ${color}` };
+  const inset = `inset 0 0 0 ${extra}px ${color}`;
+  return { border: `${realPx}px solid ${color}`, boxShadow: shadow ? `${inset}, ${shadow}` : inset };
+}
+
 export interface PosterCanvasProps {
   project: PosterProject;
   mode?: "preview" | "export";
@@ -380,9 +393,8 @@ function BlockView({ block }: { block: Block }) {
   };
   if (mode === "preview" && block.style?.border) {
     const realMm = parseLengthMm(block.style.border_width ?? "1pt") ?? 0.35;
-    const w = Math.max(mmToPx(realMm), 1.2 * k);
     const col = resolveColor(block.style.border_color, theme) ?? theme.colors.muted;
-    style.border = `${w}px solid ${col}`;
+    Object.assign(style, previewBorder(mmToPx(realMm), k, col, style.boxShadow));
   }
   if (mode === "preview") style.position = "relative";
   if (mode === "preview" && overflowing) {
@@ -406,7 +418,8 @@ function BlockView({ block }: { block: Block }) {
     isFigureBlock && !!figBlockFig?.style?.border && !!figBlockFig.style.title_inside_border;
   if (titleInside) {
     const c = resolveColor(figBlockFig!.style!.border_color, theme) ?? "#999";
-    style.border = mode === "preview" ? `${Math.max(mmToPx(0.35), 1.2 * k)}px solid ${c}` : `1pt solid ${c}`;
+    if (mode === "preview") Object.assign(style, previewBorder(mmToPx(0.35), k, c, style.boxShadow));
+    else style.border = `1pt solid ${c}`;
     style.padding = "2mm";
   }
   const isRefs =
