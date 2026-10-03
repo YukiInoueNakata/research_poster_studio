@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { fileURLToPath } from "node:url";
 import { loadPosterProjectFs } from "@rps/core/node";
 import type { Block } from "@rps/core";
-import { buildMarp } from "@rps/renderer";
+import { buildMarkdown } from "@rps/renderer";
 import { heightStyle } from "../src/style";
 
 const demo = fileURLToPath(new URL("../../../examples/sample-cat-paws-en", import.meta.url));
@@ -23,10 +23,11 @@ describe("heightStyle", () => {
   });
 });
 
-describe("Marp export", () => {
+describe("Markdown export", () => {
   it("includes child-block text and figures of nested posters", async () => {
     const project = await loadPosterProjectFs(demo);
-    const md = buildMarp(project);
+    const md = buildMarkdown(project);
+    expect(md).not.toMatch(/^size:/m); // Marp ignores mm sizes; not emitted
     expect(md).toContain("### 1-1. Background");
     expect(md).toContain('"wall of text"');
     expect(md).toMatch(/!\[Figure 3\.[^\]]*\]\(\.\.\/figures\/fig1_time\.svg\)/);

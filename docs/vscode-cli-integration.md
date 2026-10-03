@@ -24,7 +24,7 @@ git diff / commit
 | `rps validate` | Zod schema check + readability / caption / duplicate-id warnings; non-zero exit on errors |
 | `rps info` | size / columns / blocks / figures / bands / warning count |
 | `rps preview [--watch] [--port N]` | local server; `--watch` reloads the browser on source changes |
-| `rps export pdf\|png\|svg\|html\|marp` | write to `exports/` (pdf/png need `npx playwright install chromium`) |
+| `rps export pdf\|png\|svg\|html\|markdown` | write to `exports/` (pdf/png need `npx playwright install chromium`) |
 
 > Figure conversion in the CLI (Phase 3): **Graphviz (.dot/.gv and ```dot) is
 > now converted** by the CLI (`packages/cli/src/convert.ts`, @viz-js/viz in
@@ -84,6 +84,6 @@ converted; use the desktop app for the rest). All other renderer features
 
 Sources are tracked (`poster.yaml`, `references.bib`, `content/*`, `figures/*`,
 `themes/*`, `skills/*`, `docs/*`). Generated
-`exports/*.{pdf,png,html,svg,pptx,marp.md}` and automatic per-save `backups/`
+`exports/*.{pdf,png,html,svg,pptx,md}` and automatic per-save `backups/`
 are gitignored. See `.gitignore` and the「生成物とバックアップの扱い」section
 in the README (restore procedure included).

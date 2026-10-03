@@ -269,7 +269,7 @@ density, figure size, caption size, references size.
 
 `exports/` is generated. Targets: PDF (via print, exact-size @page), PNG,
 self-contained HTML, SVG (foreignObject), PPTX (pptxgenjs, approximate),
-Marp Markdown. Never hand-edit files under `exports/`. Recommend **PDF** for
+Markdown (poster text only, Marp-oriented front matter, no layout). Never hand-edit files under `exports/`. Recommend **PDF** for
 submission; fidelity per format is documented in `docs/export-matrix.md`.
 
 Note: the CLI does not convert embedded PDF / Mermaid / Graphviz figures

@@ -132,7 +132,7 @@ for (const [name, dir] of Object.entries(SAMPLES)) {
   rmSync(out, { force: true });
 }
 
-// ---- export svg / marp ------------------------------------------------------
+// ---- export svg / markdown ------------------------------------------------------
 {
   const r = rps("export", "svg", SAMPLES.full);
   const out = path.join(SAMPLES.full, "exports", "poster.svg");
@@ -141,18 +141,19 @@ for (const [name, dir] of Object.entries(SAMPLES)) {
   check("poster.svg is an svg", s.includes("<svg"));
 }
 {
-  const r = rps("export", "marp", SAMPLES.full);
-  const out = path.join(SAMPLES.full, "exports", "poster.marp.md");
-  check("export marp full exits 0", r.code === 0, `code=${r.code}`);
+  const r = rps("export", "markdown", SAMPLES.full);
+  const out = path.join(SAMPLES.full, "exports", "poster.md");
+  check("export markdown full exits 0", r.code === 0, `code=${r.code}`);
   const s = existsSync(out) ? readFileSync(out, "utf8") : "";
-  check("poster.marp.md non-trivial", s.length > 100);
+  check("poster.md non-trivial", s.length > 100);
 }
 {
-  // nested layout: body text lives in child blocks and must reach the Marp file
+  // nested layout: body text lives in child blocks and must reach the Markdown
+  // file; `marp` stays accepted as an alias of `markdown`
   const r = rps("export", "marp", SAMPLES.catEn);
-  const out = path.join(SAMPLES.catEn, "exports", "poster.marp.md");
+  const out = path.join(SAMPLES.catEn, "exports", "poster.md");
   const s = existsSync(out) ? readFileSync(out, "utf8") : "";
-  check("marp catEn includes child-block text", r.code === 0 && s.includes("1-1. Background") && s.includes("wall of text"));
+  check("markdown (alias marp) catEn includes child-block text", r.code === 0 && s.includes("1-1. Background") && s.includes("wall of text"));
 }
 
 // ---- 既存サンプルの export html も生成できる --------------------------------

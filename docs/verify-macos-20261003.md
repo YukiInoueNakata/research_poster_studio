@@ -50,7 +50,7 @@
 | 6 | PNG 出力 | OK（4967×7022）．ただし **Graphviz 図が未変換**だった（CSP の wasm-unsafe-eval を Safari 15 が知らない）→ 4fe2f45 で修正し再確認 OK |
 | 7 | PDF（印刷） | NG→OK．**何も起きなかった**（WKWebView は iframe 内の print を無視）→ 22df216 でネイティブ印刷に変更．ダイアログは出るが，用紙は既定（A4 で 3 分割）＝ README に用紙設定の手順を記載 |
 | 8 | PPTX 出力 | OK（Windows の PowerPoint で描画して崩れなし） |
-| 9 | Marp 出力 | OK（本文入り 5,439 バイト） |
+| 9 | Markdown 出力（旧称 Marp） | OK（本文入り 5,439 バイト） |
 | 10 | 名前を付けて保存（別フォルダ） | OK（一式コピー） |
 | 11 | 見出し・タイトルのフォント | NG→OK．Noto Sans JP が無いと **Times（明朝）**になった → 60bdbf9 で代替フォントを付与 |
 

@@ -8,11 +8,11 @@
 
 研究ポスター専用の**構造化レイアウトエディタ**です。A0 / A1 などの学会ポスターを
 YAML + Markdown で管理し、GUI でプレビューしながら **PDF / PNG / HTML / SVG /
-PPTX / Marp** に書き出せます。
+PPTX / Markdown** に書き出せます。
 
 *A structured layout editor for academic research posters. Manage A0/A1 posters as
 YAML + Markdown, preview them in a desktop GUI, and export to PDF / PNG / HTML /
-SVG / PPTX / Marp.*
+SVG / PPTX / Markdown.*
 
 ポスターの中身はすべてプレーンテキスト（YAML + Markdown）なので、Claude Code /
 Codex などの **Agent LLM がそのまま読んで編集できます**。AI エージェントによる
@@ -75,8 +75,8 @@ want a reproducible, version-controlled workflow or LLM-assisted authoring.*
   自動バックアップ、UI の日英切替、着せ替え・背景画像。
   *Workflow: real-size preview, overflow warnings, a proofreading mode, undo/redo,
   auto-backup, a JA/EN UI toggle, and themes.*
-- **出力** — PDF / PNG / HTML / SVG / PPTX / Marp（忠実度は `docs/export-matrix.md`）。
-  *Export to PDF / PNG / HTML / SVG / PPTX / Marp.*
+- **出力** — PDF / PNG / HTML / SVG / PPTX / Markdown（Markdown は本文のみでレイアウトなし．Marp 向けの front matter 付き．忠実度は `docs/export-matrix.md`）。
+  *Export to PDF / PNG / HTML / SVG / PPTX / Markdown (text only, Marp-oriented front matter).*
 - **エージェント支援** — `rps` CLI（validate / info / explain / export）、VS Code 拡張
   （検証・プレビュー・警告．開発版で、Marketplace には未公開．`packages/vscode-extension` を
   VS Code で開き F5 で起動）、Agent LLM 用 Skill を同梱。
@@ -407,9 +407,9 @@ poster.yaml のあるフォルダに置き換えてください。同梱サン�
 or out of a block as errors (skipped with a notice if Chromium is missing; disable with
 `--no-measure`).*
 
-HTML / SVG / Marp は追加依存なしで出力できます。PDF / PNG は初回のみ
+HTML / SVG / Markdown は追加依存なしで出力できます。PDF / PNG は初回のみ
 `npx playwright install chromium` が必要です。
-*(HTML/SVG/Marp need no extra deps; PDF/PNG require `npx playwright install
+*(HTML/SVG/Markdown need no extra deps; PDF/PNG require `npx playwright install
 chromium` once.)*
 
 ### 動作確認 / Quick verification
@@ -450,7 +450,7 @@ GUI の目視確認は `docs/acceptance-tests.md`（手動受け入れテスト�
 ```text
 packages/
   core/              @rps/core      型 / Zod schema / validate / layout（DOM 非依存）
-  renderer/          @rps/renderer  PosterCanvas / HTML / SVG / Marp / markdown
+  renderer/          @rps/renderer  PosterCanvas / HTML / SVG / Markdown 書き出し / markdown
   exporter/          @rps/exporter  HTML → PDF/PNG（Playwright）
   cli/               @rps/cli       rps（init / validate / explain / preview / export）
   desktop-app/       @rps/desktop-app   Tauri v2 + React GUI

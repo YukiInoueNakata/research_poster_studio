@@ -714,7 +714,7 @@ Research Poster Studio は，次の警告を表示する．
 
 ### 12.2 任意
 
-* Marp Markdown
+* Markdown（本文のみ．Marp 向けの front matter 付き．設定キーは互換のため `marp`）
 * HTML
 * PPTX
 
@@ -922,7 +922,7 @@ MVP は，次を満たせば完了とする．
 
 * 対応OS：全OS（Windows / macOS / Linux）
 * 初期技術選定：Tauri + React + TypeScript + Vite（MVP から Tauri を採用）
-* 出力：PDF / PNG 必須，SVG / PPTX / Marp / HTML も対応
+* 出力：PDF / PNG 必須，SVG / PPTX / Markdown / HTML も対応
 * ポスターサイズ：A0縦を最優先，A1 / A2・横向きにも対応
   （その後インチ系プリセット・カスタムサイズも実装）
 * 図表形式：PNG / JPEG / SVG（PDF図表貼り込みは将来対応 → その後実装済み．

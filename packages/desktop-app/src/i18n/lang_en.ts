@@ -659,7 +659,7 @@ export const lang_en: Record<string, string> = {
   "log.pngExported": "Exported PNG: {path} ({dpi} dpi)",
   "log.htmlExported": "Exported HTML: {path}",
   "log.svgExported": "Exported SVG: {path}",
-  "log.marpExported": "Exported Marp Markdown: {path}",
+  "log.marpExported": "Exported Markdown (poster text, no layout): {path}",
   "log.pptxNoPreview": "PPTX export failed: the preview is not rendered.",
   "log.pptxExported": "Exported PPTX: {path}",
   "log.exportFailed": "Export failed ({kind}): {msg}",

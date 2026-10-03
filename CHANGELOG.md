@@ -18,6 +18,11 @@ follow [Semantic Versioning](https://semver.org/).
   The remaining four are not reachable in the app; see `SECURITY.md`.
 
 ### Changed
+- "Marp" export renamed to **Markdown**: it is the poster text in reading order with a
+  Marp-oriented front matter, not a Marp rendition of the layout. The ineffective
+  `size: <mm>` line (Marp only accepts theme presets) is gone; the default file is
+  `exports/poster.md`. `rps export markdown` is the new name (`marp` remains an alias), and
+  `buildMarp` remains as an alias of `buildMarkdown`; the `export.marp` config key is kept.
 - Reading-distance index: the "comfortable" visual angle is 22 arcmin (was 21), the lower
   bound of the preferred range in ANSI/HFES 100-2007 §7.2.6.1; the 16-arcmin minimum is
   unchanged. Comfortable distances are about 5% shorter.

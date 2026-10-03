@@ -1,4 +1,4 @@
-// @rps/renderer — render a poster project to React markup / HTML / SVG / Marp.
+// @rps/renderer — render a poster project to React markup / HTML / SVG / Markdown.
 // Shared by the desktop app, the CLI, and (later) the VS Code extension.
 
 import type { PosterProject } from "@rps/core";
@@ -13,7 +13,7 @@ export * from "./fancyLists";
 export { buildHtml, renderPosterMarkup } from "./html";
 export type { RenderMarkupOptions } from "./html";
 export { buildSvg } from "./svg";
-export { buildMarp } from "./marp";
+export { buildMarkdown, buildMarp } from "./markdownExport";
 
 export interface RenderHtmlOptions {
   zoom?: number;

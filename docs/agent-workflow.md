@@ -11,7 +11,7 @@ How Claude Code / Codex should edit a Research Poster Studio project.
 3. Modify **source files only** (`poster.yaml`, body markdown,
    `references.bib`, `styles/*.yaml`).
 4. Do **not** edit generated files under `exports/` (PDF / PNG / HTML / SVG /
-   PPTX / Marp) and do **not** edit or delete anything under `backups/`
+   PPTX / Markdown) and do **not** edit or delete anything under `backups/`
    (automatic per-save backups, 10 generations — the user's safety net).
 5. Run `rps validate` (from the project directory).
 6. Fix errors and warnings where possible.

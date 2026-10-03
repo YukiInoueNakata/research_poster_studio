@@ -27,6 +27,7 @@ pnpm-debug.log*
 **/exports/*.svg
 **/exports/*.pptx
 **/exports/*.marp.md
+**/exports/*.md
 
 # automatic per-save backups (poster projects)
 **/backups/

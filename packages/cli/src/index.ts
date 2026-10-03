@@ -2,7 +2,7 @@
 //   rps init --template <name> [dir]
 //   rps validate [dir]
 //   rps preview [dir] [--watch] [--port N]
-//   rps export <pdf|png|svg|html|marp> [dir]
+//   rps export <pdf|png|svg|html|markdown> [dir]   (marp = alias of markdown)
 //   rps info [dir]
 //   rps explain [dir] [--json]
 
@@ -15,7 +15,7 @@ import chokidar from "chokidar";
 
 import { validatePosterYaml, calculateLayout, readingDistanceIndex } from "@rps/core";
 import { loadPosterProjectFs } from "@rps/core/node";
-import { buildHtml, buildSvg, buildMarp } from "@rps/renderer";
+import { buildHtml, buildSvg, buildMarkdown } from "@rps/renderer";
 import { htmlToPdf, htmlToPng, measureOverflow } from "@rps/exporter";
 import { prepareForRender, hasUnconvertibleDiagrams } from "./convert.js";
 import { buildExplain, formatExplainText } from "./explain.js";
@@ -236,7 +236,7 @@ program
 // ---- export --------------------------------------------------------------
 program
   .command("export")
-  .argument("<format>", "pdf | png | svg | html | marp")
+  .argument("<format>", "pdf | png | svg | html | markdown (alias: marp)")
   .argument("[dir]", "project directory", ".")
   .description("Export the poster to exports/")
   .action(async (format: string, dir: string) => {
@@ -275,14 +275,16 @@ program
         console.log(`✓ ${out}`);
         break;
       }
+      case "markdown":
       case "marp": {
-        const out = path.join(outDir, "poster.marp.md");
-        await fs.writeFile(out, buildMarp(project), "utf8");
+        // poster text as Markdown (Marp-oriented front matter; no layout)
+        const out = path.join(outDir, "poster.md");
+        await fs.writeFile(out, buildMarkdown(project), "utf8");
         console.log(`✓ ${out}`);
         break;
       }
       default:
-        console.error(`✗ unknown format: ${format} (pdf|png|svg|html|marp)`);
+        console.error(`✗ unknown format: ${format} (pdf|png|svg|html|markdown)`);
         process.exit(1);
     }
   });

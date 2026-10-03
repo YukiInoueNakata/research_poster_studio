@@ -1,7 +1,7 @@
 # @rps/renderer
 
 Renders a [Research Poster Studio](https://github.com/YukiInoueNakata/research_poster_studio)
-poster project to self-contained HTML, SVG, or Marp Markdown.
+poster project to self-contained HTML, SVG, or Markdown (text only).
 
 The same renderer backs the desktop preview, the `rps` CLI, and the VS Code extension,
 so what you see in the GUI is what gets exported. Output is laid out in millimetres at
@@ -25,13 +25,13 @@ React 19 is a peer dependency (used by the shared `PosterCanvas` component).
 
 ```ts
 import { loadPosterProjectFs } from "@rps/core/node";
-import { buildHtml, buildSvg, buildMarp } from "@rps/renderer";
+import { buildHtml, buildSvg, buildMarkdown } from "@rps/renderer";
 
 const project = await loadPosterProjectFs("./my-poster");
 
 const html = buildHtml(project);   // self-contained HTML (print-ready @page)
 const svg  = buildSvg(project);    // single SVG
-const marp = buildMarp(project);   // Marp Markdown
+const md   = buildMarkdown(project); // poster text as Markdown (no layout)
 ```
 
 Pass the resulting HTML to [`@rps/exporter`](https://www.npmjs.com/package/@rps/exporter)

@@ -148,7 +148,7 @@ export function buildBaseDoc(structureId: StructureId, language: WizardLang): an
       pdf: { enabled: true, filename: "exports/poster.pdf" },
       svg: { enabled: true, filename: "exports/poster.svg" },
       pptx: { enabled: true, filename: "exports/poster.pptx" },
-      marp: { enabled: true, filename: "exports/poster.marp.md" },
+      marp: { enabled: true, filename: "exports/poster.md" },
     },
   };
 }

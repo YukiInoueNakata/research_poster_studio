@@ -32,7 +32,7 @@
     "homepage": "https://github.com/YukiInoueNakata/research_poster_studio",
     "category": "Productivity",
     "shortDescription": "Structured layout editor for academic research posters",
-    "longDescription": "Research Poster Studio lays out A0/A1 academic posters from YAML + Markdown + BibTeX with columns, blocks and height modes, previews them at real size, warns about overflow, and exports PDF, PNG, HTML, SVG, PPTX and Marp.",
+    "longDescription": "Research Poster Studio lays out A0/A1 academic posters from YAML + Markdown + BibTeX with columns, blocks and height modes, previews them at real size, warns about overflow, and exports PDF, PNG, HTML, SVG, PPTX and Markdown.",
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",

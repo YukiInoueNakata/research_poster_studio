@@ -13,13 +13,13 @@
 | **HTML** | 高（自己完結 1 ファイル） | Web 共有・リンクをクリック可能な配布 | OK | OK（追加依存なし） | フォントは閲覧環境依存（`Noto Sans JP` 未導入環境では代替フォント） |
 | **SVG** | 高（ベクタ） | ベクタ編集の出発点・Web 埋め込み | OK | OK（追加依存なし） | `foreignObject` を使うため対応ビューア限定（ブラウザは OK，Illustrator 等では崩れる場合あり） |
 | **PPTX** | 近似 | 共同編集・PowerPoint での二次利用 | OK（pptxgenjs．プレビュー DOM の実測座標から生成） | NG（未対応） | 座標・テキスト・画像の近似再現．Markdown 装飾・枠線は簡略．提出用には使わない |
-| **Marp Markdown** | 構造のみ | スライド（口頭発表資料）への転用 | OK | OK（追加依存なし） | レイアウトは保持されない（ブロックをスライドに分解） |
+| **Markdown**（旧称 Marp．Marp 向け front matter 付き） | 構造のみ | スライド（口頭発表資料）への転用 | OK | OK（追加依存なし） | レイアウトは保持されない（ブロックをスライドに分解） |
 
 ## プレビューとの一致性
 
 プレビュー・PDF・HTML・SVG・PNG は**同一レンダラ**（`@rps/renderer` の
 `PosterCanvas`）を共有しており，mm 実寸で描画される．プレビューで確認した
-見た目がそのまま出力される（PPTX / Marp のみ近似・変換出力）．
+見た目がそのまま出力される（PPTX / Markdown のみ近似・変換出力）．
 
 VS Code 拡張のプレビュー（`buildHtml`）と `rps export html/svg/pdf/png` も
 同じレンダラを通るため，以下のレンダラ機能は**デスクトップ・VS Code・CLI で

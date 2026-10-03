@@ -7,7 +7,7 @@ future VS Code extension all behave identically.
 ```text
 packages/
 ├─ core/             @rps/core      schema (Zod), validation, layout (DOM-free; Node+browser)
-├─ renderer/         @rps/renderer  poster.yaml + content -> React markup / HTML / SVG / Marp
+├─ renderer/         @rps/renderer  poster.yaml + content -> React markup / HTML / SVG / Markdown
 ├─ exporter/         @rps/exporter  HTML -> PDF / PNG via Playwright (Chromium)
 ├─ cli/              @rps/cli       `rps` (init / validate / preview / export / info)
 ├─ desktop-app/      @rps/desktop-app  Tauri v2 + React GUI (preview/inspector)
@@ -27,7 +27,7 @@ exporter ◄───┘                    (no DOM, no Electron/Tauri)
   unit/normalize helpers. A separate `@rps/core/node` entry adds a filesystem
   project loader for the CLI.
 - **@rps/renderer** owns the single `PosterCanvas` React component plus
-  `renderPosterToHtml` / `buildSvg` / `buildMarp`. The desktop preview and every
+  `renderPosterToHtml` / `buildSvg` / `buildMarkdown`. The desktop preview and every
   HTML/SVG export use the same renderer (Markdown sanitized with
   isomorphic-dompurify so it works in Node and the browser).
 - **@rps/exporter** drives headless Chromium. The renderer HTML declares
@@ -37,7 +37,7 @@ exporter ◄───┘                    (no DOM, no Electron/Tauri)
   rendering logic. Desktop-only modules are limited to `src/export/`
   (print-dialog PDF, PNG, pptxgenjs PPTX — PPTX is generated from measured
   preview DOM rects) and `src/lib/` glue (file I/O via Tauri, figure
-  conversion). PPTX/SVG/Marp/HTML come from the desktop using renderer +
+  conversion). PPTX/SVG/Markdown/HTML come from the desktop using renderer +
   pptxgenjs. The CLI uses Playwright for fully automated PDF/PNG.
 
 > Figure conversion: the desktop WebView converts PDF / Mermaid / Graphviz

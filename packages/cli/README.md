@@ -3,7 +3,7 @@
 `rps` — the command line for [Research Poster Studio](https://github.com/YukiInoueNakata/research_poster_studio),
 a structured layout editor for academic research posters. A poster is a plain-text
 project (`poster.yaml` + Markdown + figures); this CLI validates it, summarises its
-structure for LLM agents, and exports it to PDF / PNG / HTML / SVG / Marp.
+structure for LLM agents, and exports it to PDF / PNG / HTML / SVG / Markdown.
 
 ## Install
 
@@ -22,13 +22,13 @@ rps export   pdf <project-dir>               # write to <project-dir>/exports/
 rps preview  <project-dir>                   # watch and re-render on change
 ```
 
-Formats for `export`: `pdf`, `png`, `html`, `svg`, `marp`.
+Formats for `export`: `pdf`, `png`, `html`, `svg`, `markdown` (poster text with Marp-oriented front matter; `marp` is an alias).
 
 ## Requirements
 
 - Node.js >= 20.19
 - PDF / PNG export additionally needs a Chromium build:
-  `npx playwright install chromium`. HTML / SVG / Marp need no extra dependencies.
+  `npx playwright install chromium`. HTML / SVG / Markdown need no extra dependencies.
 
 ## Notes
 

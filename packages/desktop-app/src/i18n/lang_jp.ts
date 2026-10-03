@@ -660,7 +660,7 @@ export const lang_jp: Record<string, string> = {
   "log.pngExported": "PNG を書き出しました: {path}（{dpi} dpi）",
   "log.htmlExported": "HTML を書き出しました: {path}",
   "log.svgExported": "SVG を書き出しました: {path}",
-  "log.marpExported": "Marp Markdown を書き出しました: {path}",
+  "log.marpExported": "Markdown（ポスターの本文．レイアウトなし）を書き出しました: {path}",
   "log.pptxNoPreview": "PPTX 書き出し失敗: プレビューが未描画です．",
   "log.pptxExported": "PPTX を書き出しました: {path}",
   "log.exportFailed": "エクスポート失敗 ({kind}): {msg}",

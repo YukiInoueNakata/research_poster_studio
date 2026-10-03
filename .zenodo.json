@@ -1,6 +1,6 @@
 {
   "title": "Research Poster Studio",
-  "description": "A desktop GUI and command-line application for structured layout authoring of academic research posters from text files (YAML + Markdown + BibTeX), with export to PDF, PNG, HTML, SVG, PPTX, and Marp. Implemented with Tauri v2, React, TypeScript, and Rust; runs on Windows, macOS, and Linux.",
+  "description": "A desktop GUI and command-line application for structured layout authoring of academic research posters from text files (YAML + Markdown + BibTeX), with export to PDF, PNG, HTML, SVG, PPTX, and Markdown. Implemented with Tauri v2, React, TypeScript, and Rust; runs on Windows, macOS, and Linux.",
   "upload_type": "software",
   "access_right": "open",
   "license": "Apache-2.0",

@@ -7,7 +7,7 @@ import { save } from "@tauri-apps/plugin-dialog";
 import { openPath } from "@tauri-apps/plugin-opener";
 import { invoke } from "@tauri-apps/api/core";
 import type { DiagramResolver, PosterProject } from "@rps/core";
-import { buildHtml, buildSvg, buildMarp } from "@rps/renderer";
+import { buildHtml, buildSvg, buildMarkdown } from "@rps/renderer";
 import { ensureDir, writeText, writeFileFromBase64 } from "../lib/tauri";
 import { buildPptxBase64 } from "./pptx";
 import { buildPngBase64 } from "./png";
@@ -33,7 +33,7 @@ export function exportName(project: PosterProject | null, ext: string): string {
     png: cfg?.png?.filename,
     svg: cfg?.svg?.filename,
     pptx: cfg?.pptx?.filename,
-    "marp.md": cfg?.marp?.filename,
+    "md": cfg?.marp?.filename,
   };
   return map[ext] ?? `exports/poster.${ext}`;
 }
@@ -102,9 +102,9 @@ export async function runExport(kind: ExportKind, ctx: ExportCtx): Promise<void>
         break;
       }
       case "marp": {
-        const path = await pickExportPath(ctx, exportName(project, "marp.md"), "md", "Marp Markdown");
+        const path = await pickExportPath(ctx, exportName(project, "md"), "md", "Markdown");
         if (!path) break;
-        await writeText(path, buildMarp(project));
+        await writeText(path, buildMarkdown(project));
         log("ok", t("log.marpExported", { path }));
         break;
       }

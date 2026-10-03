@@ -164,7 +164,7 @@ export default function Toolbar({
       <button onClick={() => onExport("html")} disabled={!loaded || busy}>HTML</button>
       <button onClick={() => onExport("svg")} disabled={!loaded || busy}>SVG</button>
       <button onClick={() => onExport("pptx")} disabled={!loaded || busy}>PPTX</button>
-      <button onClick={() => onExport("marp")} disabled={!loaded || busy}>Marp</button>
+      <button onClick={() => onExport("marp")} disabled={!loaded || busy}>Markdown</button>
     </div>
   );
 }

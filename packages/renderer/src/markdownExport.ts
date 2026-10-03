@@ -1,19 +1,20 @@
-// Marp Markdown export (single large slide). Useful as an editable text
-// fallback and for the agent/ workflow.
+// Markdown export: the poster's text (titles, bodies, figures as image links)
+// in reading order, as one Markdown file. It does not reproduce the layout.
+// The front matter targets Marp (math via KaTeX) so the file can be reused as
+// slide material, but it is not a Marp rendition of the poster: Marp's `size`
+// only accepts theme presets, so no A0/A1 page size is set.
 
 import type { Block, PosterProject } from "@rps/core";
-import { posterSizeMm, prepareCitations, sectionNumbers } from "@rps/core";
+import { prepareCitations, sectionNumbers } from "@rps/core";
 import { computeBands, computeChildBands } from "@rps/core";
 
-export function buildMarp(project: PosterProject): string {
+export function buildMarkdown(project: PosterProject): string {
   const { doc } = project;
-  const size = posterSizeMm(doc.project);
   // markdown headings are single-line; fold manual title line breaks into spaces
   const oneLine = (s: string) => s.replace(/\s*\n\s*/g, " ");
   const head = [
     "---",
     "marp: true",
-    `size: ${size.w}mm ${size.h}mm`,
     "paginate: false",
     `theme: default`,
     // LaTeX math ($…$ / $$…$$) in block bodies is passed through verbatim and
@@ -65,3 +66,6 @@ export function buildMarp(project: PosterProject): string {
   for (const b of inReadingOrder(computeBands(doc))) emit(b, 0);
   return parts.join("\n");
 }
+
+/** @deprecated use buildMarkdown (kept for compatibility). */
+export const buildMarp = buildMarkdown;

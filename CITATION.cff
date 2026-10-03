@@ -4,7 +4,7 @@ title: "Research Poster Studio"
 abstract: >-
   A desktop GUI and command-line application for structured layout authoring of
   academic research posters from text files (YAML + Markdown + BibTeX), with
-  export to PDF, PNG, HTML, SVG, PPTX, and Marp.
+  export to PDF, PNG, HTML, SVG, PPTX, and Markdown.
 type: software
 authors:
   - family-names: "Nakata"

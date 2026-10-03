@@ -44,7 +44,7 @@ npm run typecheck    # type-check all workspaces
 npm run smoke        # smoke tests (column layout + CLI validate/info/export)
 ```
 
-PDF / PNG export requires `npx playwright install chromium` once; HTML / SVG / Marp need no extra dependencies. GUI changes should be checked manually against `docs/acceptance-tests.md`.
+PDF / PNG export requires `npx playwright install chromium` once; HTML / SVG / Markdown need no extra dependencies. GUI changes should be checked manually against `docs/acceptance-tests.md`.
 
 ## Coding guidelines / コーディング規約
 
