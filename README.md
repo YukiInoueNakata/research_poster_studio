@@ -106,6 +106,13 @@ want a reproducible, version-controlled workflow or LLM-assisted authoring.*
   xattr -dr com.apple.quarantine "/Applications/Research Poster Studio.app"
   ```
 
+> **Linux の AppImage を端末から起動したときの警告 / Warnings when starting the AppImage:**
+> `Failed to load module "canberra-gtk-module"` や `libgvfscommon.so: undefined symbol: g_task_set_static_name` が表示されることがあります。
+> 前者は操作音のモジュール、後者は AppImage に同梱された GLib とシステムの GVfs の版の違いによるもので、
+> アプリが起動していれば無視して構いません（`.deb` 版では通常表示されません）。
+> *These GTK/GVfs messages (sound module; bundled GLib vs. system GVfs version) are harmless if the app starts;
+> the `.deb` build normally does not print them.*
+
 > **Windows でアンインストールできない場合 / If uninstall is blocked on Windows:**
 > `.exe`（NSIS）版のアンインストーラ `uninstall.exe` は未署名のため、**スマート アプリ コントロール（SAC）**が
 > 有効な環境ではブロックされ、アンインストールが完走しないことがあります。この場合、`uninstall.exe` と
