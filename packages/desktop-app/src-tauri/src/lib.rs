@@ -184,6 +184,14 @@ fn copy_dir_all(src: &Path, dst: &Path) -> std::io::Result<()> {
     Ok(())
 }
 
+/// Print the main webview (macOS: WKWebView ignores window.print() inside an
+/// iframe, so the front end puts the poster into a print-only root and asks
+/// the native webview to print).
+#[tauri::command]
+fn print_webview(webview: tauri::Webview) -> Result<(), String> {
+    webview.print().map_err(|e| e.to_string())
+}
+
 /// "Save as" into another folder: copy the whole project (poster files,
 /// content/, figures/, styles/, references) to `dst`, skipping generated or
 /// bulky top-level folders. Returns the number of files copied.
@@ -442,6 +450,7 @@ pub fn run() {
             join_path,
             sample_project_dir,
             copy_project,
+            print_webview,
             paste_clipboard_image,
             backup_project,
             list_fonts,
