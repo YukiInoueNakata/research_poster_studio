@@ -33,4 +33,4 @@ export function renderPosterToHtml(
   return buildHtml(project);
 }
 
-export const RPS_RENDERER_VERSION = "0.1.0";
+export const RPS_RENDERER_VERSION = "0.1.1";

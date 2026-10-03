@@ -1,6 +1,6 @@
 [package]
 name = "research-poster-studio"
-version = "0.1.0"
+version = "0.1.1"
 description = "Research Poster Studio - structured layout editor for academic research posters"
 authors = ["Yuki Inoue Nakata"]
 edition = "2021"

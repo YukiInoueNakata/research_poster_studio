@@ -1,6 +1,6 @@
 {
   "name": "@rps/exporter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Render self-contained poster HTML to PDF / PNG via Playwright (A0/A1 @page)",
   "license": "Apache-2.0",
   "author": "Yuki Inoue Nakata <dj.y.nakata@gmail.com>",

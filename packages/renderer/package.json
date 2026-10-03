@@ -1,6 +1,6 @@
 {
   "name": "@rps/renderer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Render a poster project to self-contained HTML / SVG / Marp (shared by desktop, CLI, VS Code)",
   "license": "Apache-2.0",
   "author": "Yuki Inoue Nakata <dj.y.nakata@gmail.com>",

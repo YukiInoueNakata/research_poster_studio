@@ -18,7 +18,7 @@ authors:
 repository-code: "https://github.com/YukiInoueNakata/research_poster_studio"
 url: "https://github.com/YukiInoueNakata/research_poster_studio"
 license: Apache-2.0
-version: "0.1.0"
+version: "0.1.1"
 doi: "10.5281/zenodo.23114417"
 identifiers:
   - type: doi

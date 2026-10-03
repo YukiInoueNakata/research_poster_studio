@@ -81,4 +81,4 @@ export async function measureOverflow(html: string): Promise<OverflowReport> {
   );
 }
 
-export const RPS_EXPORTER_VERSION = "0.1.0";
+export const RPS_EXPORTER_VERSION = "0.1.1";
