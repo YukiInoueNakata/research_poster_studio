@@ -147,6 +147,13 @@ for (const [name, dir] of Object.entries(SAMPLES)) {
   const s = existsSync(out) ? readFileSync(out, "utf8") : "";
   check("poster.marp.md non-trivial", s.length > 100);
 }
+{
+  // nested layout: body text lives in child blocks and must reach the Marp file
+  const r = rps("export", "marp", SAMPLES.catEn);
+  const out = path.join(SAMPLES.catEn, "exports", "poster.marp.md");
+  const s = existsSync(out) ? readFileSync(out, "utf8") : "";
+  check("marp catEn includes child-block text", r.code === 0 && s.includes("1-1. Background") && s.includes("wall of text"));
+}
 
 // ---- 既存サンプルの export html も生成できる --------------------------------
 for (const name of ["catEn", "catJa", "nested"]) {

@@ -32,6 +32,12 @@ follow [Semantic Versioning](https://semver.org/).
   sizes; such blocks now indent lists by `max(6mm, 1.15em)`. Unboxed blocks are unchanged.
 - Saving a single-file `content.md` no longer rewrites untitled headings as `#  {#id}` or
   adds blank lines; saving is idempotent.
+- Desktop PNG export never wrote a file ("Tainted canvases may not be exported"): the
+  poster SVG is now rasterized from a data: URL.
+- Desktop PDF export printed white headers unless "Background graphics" was ticked in the
+  print dialog; backgrounds now always print (`print-color-adjust: exact`).
+- Marp export omitted every child block, so nested posters (including the demos) came out
+  almost empty; child blocks and figures are now exported in reading order.
 
 ## [0.1.1] - 2026-10-03
 
