@@ -6,6 +6,8 @@ follow [Semantic Versioning](https://semver.org/).
 
 ## [0.1.1] - 2026-10-03
 
+Archived on Zenodo: [10.5281/zenodo.23115929](https://doi.org/10.5281/zenodo.23115929).
+
 ### Added
 - Standard demo posters in Japanese and English (`examples/sample-cat-paws-ja`,
   `examples/sample-cat-paws-en`): a fictional A0 IMRAD study with only real references.
