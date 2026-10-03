@@ -34,3 +34,13 @@ describe("Marp export", () => {
     expect(md).toContain("<!-- figure source: figures/procedure.dot");
   });
 });
+
+describe("fontStack", () => {
+  it("adds sans fallbacks so a missing font does not fall back to the browser's serif", async () => {
+    const { fontStack } = await import("../src/posterCss");
+    expect(fontStack("Noto Sans JP")).toMatch(/^Noto Sans JP, .*sans-serif$/);
+    expect(fontStack("Yu Mincho")).toMatch(/serif$/);
+    expect(fontStack("Yu Mincho")).not.toMatch(/sans-serif$/);
+    expect(fontStack("Arial, sans-serif")).toBe("Arial, sans-serif");
+  });
+});

@@ -5,6 +5,21 @@ import type { PosterDoc } from "@rps/core";
 import { roleColorCss } from "./markdown";
 import { fancyListCss } from "./fancyLists";
 
+/**
+ * Append platform fallbacks and a generic family to a font-family value, so a
+ * font missing on this machine falls back to a similar face instead of the
+ * browser default (WebKit uses a serif face: titles came out in Times on macOS).
+ */
+export function fontStack(family: string | undefined): string {
+  const f = (family ?? "").trim();
+  if (!f) return '"Hiragino Sans", "Yu Gothic", "Noto Sans CJK JP", sans-serif';
+  if (/(^|,)\s*(serif|sans-serif|monospace|cursive|fantasy|system-ui)\s*$/i.test(f)) return f;
+  const serif = /mincho|明朝|times|georgia|garamond|serif/i.test(f) && !/sans/i.test(f);
+  return serif
+    ? `${f}, "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", serif`
+    : `${f}, "Hiragino Sans", "Yu Gothic", "Noto Sans CJK JP", sans-serif`;
+}
+
 export function posterCss(doc: PosterDoc): string {
   const t = doc.theme;
   const lineHeight = t.line_height ?? 1.45;
@@ -14,7 +29,7 @@ export function posterCss(doc: PosterDoc): string {
   box-sizing:border-box;
   background:${t.colors.background};
   color:${t.colors.text};
-  font-family:${t.font_family.body}, "Yu Gothic", "Hiragino Sans", sans-serif;
+  font-family:${fontStack(t.font_family.body)};
   display:flex; flex-direction:column;
   /* On screen, overflowing content stays VISIBLE (spills past the A0 frame) so
      the overflow is obvious and the overflow warning is actionable — never
@@ -31,7 +46,7 @@ export function posterCss(doc: PosterDoc): string {
 @media print { .rps-poster{ overflow:hidden; } }
 .rps-poster *{ box-sizing:border-box; }
 .rps-header{ text-align:center; padding:0 0 6mm; border-bottom:2pt solid ${t.colors.accent}; }
-.rps-title{ font-family:${t.font_family.title}; font-size:${t.font_size.title}; color:${t.colors.heading}; margin:0 0 3mm; line-height:1.1; font-weight:700; white-space:pre-line; }
+.rps-title{ font-family:${fontStack(t.font_family.title)}; font-size:${t.font_size.title}; color:${t.colors.heading}; margin:0 0 3mm; line-height:1.1; font-weight:700; white-space:pre-line; }
 .rps-subtitle{ font-size:${t.font_size.subtitle}; color:${t.colors.accent}; margin:0 0 4mm; white-space:pre-line; }
 .rps-authors{ font-size:${t.font_size.heading2}; color:${t.colors.text}; }
 .rps-affil{ font-size:${t.font_size.caption}; color:${t.colors.muted}; margin-top:2mm; }
@@ -51,7 +66,7 @@ export function posterCss(doc: PosterDoc): string {
 .rps-follow-fill > .rps-block{ flex:1 1 auto; min-height:0; }
 .rps-keywords{ font-size:${t.font_size.caption}; color:${t.colors.muted}; margin-top:2mm; }
 .rps-block{ display:flex; flex-direction:column; min-height:0; }
-.rps-block-title{ font-family:${t.font_family.heading}; font-size:${t.font_size.heading1}; color:${t.colors.heading}; margin:0 0 2mm; line-height:1.15; font-weight:700; border-left:6pt solid ${t.colors.accent}; padding-left:4mm; white-space:pre-line; text-wrap:balance; overflow-wrap:break-word; }
+.rps-block-title{ font-family:${fontStack(t.font_family.heading)}; font-size:${t.font_size.heading1}; color:${t.colors.heading}; margin:0 0 2mm; line-height:1.15; font-weight:700; border-left:6pt solid ${t.colors.accent}; padding-left:4mm; white-space:pre-line; text-wrap:balance; overflow-wrap:break-word; }
 .rps-section-num{ margin-right:0.5em; }
 .rps-heading-badge{ vertical-align:0.02em; box-sizing:border-box; }
 /* N2 card: title bar bleeds flush to top/edges (section padding is 0); the
@@ -72,7 +87,7 @@ export function posterCss(doc: PosterDoc): string {
    edge, a fixed 6mm indent let them overlap the border at large body sizes. */
 .rps-boxed > .rps-block-body ul,.rps-boxed > .rps-block-body ol,.rps-card > .rps-block-body ul,.rps-card > .rps-block-body ol{ padding-left:max(6mm, 1.15em); }
 .rps-block-body h1,.rps-block-body h2,.rps-block-body h3,.rps-block-body h4,.rps-block-body h5,.rps-block-body h6{
-  font-family:${t.font_family.heading}; color:${t.colors.heading};
+  font-family:${fontStack(t.font_family.heading)}; color:${t.colors.heading};
   margin:3mm 0 1.5mm; line-height:1.2; font-weight:700;
 }
 .rps-block-body h3{ font-size:${t.font_size.heading2}; }

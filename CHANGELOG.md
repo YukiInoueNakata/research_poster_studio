@@ -30,6 +30,9 @@ follow [Semantic Versioning](https://semver.org/).
   catches the blank-window regression (`npm run smoke:desktop`).
 
 ### Fixed
+- Titles and headings fell back to the browser default (a serif face in WebKit, e.g. Times on
+  macOS) when the requested font was missing; every theme and block font now gets platform
+  fallbacks and a generic family (sans or serif to match).
 - The desktop app showed a blank (black) window on macOS 12 (Safari 15 WebView): a
   citation regex used a lookbehind, which Safari before 16.4 cannot parse. Rewritten
   without lookbehind; a unit test keeps lookbehinds out of the sources.

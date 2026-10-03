@@ -1,6 +1,7 @@
 // Resolve block-level style and height modes into React CSS properties.
 
 import type { CSSProperties } from "react";
+import { fontStack } from "./posterCss";
 import type { Block, Theme } from "@rps/core";
 
 const ROLE_KEYS = ["text", "heading", "accent", "warning", "muted", "background"] as const;
@@ -88,7 +89,7 @@ export function boxStyle(block: Block, theme: Theme): CSSProperties {
 export function bodyTextStyle(block: Block, theme: Theme): CSSProperties {
   const s = block.style ?? {};
   const css: CSSProperties = {
-    fontFamily: s.font_family ?? undefined,
+    fontFamily: s.font_family ? fontStack(s.font_family) : undefined,
     // reference-format blocks (D) default to the smaller references size unless
     // an explicit body_font_size is set.
     fontSize:
@@ -110,7 +111,7 @@ export function headingStyle(block: Block, theme: Theme): CSSProperties {
   const deco: string[] = [];
   if (s.heading_underline) deco.push("underline");
   const css: CSSProperties = {
-    fontFamily: s.font_family ?? undefined,
+    fontFamily: s.font_family ? fontStack(s.font_family) : undefined,
     fontSize: s.heading_font_size ?? theme.font_size.heading1,
     color: resolveColor(s.heading_color, theme) ?? theme.colors.heading,
     fontWeight: s.heading_bold === false ? 400 : s.heading_bold ? 700 : undefined,
