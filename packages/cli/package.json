@@ -1,6 +1,6 @@
 {
   "name": "@rps/cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "rps - command line for Research Poster Studio (init / validate / preview / export / info)",
   "license": "Apache-2.0",
   "author": "Yuki Inoue Nakata <dj.y.nakata@gmail.com>",

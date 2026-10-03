@@ -1,6 +1,6 @@
 {
   "name": "@rps/vscode-extension",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "Apache-2.0",
   "private": true,
   "description": "VS Code extension for Research Poster Studio (uses @rps/core + @rps/renderer)",

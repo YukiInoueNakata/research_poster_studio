@@ -1,6 +1,6 @@
 {
   "name": "@rps/core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Schema, validation, and layout calculation for Research Poster Studio (DOM/Electron-free)",
   "license": "Apache-2.0",
   "author": "Yuki Inoue Nakata <dj.y.nakata@gmail.com>",

@@ -48,7 +48,7 @@ async function readYaml(dir: string): Promise<string> {
 }
 
 const program = new Command();
-program.name("rps").description("Research Poster Studio CLI").version("0.1.1");
+program.name("rps").description("Research Poster Studio CLI").version("0.1.2");
 
 // ---- init ----------------------------------------------------------------
 program
