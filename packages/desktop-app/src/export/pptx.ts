@@ -9,7 +9,7 @@
 
 import pptxgen from "pptxgenjs";
 import type { PosterProject, Block } from "@rps/core";
-import { posterSizeMm, parseFontPt, MM_PER_INCH } from "@rps/core";
+import { posterSizeMm, MM_PER_INCH } from "@rps/core";
 import { groupPptxBase64 } from "./pptxGroup";
 
 const hex = (c: string | undefined, fallback: string) =>
@@ -46,6 +46,174 @@ function normRect(el: Element, root: DOMRect): Box {
     w: r.width / root.width,
     h: r.height / root.height,
   };
+}
+
+/** CSS px (1/96 in) -> pt (1/72 in). */
+const PX_TO_PT = 0.75;
+/** Preview-only overlays and non-text content skipped when collecting text. */
+const SKIP_SEL =
+  ".rps-fontbadge, .rps-overflow-badge, .rps-figure, .rps-gallery, .rps-figure-missing, figure, table, img, svg, script, style";
+
+/** "rgb(r, g, b)" / "rgba(...)" -> "rrggbb"; null when transparent. */
+function cssHex(c: string): string | null {
+  const m = c.match(/rgba?\(([^)]+)\)/);
+  if (!m) return null;
+  const v = m[1].split(/[\s,/]+/).filter(Boolean).map(Number);
+  if (v.length > 3 && v[3] === 0) return null;
+  return v.slice(0, 3).map((n) => Math.round(n).toString(16).padStart(2, "0")).join("");
+}
+
+type Run = pptxgen.TextProps;
+type RunOpts = NonNullable<pptxgen.TextProps["options"]>;
+
+/**
+ * Convert rendered HTML into PowerPoint text runs: paragraphs, bulleted /
+ * numbered lists, bold / italic / underline / strike, super/subscript, color,
+ * font and size, all read from computed styles.
+ */
+function textRuns(root: Element): Run[] {
+  // pptxgenjs starts a new paragraph at every run that carries `bullet` (and
+  // then drops that run's breakLine), so paragraph-level options must sit on
+  // the first run of each paragraph only. Build paragraphs first, then flatten.
+  interface Para { p: RunOpts; runs: Run[] }
+  const paras: Para[] = [];
+  let cur: Para | null = null;
+  const isBlock = (e: Element) => /^(block|list-item|flex|grid|table)/.test(getComputedStyle(e).display);
+  const open = (p: RunOpts) => {
+    if (!cur) cur = { p, runs: [] };
+  };
+  const close = () => {
+    if (cur && cur.runs.some((r) => (r.text ?? "").trim())) paras.push(cur);
+    cur = null;
+  };
+  const paraOf = (e: Element, base: RunOpts): RunOpts => {
+    const cs = getComputedStyle(e);
+    const lh = parseFloat(cs.lineHeight);
+    return {
+      ...base,
+      paraSpaceAfter: (parseFloat(cs.marginBottom) || 0) * PX_TO_PT,
+      ...(lh ? { lineSpacing: lh * PX_TO_PT } : { lineSpacingMultiple: 1.2 }),
+    };
+  };
+  const inline = (node: Node, p: RunOpts) => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const text = (node.textContent ?? "").replace(/\s+/g, " ");
+      if (!text.trim() && !cur?.runs.length) return;
+      open(p);
+      const pe = node.parentElement!;
+      const cs = getComputedStyle(pe);
+      const deco = cs.textDecorationLine || "";
+      const va = cs.verticalAlign;
+      cur!.runs.push({
+        text: cur!.runs.length ? text : text.replace(/^\s+/, ""),
+        options: {
+          bold: (parseInt(cs.fontWeight, 10) || 400) >= 600,
+          italic: cs.fontStyle === "italic",
+          underline: deco.includes("underline") ? { style: "sng" } : undefined,
+          strike: deco.includes("line-through") ? "sngStrike" : undefined,
+          superscript: va === "super" || undefined,
+          subscript: va === "sub" || undefined,
+          fontSize: Math.round((parseFloat(cs.fontSize) || 16) * PX_TO_PT * 10) / 10,
+          fontFace: cs.fontFamily.split(",")[0].replace(/["']/g, "").trim() || undefined,
+          color: cssHex(cs.color) ?? undefined,
+          highlight: pe.tagName === "MARK" ? cssHex(cs.backgroundColor) ?? undefined : undefined,
+        },
+      });
+      return;
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) return;
+    const e = node as Element;
+    if (e.matches(SKIP_SEL)) return;
+    if (e.tagName === "BR") {
+      close();
+      return;
+    }
+    if (isBlock(e)) {
+      block(e, p);
+      return;
+    }
+    e.childNodes.forEach((c) => inline(c, p));
+  };
+  const block = (e: Element, base: RunOpts) => {
+    if (e.matches(SKIP_SEL)) return;
+    if (e.tagName === "UL" || e.tagName === "OL") {
+      close();
+      const level = (base.indentLevel ?? -1) + 1;
+      for (const li of Array.from(e.children)) {
+        if (li.tagName !== "LI") continue;
+        const bullet: RunOpts["bullet"] = e.tagName === "OL" ? { type: "number", indent: 18 } : { indent: 18 };
+        block(li, { ...base, bullet, indentLevel: level });
+      }
+      return;
+    }
+    close();
+    const p = paraOf(e, base);
+    for (const c of Array.from(e.childNodes)) {
+      if (c.nodeType === Node.ELEMENT_NODE && isBlock(c as Element)) {
+        close();
+        // a nested block inside a list item continues without its own bullet
+        const ce = c as Element;
+        block(ce, ce.tagName === "UL" || ce.tagName === "OL" ? base : { ...base, bullet: undefined });
+      } else {
+        inline(c, p);
+      }
+    }
+    close();
+  };
+  block(root, {});
+  close();
+  const out: Run[] = [];
+  paras.forEach((para, i) => {
+    para.runs.forEach((r, j) => {
+      const o: RunOpts = { ...r.options };
+      if (j === 0) Object.assign(o, para.p);
+      if (j === para.runs.length - 1 && i < paras.length - 1) o.breakLine = true;
+      out.push({ text: r.text, options: o });
+    });
+  });
+  return out;
+}
+
+/** Place an HTML table as a native PowerPoint table at its measured box. */
+function addTable(slide: pptxgen.Slide, table: Element, box: Box, objectName: string) {
+  const rows: pptxgen.TableRow[] = [];
+  table.querySelectorAll("tr").forEach((tr) => {
+    const row: pptxgen.TableCell[] = [];
+    tr.querySelectorAll("th, td").forEach((cell) => {
+      const cs = getComputedStyle(cell);
+      const fill = cssHex(cs.backgroundColor);
+      const bt = parseFloat(cs.borderBottomWidth) || 0;
+      row.push({
+        text: (cell as HTMLElement).innerText.trim(),
+        options: {
+          bold: (parseInt(cs.fontWeight, 10) || 400) >= 600,
+          fontSize: Math.round((parseFloat(cs.fontSize) || 16) * PX_TO_PT * 10) / 10,
+          fontFace: cs.fontFamily.split(",")[0].replace(/["']/g, "").trim() || undefined,
+          color: cssHex(cs.color) ?? undefined,
+          align: (["center", "right"].includes(cs.textAlign) ? cs.textAlign : "left") as "left",
+          valign: "middle",
+          fill: fill ? { color: fill } : undefined,
+          border: bt > 0 ? { type: "solid", pt: bt * PX_TO_PT, color: cssHex(cs.borderBottomColor) ?? "999999" } : { type: "none" },
+          // cell margin is in inches, [T, R, B, L]
+          margin: [
+            (parseFloat(cs.paddingTop) || 0) / 96,
+            (parseFloat(cs.paddingRight) || 0) / 96,
+            (parseFloat(cs.paddingBottom) || 0) / 96,
+            (parseFloat(cs.paddingLeft) || 0) / 96,
+          ],
+        },
+      });
+    });
+    if (row.length) rows.push(row);
+  });
+  if (!rows.length) return;
+  // column widths from the first row's measured cells
+  const first = table.querySelector("tr");
+  const tw = table.getBoundingClientRect().width || 1;
+  const colW = first
+    ? Array.from(first.querySelectorAll("th, td")).map((c) => (c.getBoundingClientRect().width / tw) * box.w)
+    : undefined;
+  slide.addTable(rows, { ...box, colW, objectName } as pptxgen.TableProps);
 }
 
 export async function buildPptxBase64(
@@ -90,84 +258,116 @@ export async function buildPptxBase64(
     h: b.h * inH,
   });
 
-  // Header title
+  // Everything below is measured from the live preview DOM: positions from
+  // bounding boxes (normalized to the poster root, so the preview zoom does not
+  // matter) and look from computed styles (CSS px are real-size px, 1px = 0.75pt).
+  const place = (el: Element) => toBox(normRect(el, rootRect));
+  const rectShape = (el: Element, objectName: string) => {
+    const cs = getComputedStyle(el);
+    const fill = cssHex(cs.backgroundColor);
+    const bw = parseFloat(cs.borderTopWidth) || 0;
+    const bl = parseFloat(cs.borderLeftWidth) || 0;
+    if (fill || bw > 0) {
+      slide.addShape("rect", {
+        ...place(el),
+        fill: fill ? { color: fill } : { type: "none" },
+        line: bw > 0 ? { color: cssHex(cs.borderTopColor) ?? "666666", width: bw * PX_TO_PT } : { type: "none" },
+        objectName,
+      });
+    }
+    if (bl > 0 && bw === 0) {
+      // left accent bar only (e.g. section titles, callouts)
+      const b = place(el);
+      slide.addShape("rect", {
+        x: b.x, y: b.y, w: (bl / 96), h: b.h,
+        fill: { color: cssHex(cs.borderLeftColor) ?? "1f5f99" }, line: { type: "none" }, objectName,
+      });
+    }
+  };
+  const textBox = (el: Element, objectName: string) => {
+    const runs = textRuns(el);
+    if (!runs.length) return;
+    const cs = getComputedStyle(el);
+    const px = (v: string) => (parseFloat(v) || 0) * PX_TO_PT;
+    slide.addText(runs, {
+      ...place(el),
+      valign: "top",
+      align: (["center", "right", "justify"].includes(cs.textAlign) ? cs.textAlign : "left") as "left",
+      margin: [px(cs.paddingTop), px(cs.paddingRight), px(cs.paddingBottom), px(cs.paddingLeft) + px(cs.borderLeftWidth)], // pt, [T, R, B, L]
+      fit: "none",
+      objectName,
+    });
+  };
+
+  // Header: band background, then each text line at its own measured box.
   const header = rootEl.querySelector(".rps-header");
   if (header) {
-    const b = toBox(normRect(header, rootRect));
-    slide.addText(
-      [
-        {
-          text: doc.project.title,
-          options: {
-            bold: true,
-            fontSize: parseFontPt(doc.theme.font_size.title) ?? 54,
-            color: hex(doc.theme.colors.heading, "111111"),
-          },
-        },
-        ...(doc.project.subtitle
-          ? [
-              {
-                text: "\n" + doc.project.subtitle,
-                options: {
-                  fontSize: parseFontPt(doc.theme.font_size.subtitle) ?? 32,
-                  color: hex(doc.theme.colors.accent, "1f5f99"),
-                },
-              },
-            ]
-          : []),
-        {
-          text: "\n" + doc.project.authors.map((a) => a.name).join("，"),
-          options: { fontSize: parseFontPt(doc.theme.font_size.heading2) ?? 28 },
-        },
-      ],
-      { ...b, align: "center", valign: "middle", objectName: grpName("__header__") },
-    );
+    rectShape(header, grpName("__header__"));
+    header
+      .querySelectorAll(".rps-conf, .rps-title, .rps-subtitle, .rps-authors, .rps-affil, .rps-header-badge")
+      .forEach((el) => textBox(el, grpName("__header__")));
   }
+  rootEl.querySelectorAll(".rps-footer-text").forEach((el) => textBox(el, grpName("__header__")));
 
-  // Blocks
-  const bodyPt = parseFontPt(doc.theme.font_size.body) ?? 22;
-  const headPt = parseFontPt(doc.theme.font_size.heading1) ?? 34;
+  // Blocks: box (background / border), title, body text, tables. Only the
+  // block's *own* title/body are used; child blocks are visited separately.
   rootEl.querySelectorAll("[data-block-id]").forEach((el) => {
     const id = el.getAttribute("data-block-id")!;
     if (id === "__header__") return; // header handled separately above
-    const block = doc.blocks.find((b) => b.id === id);
-    const titleEl = el.querySelector(".rps-block-title");
-    const bodyEl = el.querySelector(".rps-block-body");
-    const title = titleEl?.textContent?.trim() ?? block?.title ?? "";
-    const body = (bodyEl as HTMLElement)?.innerText?.trim() ?? "";
-    const b = toBox(normRect(el, rootRect));
-
-    const blkBodyPt = parseFontPt(block?.style?.body_font_size) ?? bodyPt;
-    const headingColor = hex(doc.theme.colors.heading, "111111");
-
-    slide.addText(
-      [
-        ...(title
-          ? [
-              {
-                text: title,
-                options: { bold: true, fontSize: headPt, color: headingColor },
-              },
-            ]
-          : []),
-        ...(body
-          ? [{ text: (title ? "\n" : "") + body, options: { fontSize: blkBodyPt } }]
-          : []),
-      ],
-      {
-        ...b,
-        align: "left",
-        valign: "top",
-        color: hex(doc.theme.colors.text, "222222"),
-        objectName: grpName(blockPaths.get(id) ?? id),
-        fill: block?.style?.background
-          ? { color: hex(block.style.background, "ffffff") }
-          : undefined,
-        line: block?.style?.border
-          ? { color: hex(block.style.border_color, "666666"), width: 1 }
-          : undefined,
-      },
-    );
+    const obj = grpName(blockPaths.get(id) ?? id);
+    rectShape(el, obj);
+    const titleEl = el.querySelector(":scope > .rps-block-title");
+    if (titleEl) {
+      rectShape(titleEl, obj);
+      textBox(titleEl, obj);
+    }
+    const bodyEl = el.querySelector(":scope > .rps-block-body");
+    if (bodyEl) {
+      if (!bodyEl.children.length) {
+        textBox(bodyEl, obj);
+        return;
+      }
+      // Split the body at tables / figures so text never flows under them:
+      // each run of consecutive text elements becomes one box at its own place.
+      const bodyCs = getComputedStyle(bodyEl);
+      let seg: Element[] = [];
+      const flush = () => {
+        if (!seg.length) return;
+        const runs: Run[] = [];
+        for (const e of seg) {
+          const r = textRuns(e);
+          if (!r.length) continue;
+          // paragraph break between consecutive elements of the segment
+          if (runs.length) runs[runs.length - 1].options = { ...runs[runs.length - 1].options, breakLine: true };
+          runs.push(...r);
+        }
+        if (runs.length) {
+          const first = place(seg[0]);
+          const last = place(seg[seg.length - 1]);
+          const body = place(bodyEl);
+          slide.addText(runs, {
+            x: body.x, y: first.y, w: body.w, h: Math.max(last.y + last.h - first.y, 0.05),
+            valign: "top",
+            margin: [0, (parseFloat(bodyCs.paddingRight) || 0) * PX_TO_PT, 0, (parseFloat(bodyCs.paddingLeft) || 0) * PX_TO_PT], // pt, [T, R, B, L]
+            fit: "none",
+            objectName: obj,
+          });
+        }
+        seg = [];
+      };
+      for (const c of Array.from(bodyEl.children)) {
+        if (c.matches("table") || c.querySelector(":scope table")) {
+          flush();
+          const t = c.matches("table") ? c : c.querySelector("table")!;
+          addTable(slide, t, place(t), obj);
+        } else if (c.matches(SKIP_SEL)) {
+          flush();
+        } else {
+          seg.push(c);
+        }
+      }
+      flush();
+    }
   });
 
   // Institution logos (header / footer). The <img> src is already a data URI;

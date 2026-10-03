@@ -41,6 +41,11 @@ follow [Semantic Versioning](https://semver.org/).
 - "Save as" ignored the chosen folder and always wrote into the current project folder,
   so nothing appeared where the user saved. Choosing another folder now copies the whole
   project there (excluding `exports/`, `backups/`) and continues in it.
+- PPTX export: text of child blocks was duplicated into their parent (overlapping text),
+  the header background was missing, and all Markdown formatting, bullets and tables were
+  flattened to plain text. Each block now gets its own title/body boxes, backgrounds and
+  borders from the rendered styles, formatted runs (bold, italic, underline, sub/super,
+  colour, bullets / numbering) and native PowerPoint tables at their measured positions.
 
 ## [0.1.1] - 2026-10-03
 
