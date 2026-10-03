@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Research Poster Studio app icon (source for `npm run tauri icon`). -->
+  <rect x="32" y="32" width="960" height="960" rx="200" fill="#1F3A5F"/>
+  <!-- poster sheet (A-series portrait) -->
+  <rect x="262" y="150" width="500" height="724" rx="26" fill="#FFFFFF"/>
+  <!-- header band -->
+  <rect x="262" y="150" width="500" height="150" rx="26" fill="#D9822B"/>
+  <rect x="262" y="250" width="500" height="50" fill="#D9822B"/>
+  <rect x="332" y="200" width="360" height="44" rx="22" fill="#FFFFFF" opacity="0.92"/>
+  <!-- two-column blocks -->
+  <rect x="302" y="340" width="200" height="40" rx="10" fill="#1F3A5F"/>
+  <rect x="302" y="396" width="200" height="150" rx="14" fill="#C9D3DF"/>
+  <rect x="302" y="566" width="200" height="40" rx="10" fill="#1F3A5F"/>
+  <rect x="302" y="622" width="200" height="212" rx="14" fill="#C9D3DF"/>
+  <rect x="522" y="340" width="200" height="40" rx="10" fill="#1F3A5F"/>
+  <rect x="522" y="396" width="200" height="250" rx="14" fill="#C9D3DF"/>
+  <rect x="522" y="666" width="200" height="40" rx="10" fill="#1F3A5F"/>
+  <rect x="522" y="722" width="200" height="112" rx="14" fill="#C9D3DF"/>
+</svg>
