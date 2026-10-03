@@ -78,9 +78,11 @@ want a reproducible, version-controlled workflow or LLM-assisted authoring.*
 - **出力** — PDF / PNG / HTML / SVG / PPTX / Marp（忠実度は `docs/export-matrix.md`）。
   *Export to PDF / PNG / HTML / SVG / PPTX / Marp.*
 - **エージェント支援** — `rps` CLI（validate / info / explain / export）、VS Code 拡張
-  （検証・プレビュー・警告）、Agent LLM 用 Skill を同梱。
-  *Agent support: an `rps` CLI, a VS Code extension (validate/preview/warnings),
-  and a bundled LLM Skill — all in this repo.*
+  （検証・プレビュー・警告．開発版で、Marketplace には未公開．`packages/vscode-extension` を
+  VS Code で開き F5 で起動）、Agent LLM 用 Skill を同梱。
+  *Agent support: an `rps` CLI, a VS Code extension (validate/preview/warnings; a development
+  build, not yet on the Marketplace — open `packages/vscode-extension` and press F5), and a
+  bundled LLM Skill — all in this repo.*
 
 詳細な仕様は `docs/design.md`（設計書）を参照してください。
 *See `docs/design.md` for the full specification.*

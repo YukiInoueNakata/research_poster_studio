@@ -5,8 +5,13 @@ poster project to self-contained HTML, SVG, or Marp Markdown.
 
 The same renderer backs the desktop preview, the `rps` CLI, and the VS Code extension,
 so what you see in the GUI is what gets exported. Output is laid out in millimetres at
-real poster size; figures, CSV tables, Graphviz diagrams, charts, QR codes, and LaTeX
-math (via MathJax) are inlined as data URIs so a single HTML/SVG file stands alone.
+real poster size; figures, CSV tables, charts, QR codes, and LaTeX math (via MathJax)
+are inlined as data URIs so a single HTML/SVG file stands alone.
+
+Diagrams (` ```dot ` / ` ```mermaid ` code blocks and Graphviz / Mermaid figure files) are
+*not* converted by the renderer itself: pass rendered SVGs through the `diagram` option
+(`buildHtml(project, { diagram })`). The `rps` CLI does this for Graphviz; the desktop app
+also for Mermaid and PDF figures. Without a resolver, diagrams render as placeholders.
 
 ## Install
 

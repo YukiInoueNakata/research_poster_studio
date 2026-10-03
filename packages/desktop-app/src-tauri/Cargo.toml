@@ -2,7 +2,9 @@
 name = "research-poster-studio"
 version = "0.1.1"
 description = "Research Poster Studio - structured layout editor for academic research posters"
-authors = ["Yuki Inoue Nakata"]
+authors = ["Yuki Inoue Nakata", "Shoichi Hasegawa"]
+license = "Apache-2.0"
+repository = "https://github.com/YukiInoueNakata/research_poster_studio"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
