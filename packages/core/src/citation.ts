@@ -318,7 +318,9 @@ const KEY = "[A-Za-z0-9_](?:[A-Za-z0-9_-]|[.:](?=[A-Za-z0-9_]))*";
 // an optional locator/suffix (pandoc extended notation: [see @key, pp. 4-6]).
 const RE_ITEM = new RegExp(`^(?<prefix>[^@]*?)(?<sign>-)?@(?<key>${KEY})(?<suffix>.*)$`);
 const RE_BRACKET = /\[([^\][]*)\]/g;
-const RE_NARRATIVE = new RegExp(`(?<![\\w@.\\]])@(${KEY})`, "g");
+// No lookbehind assertions: Safari < 16.4 (the macOS 12 WebView) cannot parse them and
+// the whole desktop UI failed to start. Capture the preceding char instead.
+const RE_NARRATIVE = new RegExp(`(^|[^\\w@.\\]])@(${KEY})`, "g");
 
 // markdown のコード・URL・リンク先は引用展開の対象外（proofread と同方針）
 const PROTECTED: RegExp[] = [
@@ -398,15 +400,15 @@ export function expandCitations(
 
   // 地の文 @key（著者（年）形式）．角括弧の外側にだけ適用する
   const narrate = (s: string): string =>
-    s.replace(RE_NARRATIVE, (_whole, key: string) => {
+    s.replace(RE_NARRATIVE, (_whole, lead: string, key: string) => {
       const e = entries.get(key);
       note(key, !!e);
       if (style.numeric) {
-        if (!e) return `[?]`;
-        return `[${numberOf?.(key) ?? "?"}]`;
+        if (!e) return `${lead}[?]`;
+        return `${lead}[${numberOf?.(key) ?? "?"}]`;
       }
-      if (!e) return `@${key}?`;
-      return fillTemplate(style.in_text.narrative, {
+      if (!e) return `${lead}@${key}?`;
+      return lead + fillTemplate(style.in_text.narrative, {
         authors: inTextAuthors(e, style),
         year: entryYear(e),
       });

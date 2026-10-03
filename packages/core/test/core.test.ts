@@ -73,3 +73,26 @@ describe("reading distance", () => {
     expect(legible).toBeGreaterThan(comfortable);
   });
 });
+
+describe("WebView compatibility", () => {
+  it("source has no regex lookbehind (Safari < 16.4 / macOS 12 cannot parse it)", async () => {
+    const fs = await import("node:fs");
+    const path = await import("node:path");
+    const root = path.resolve(__dirname, "../..");
+    const hits: string[] = [];
+    const walk = (d: string) => {
+      for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+        const p = path.join(d, e.name);
+        if (e.isDirectory()) {
+          if (!["node_modules", "dist", "target", "gen"].includes(e.name)) walk(p);
+        } else if (/\.(ts|tsx)$/.test(e.name) && p.includes(`${path.sep}src${path.sep}`)) {
+          fs.readFileSync(p, "utf8").split("\n").forEach((line: string, i: number) => {
+            if (/\(\?<[=!]/.test(line) && !line.includes("lookbehind-ok")) hits.push(`${path.relative(root, p)}:${i + 1}`);
+          });
+        }
+      }
+    };
+    walk(root);
+    expect(hits).toEqual([]);
+  });
+});

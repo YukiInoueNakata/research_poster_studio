@@ -30,6 +30,9 @@ follow [Semantic Versioning](https://semver.org/).
   catches the blank-window regression (`npm run smoke:desktop`).
 
 ### Fixed
+- The desktop app showed a blank (black) window on macOS 12 (Safari 15 WebView): a
+  citation regex used a lookbehind, which Safari before 16.4 cannot parse. Rewritten
+  without lookbehind; a unit test keeps lookbehinds out of the sources.
 - The desktop preview reported false overflow errors (blocks and the whole page) when
   zoomed out. Preview-only overlays (pt / overflow badges, page frame, margin guide,
   scale bar) grow by 1/zoom and were counted as content; they are now excluded while
