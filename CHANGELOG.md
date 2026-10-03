@@ -13,6 +13,11 @@ follow [Semantic Versioning](https://semver.org/).
   measuring, and preview borders keep their real width in the layout (the extra
   on-screen thickness is drawn as an inset shadow). Overflow is judged against the paper
   at every zoom level.
+- `flex` height mode followed the design (keep the content height, share the remaining
+  space by weight) only in the last band. Elsewhere it used a zero basis, so flex blocks
+  above a full-width block collapsed to 0 height and overlapped the next block; this
+  affected the `qualitative` and `multi-study` templates of `rps init`. CI now validates
+  all three templates.
 
 ## [0.1.1] - 2026-10-03
 

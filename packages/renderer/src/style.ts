@@ -28,7 +28,11 @@ export function heightStyle(block: Block): CSSProperties {
       }
       break;
     case "flex":
-      css.flex = `${weight ?? 1} 1 0`;
+      // design §8.2/§8.5: keep the natural (content) height and share the
+      // *remaining* space by weight. A 0 basis made flex blocks contribute no
+      // height to a content-sized band, so they collapsed to 0 whenever a
+      // full-width block followed them.
+      css.flex = `${weight ?? 1} 1 auto`;
       break;
     case "auto":
     default:

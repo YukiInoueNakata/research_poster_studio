@@ -62,6 +62,13 @@ jobs:
           npm run rps -- validate examples/sample-cat-paws-en
           npm run rps -- validate examples/sample-cat-paws-ja
 
+      - name: Validate the `rps init` templates (rendered overflow)
+        run: |
+          for t in quantitative qualitative multi-study; do
+            npm run rps -- init "$RUNNER_TEMP/tpl-$t" --template "$t"
+            npm run rps -- validate "$RUNNER_TEMP/tpl-$t"
+          done
+
       - name: Export sample poster to PDF
         run: npm run rps -- export pdf examples/sample-cat-paws-en
 
