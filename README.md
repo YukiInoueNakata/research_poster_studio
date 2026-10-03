@@ -458,8 +458,8 @@ poster-project/
 - 中田友貴（Yuki Inoue Nakata, [ORCID 0009-0000-4934-323X](https://orcid.org/0009-0000-4934-323X)）—
   設計・実装・文書 / design, implementation, documentation
 - 長谷川翔一（Shoichi Hasegawa, [ORCID 0000-0001-9080-902X](https://orcid.org/0000-0001-9080-902X)）—
-  既存ポスター再現による検証・検証用ポスターデータの提供・Windows セットアップ手順 /
-  validation by reproducing existing posters, test poster data, Windows setup guide
+  開発・既存ポスター再現による検証・検証用ポスターデータの提供・Windows／Ubuntu セットアップ手順 /
+  development, validation by reproducing existing posters, test poster data, Windows/Ubuntu setup guides
 
 本リポジトリは **Apache License 2.0** で公開しています（全文は [`LICENSE`](./LICENSE)、
 帰属表示は [`NOTICE`](./NOTICE)）。
