@@ -104,11 +104,14 @@ export function useHistory(
     const onKey = (e: KeyboardEvent) => {
       if (!(e.ctrlKey || e.metaKey) || e.isComposing) return;
       const k = e.key.toLowerCase();
-      // テキスト入力中はブラウザ標準の undo に任せる（入力欄の編集を壊さない）
+      // Fields bound to the poster (body, titles; marked data-app-undo) use the
+      // app history: the native undo stack of a React-controlled textarea breaks
+      // whenever the app rewrites the value (toolbar inserts, undo), and on
+      // WebKitGTK Ctrl+Z there did nothing. Other inputs keep the native undo.
       const t = e.target as HTMLElement | null;
       const inEditor =
         !!t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable);
-      if (inEditor) return;
+      if (inEditor && !t!.closest("[data-app-undo]")) return;
       if (k === "z" && !e.shiftKey) {
         e.preventDefault();
         undo();

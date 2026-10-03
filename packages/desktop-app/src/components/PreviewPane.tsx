@@ -328,6 +328,7 @@ export default function PreviewPane({
             <span style={{ opacity: 0.85 }}>{t("preview.inlineEditHint")}</span>
           </div>
           <textarea
+            data-app-undo
             autoFocus
             value={editContent}
             onChange={(e) => onEditContent(e.target.value)}

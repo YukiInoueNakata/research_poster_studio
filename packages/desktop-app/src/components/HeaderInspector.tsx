@@ -206,6 +206,7 @@ export default function HeaderInspector({
         <div className="legend">{t("header.titleLegend")}</div>
         <div className="field">
           <textarea
+            data-app-undo
             value={meta.title}
             onChange={(e) => onChangeMeta({ title: e.target.value })}
             style={{ width: "100%", minHeight: 48 }}
@@ -231,6 +232,7 @@ export default function HeaderInspector({
         <div className="legend">{t("header.subtitleLegend")}</div>
         <div className="field">
           <textarea
+            data-app-undo
             value={meta.subtitle ?? ""}
             onChange={(e) => onChangeMeta({ subtitle: e.target.value || undefined })}
             rows={Math.max(1, (meta.subtitle ?? "").split("\n").length)}

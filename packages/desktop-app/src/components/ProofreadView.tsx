@@ -37,6 +37,7 @@ function GrowingTextarea({
   return (
     <textarea
       ref={ref}
+      data-app-undo
       value={value}
       rows={1}
       spellCheck={false}

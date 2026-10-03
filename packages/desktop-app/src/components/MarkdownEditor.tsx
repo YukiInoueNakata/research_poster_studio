@@ -64,6 +64,7 @@ export default function MarkdownEditor({ value, onChange }: Props) {
       <textarea
         ref={ref}
         className="md-editor"
+        data-app-undo
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={(e) => {

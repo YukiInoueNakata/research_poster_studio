@@ -140,6 +140,7 @@ export default function Inspector({
           <div className="field">
             <label>{selectedCount > 1 ? t("inspector.titleLabelPrimary") : t("inspector.titleLabel")}</label>
             <textarea
+              data-app-undo
               value={block.title}
               onChange={(e) => setTitle({ title: e.target.value })}
               rows={Math.max(1, block.title.split("\n").length)}
