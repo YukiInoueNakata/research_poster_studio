@@ -442,6 +442,8 @@ function BlockView({ block }: { block: Block }) {
   const classes = ["rps-block"];
   if (isRefs) classes.push("rps-refs");
   if (block.style?.card) classes.push("rps-card");
+  // visible box edge (border / background / accent bar): list markers must stay inside it
+  if (block.style?.border || block.style?.background || block.style?.accent_bar) classes.push("rps-boxed");
   if (mode === "preview" && overflowing) classes.push("rps-overflow");
 
   // N1 number badge: split a leading number / circled-number token off the

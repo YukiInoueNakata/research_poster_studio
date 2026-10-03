@@ -68,6 +68,9 @@ export function posterCss(doc: PosterDoc): string {
 .rps-block-body p{ margin:0 0 var(--rps-para, ${paraMm}mm); }
 .rps-block-body ul,.rps-block-body ol{ margin:0 0 var(--rps-para, ${paraMm}mm); padding-left:6mm; }
 .rps-block-body li{ margin:0 0 1mm; }
+/* Outside list markers sit about 1em left of the text. In a block with a visible
+   edge, a fixed 6mm indent let them overlap the border at large body sizes. */
+.rps-boxed > .rps-block-body ul,.rps-boxed > .rps-block-body ol,.rps-card > .rps-block-body ul,.rps-card > .rps-block-body ol{ padding-left:max(6mm, 1.15em); }
 .rps-block-body h1,.rps-block-body h2,.rps-block-body h3,.rps-block-body h4,.rps-block-body h5,.rps-block-body h6{
   font-family:${t.font_family.heading}; color:${t.colors.heading};
   margin:3mm 0 1.5mm; line-height:1.2; font-weight:700;

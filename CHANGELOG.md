@@ -23,6 +23,10 @@ follow [Semantic Versioning](https://semver.org/).
   above a full-width block collapsed to 0 height and overlapped the next block; this
   affected the `qualitative` and `multi-study` templates of `rps init`. CI now validates
   all three templates.
+- List bullets overlapped the left border of a bordered (or shaded) block at large body
+  sizes; such blocks now indent lists by `max(6mm, 1.15em)`. Unboxed blocks are unchanged.
+- Saving a single-file `content.md` no longer rewrites untitled headings as `#  {#id}` or
+  adds blank lines; saving is idempotent.
 
 ## [0.1.1] - 2026-10-03
 
