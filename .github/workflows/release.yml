@@ -1,16 +1,51 @@
 name: release
 
-# タグ v* を push するとインストーラをビルドして GitHub Releases に添付する．
-# 例) git tag v0.1.0 && git push origin v0.1.0
-# 手動実行 (workflow_dispatch) も可．
+# タグ v* を push すると，検証（typecheck・smoke）を通したうえでインストーラを
+# ビルドし，GitHub Releases の下書きに添付する．
+# 例) git tag -a v0.1.1 -m "..." && git push origin v0.1.1
+# 手動実行 (workflow_dispatch) は既存タグ名の入力が必須（main 等の誤タグを防ぐ）．
 on:
   push:
     tags:
       - 'v*'
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing release tag to build (e.g. v0.1.1)'
+        required: true
+
+env:
+  RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
 
 jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check tag format
+        run: |
+          echo "tag=$RELEASE_TAG"
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+ ]] || { echo "::error::not a version tag: $RELEASE_TAG"; exit 1; }
+
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ env.RELEASE_TAG }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install, build, type-check, smoke test
+        run: |
+          npm ci
+          npm run build:libs
+          npm run typecheck
+          npm run smoke
+
   release:
+    needs: verify
     permissions:
       contents: write
     strategy:
@@ -33,12 +68,14 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ env.RELEASE_TAG }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install Rust (stable)
         uses: dtolnay/rust-toolchain@stable
@@ -77,8 +114,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           projectPath: packages/desktop-app
-          tagName: ${{ github.ref_name }}
-          releaseName: 'Research Poster Studio ${{ github.ref_name }}'
+          tagName: ${{ env.RELEASE_TAG }}
+          releaseName: 'Research Poster Studio ${{ env.RELEASE_TAG }}'
           releaseBody: |
             各 OS のインストーラを添付しています / Installers for each OS are attached below.
 
