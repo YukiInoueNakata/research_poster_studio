@@ -63,7 +63,7 @@ English version: [getting-started.en.md](getting-started.en.md)
    <!-- img: win-21-uninstall-menu.png / win-22… -->
 
 作ったポスター（`ドキュメント\Research Poster Studio` など）は消えません．要らなければ自分で削除してください．
-アンインストーラの「アプリケーション データを削除する」（Delete the application data）にチェックを入れないと，
+アンインストーラの「アプリケーションデータを削除する」（英語の画面では Delete the application data）にチェックを入れないと，
 表示の設定などを記録したフォルダ `%LocalAppData%\io.github.yukiinouenakata.research-poster-studio` が残ります．残っていても害はありません．
 
 > **アンインストールが止まる場合**
