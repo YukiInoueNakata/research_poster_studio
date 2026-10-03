@@ -20,7 +20,8 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "smoke": "node scripts/smoke-columns.mjs && node scripts/smoke-cli.mjs",
     "tauri": "npm run tauri -w @rps/desktop-app --",
-    "rps": "tsx packages/cli/src/index.ts"
+    "rps": "tsx packages/cli/src/index.ts",
+    "smoke:desktop": "node scripts/smoke-desktop.mjs"
   },
   "devDependencies": {
     "tsx": "^4.23.1"

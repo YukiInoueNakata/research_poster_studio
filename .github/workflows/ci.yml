@@ -62,6 +62,9 @@ jobs:
           npm run rps -- validate examples/sample-cat-paws-en
           npm run rps -- validate examples/sample-cat-paws-ja
 
+      - name: Desktop UI renders (blank-window regression check)
+        run: npm run smoke:desktop
+
       - name: Validate the `rps init` templates (rendered overflow)
         run: |
           for t in quantitative qualitative multi-study; do

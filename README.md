@@ -408,6 +408,7 @@ npm run build:libs                       # 共有ライブラリ / build shared 
 npm run tauri build -w @rps/desktop-app  # 配布物 / desktop installers
 npm run typecheck                        # 全ワークスペースの型チェック / typecheck
 npm run smoke                            # smoke test（要 build:libs）
+npm run smoke:desktop                    # デスクトップ UI の描画確認（要 Chromium）/ desktop UI renders
 ```
 
 GUI の目視確認は `docs/acceptance-tests.md`（手動受け入れテスト表）に従います。
