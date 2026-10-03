@@ -135,6 +135,11 @@ English version: [getting-started.en.md](getting-started.en.md)
 
    ![起動した画面](images/getting-started/mac-07-started.png)
 
+8. はじめてサンプルを開いたときなどに，「"書類"フォルダ内のファイルにアクセスしようとしています」と出たら，「OK」を押します．
+   ポスターは「書類」（Documents）フォルダの中に保存されるためです．
+
+   ![書類フォルダへのアクセスの確認](images/getting-started/mac-08-documents-access.png)
+
 macOS 13 以降で 5〜6 のやり方では開けないときは，「システム設定」→「プライバシーとセキュリティ」を開き，下のほうにある「このまま開く」を押します．
 
 > **「壊れているため開けません」と出る場合**

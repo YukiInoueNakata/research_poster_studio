@@ -133,6 +133,11 @@ The `.msi` build uninstalls normally even when Smart App Control is on.
 
    ![The app after starting](images/getting-started/mac-07-started.png)
 
+8. The first time you open the sample (or save into Documents), macOS may ask to allow access to files in your "Documents" folder. Click "OK";
+   posters are stored in the Documents folder.
+
+   ![Permission to access the Documents folder](images/getting-started/mac-08-documents-access.png)
+
 On macOS 13 or later, if steps 5–6 do not open the app, go to System Settings → Privacy & Security and click "Open Anyway" near the bottom.
 
 The screenshots are from a Japanese-language Mac (macOS 12).
