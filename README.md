@@ -93,6 +93,11 @@ want a reproducible, version-controlled workflow or LLM-assisted authoring.*
 （Windows `.msi` / `.exe`、macOS universal `.dmg`、Linux `.AppImage` / `.deb` / `.rpm`）。
 *Prebuilt installers are on the [Releases](../../releases) page.*
 
+**はじめての方へ**: どのファイルを選ぶか，OS ごとのインストール・起動・アンインストール，ソースからの起動と更新，
+サンプルを開いて PDF にするまでを，画面の写真つきで [はじめてのガイド](docs/getting-started.ja.md) にまとめています．
+*New to the app? The [Getting started guide](docs/getting-started.en.md) shows, with screenshots, which file to pick,
+how to install, start, and uninstall on each OS, how to run and update from source, and how to go from the sample to a PDF.*
+
 アプリは未署名のため、初回起動時に OS の警告が出ることがあります。回避手順:
 *The app is unsigned, so your OS may warn on first launch:*
 
