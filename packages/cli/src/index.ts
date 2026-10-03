@@ -16,7 +16,7 @@ import chokidar from "chokidar";
 import { validatePosterYaml, calculateLayout, readingDistanceIndex } from "@rps/core";
 import { loadPosterProjectFs } from "@rps/core/node";
 import { buildHtml, buildSvg, buildMarp } from "@rps/renderer";
-import { htmlToPdf, htmlToPng } from "@rps/exporter";
+import { htmlToPdf, htmlToPng, measureOverflow } from "@rps/exporter";
 import { prepareForRender, hasUnconvertibleDiagrams } from "./convert.js";
 import { buildExplain, formatExplainText } from "./explain.js";
 
@@ -94,9 +94,41 @@ program
   .command("validate")
   .argument("[dir]", "project directory", ".")
   .description("Validate poster.yaml schema and report warnings")
-  .action(async (dir: string) => {
+  .option("--no-measure", "skip the rendered-layout overflow check (needs Chromium)")
+  .action(async (dir: string, opts: { measure: boolean }) => {
     const text = await readYaml(dir);
     const res = validatePosterYaml(text);
+    // Overflow (page bottom / block box) can only be known after layout, so
+    // render in headless Chromium like the desktop preview does.
+    if (opts.measure && res.errors.length === 0) {
+      try {
+        const loaded = await loadPosterProjectFs(dir);
+        const { project, diagram } = await prepareForRender(loaded);
+        const m = await measureOverflow(buildHtml(project, { diagram }));
+        if (m.page) {
+          res.warnings.push({
+            level: "error",
+            code: "poster-overflow",
+            message: `ポスター全体が版面からはみ出しています（内容 ${m.page.contentMm} mm / 版面 ${m.page.pageMm} mm）`,
+          });
+        }
+        for (const id of m.blocks) {
+          const title = project.doc.blocks.find((b) => b.id === id)?.title || id;
+          res.warnings.push({
+            level: "error",
+            code: "overflow",
+            blockId: id,
+            message: `ブロック「${title}」の内容が枠からあふれています`,
+          });
+        }
+      } catch (e: any) {
+        res.warnings.push({
+          level: "info",
+          code: "overflow-not-measured",
+          message: `レイアウトのはみ出しは未検査です（${String(e?.message ?? e).split("\n")[0]}）．npx playwright install chromium を実行するか --no-measure を付けてください`,
+        });
+      }
+    }
     if (res.errors.length === 0) console.log("✓ poster.yaml schema valid");
     for (const e of res.errors) console.log(`✗ ${e}`);
     for (const w of res.warnings) {

@@ -50,4 +50,35 @@ export async function htmlToPng(
   });
 }
 
+export interface OverflowReport {
+  /** content height vs page height (mm) when the poster is taller than its page */
+  page: { contentMm: number; pageMm: number } | null;
+  /** ids of blocks whose content is taller than the block box */
+  blocks: string[];
+}
+
+/**
+ * Lay the poster out in headless Chromium and report overflow, using the same
+ * rule as the desktop preview (scrollHeight > clientHeight + 2px).
+ */
+export async function measureOverflow(html: string): Promise<OverflowReport> {
+  return withPage(html, (page) =>
+    page.evaluate(() => {
+      const pxToMm = (px: number) => Math.round((px * 25.4) / 96);
+      const root = document.querySelector("[data-poster-root]") as HTMLElement | null;
+      if (!root) return { page: null, blocks: [] };
+      const pageOver = root.scrollHeight > root.clientHeight + 2;
+      const blocks: string[] = [];
+      root.querySelectorAll<HTMLElement>("[data-block-id]").forEach((el) => {
+        const id = el.getAttribute("data-block-id")!;
+        if (id !== "__header__" && el.scrollHeight > el.clientHeight + 2) blocks.push(id);
+      });
+      return {
+        page: pageOver ? { contentMm: pxToMm(root.scrollHeight), pageMm: pxToMm(root.clientHeight) } : null,
+        blocks,
+      };
+    }),
+  );
+}
+
 export const RPS_EXPORTER_VERSION = "0.1.0";

@@ -24,8 +24,8 @@ theme:
 
 blocks:
   - { id: background, type: text, title: 背景, source: content.md#background, column: left, order: 1, height: { mode: auto } }
-  - { id: method, type: text, title: 方法, source: content.md#method, column: left, order: 2, height: { mode: flex, weight: 1 } }
-  - { id: results, type: text, title: 結果, source: content.md#results, column: right, order: 1, height: { mode: flex, weight: 1 } }
+  - { id: method, type: text, title: 方法, source: content.md#method, column: left, order: 2, height: { mode: auto } }
+  - { id: results, type: text, title: 結果, source: content.md#results, column: right, order: 1, height: { mode: auto } }
   - { id: discussion, type: text, title: 考察, source: content.md#discussion, column: wide, order: 90, height: { mode: auto } }
   - { id: references, type: text, title: 引用文献, source: content.md#references, column: wide, order: 100, height: { mode: auto } }
 
