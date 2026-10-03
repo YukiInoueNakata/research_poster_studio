@@ -21,23 +21,22 @@ export async function buildPngBase64(
   const h = Math.round((size.h / MM_PER_INCH) * dpi);
 
   const svg = buildSvg(project, opts);
-  const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  try {
-    const img = await loadImage(url);
-    const canvas = document.createElement("canvas");
-    canvas.width = w;
-    canvas.height = h;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) throw new Error("canvas 2d context が取得できません");
-    // posters are printed on paper — flatten on white
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, w, h);
-    ctx.drawImage(img, 0, 0, w, h);
-    return canvas.toDataURL("image/png").replace(/^data:image\/png;base64,/, "");
-  } finally {
-    URL.revokeObjectURL(url);
-  }
+  // Load as a data: URL, not a blob: URL. Chromium/WebView2 taints the canvas
+  // when an SVG containing <foreignObject> is loaded from a blob: URL, and
+  // toDataURL() then throws "Tainted canvases may not be exported" (PNG export
+  // silently produced no file). The same SVG as a data: URL does not taint.
+  const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+  const img = await loadImage(url);
+  const canvas = document.createElement("canvas");
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("canvas 2d context が取得できません");
+  // posters are printed on paper — flatten on white
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, w, h);
+  ctx.drawImage(img, 0, 0, w, h);
+  return canvas.toDataURL("image/png").replace(/^data:image\/png;base64,/, "");
 }
 
 function loadImage(src: string): Promise<HTMLImageElement> {
