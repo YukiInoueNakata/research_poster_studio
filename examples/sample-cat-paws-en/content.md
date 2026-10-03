@@ -1,6 +1,6 @@
 # {#notice}
 
-**Fictitious example.** All data, authors, affiliations, and the conference on this poster are invented. It is a bundled example of Research Poster Studio; only the three references are real.
+**Fictitious example.** All data, authors, affiliations, and the conference on this poster are invented. It is a bundled example of Research Poster Studio; only the three references are real. If you include an abstract or the like, put it here. And all cats are kawaii.
 
 
 # 1 Introduction {#intro}

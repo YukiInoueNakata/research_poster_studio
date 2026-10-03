@@ -15,7 +15,7 @@ project:
     - "猫の労働研究所"
     - "架空大学 ことわざ検証学科"
   conference:
-    name: "日本ことわざ検証学会 第 1 回大会（架空）"
+    name: "日本ネコちゃんカワイイ学会（架空）"
   poster_size: "A0"
   orientation: "portrait"
   content_file: content.md

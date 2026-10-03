@@ -15,7 +15,7 @@ project:
     - "Institute for Feline Labor Studies"
     - "Department of Proverb Verification, University of Nowhere"
   conference:
-    name: "International Conference on Proverb Verification 2026 (fictitious)"
+    name: "Japanese Society for Kawaii Kitties (fictitious)"
   poster_size: "A0"
   orientation: "portrait"
   content_file: content.md
