@@ -32,8 +32,20 @@ export function buildMarkdown(project: PosterProject): string {
   const cite = prepareCitations(project);
   const secNums = doc.layout.number_sections ? sectionNumbers(doc) : new Map<string, string>();
   const parts: string[] = [head];
+  // Reading order inside a column band: with sync_row the columns are laid out as
+  // rows (blocks with the same order sit side by side), so read row by row, left to
+  // right (e.g. 2 Method | 3 Results, then 4 Discussion | 5 Conclusion). Otherwise
+  // the columns are independent, so read each column top to bottom.
+  const byRow = doc.layout.columns?.sync_mode === "sync_row";
   const inReadingOrder = (bands: ReturnType<typeof computeBands>) =>
-    bands.flatMap((band) => (band.kind === "wide" ? [band.block] : band.columns.flatMap((c) => c.blocks)));
+    bands.flatMap((band) => {
+      if (band.kind === "wide") return [band.block];
+      if (!byRow) return band.columns.flatMap((c) => c.blocks);
+      return band.columns
+        .flatMap((c, ci) => c.blocks.map((b, bi) => ({ b, ci, bi })))
+        .sort((x, y) => (x.b.order ?? x.bi) - (y.b.order ?? y.bi) || x.ci - y.ci)
+        .map((x) => x.b);
+    });
 
   // Walk blocks depth-first in reading order. In nested layouts (e.g. the
   // demos) most of the text lives in child blocks, so they must be included.

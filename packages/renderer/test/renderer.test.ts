@@ -34,6 +34,14 @@ describe("Markdown export", () => {
     // diagram sources are noted, not linked as images
     expect(md).toContain("<!-- figure source: figures/procedure.dot");
   });
+  it("reads sync_row columns row by row, independent columns column by column", async () => {
+    const project = await loadPosterProjectFs(demo);
+    const heads = (m: string) => [...m.matchAll(/^## (\d) /gm)].map((x) => x[1]).join("");
+    // the demo is sync_row: 2 Method | 3 Results, then 4 Discussion | 5 Conclusion
+    expect(heads(buildMarkdown(project))).toBe("12345");
+    project.doc.layout.columns.sync_mode = "independent";
+    expect(heads(buildMarkdown(project))).toBe("12435");
+  });
 });
 
 describe("fontStack", () => {

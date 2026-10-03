@@ -43,6 +43,9 @@ follow [Semantic Versioning](https://semver.org/).
   catches the blank-window regression (`npm run smoke:desktop`).
 
 ### Fixed
+- Markdown export follows the reading order of `sync_row` layouts: blocks that share a row
+  are read left to right (the demo now reads 1, 2, 3, 4, 5 instead of 1, 2, 4, 3, 5);
+  independent columns are still read one column at a time.
 - English interface: the preview badges (body size, too small, overflow), the wizard's
   structure choices, and the placeholders of a new English poster were in Japanese; the
   wizard's headings/body language now defaults to the interface language.
