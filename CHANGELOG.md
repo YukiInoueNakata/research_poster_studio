@@ -38,6 +38,9 @@ follow [Semantic Versioning](https://semver.org/).
   print dialog; backgrounds now always print (`print-color-adjust: exact`).
 - Marp export omitted every child block, so nested posters (including the demos) came out
   almost empty; child blocks and figures are now exported in reading order.
+- "Save as" ignored the chosen folder and always wrote into the current project folder,
+  so nothing appeared where the user saved. Choosing another folder now copies the whole
+  project there (excluding `exports/`, `backups/`) and continues in it.
 
 ## [0.1.1] - 2026-10-03
 

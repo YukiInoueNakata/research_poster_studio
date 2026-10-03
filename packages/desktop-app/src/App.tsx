@@ -339,9 +339,12 @@ export default function App() {
       if (typeof sel !== "string") return;
       const name = sel.split(/[\\/]/).pop() ?? "poster.yaml";
       const chosenDir = sel.replace(/[\\/][^\\/]+$/, "");
-      // figures/ and content/ live in the project folder; always save the yaml
-      // there so relative image paths keep working.
-      const np: PosterProject = { ...project, posterFile: name };
+      // Another folder: copy the whole project there first (figures/, content/,
+      // styles/, references keep their relative paths), then continue in it.
+      const moved = chosenDir.toLowerCase() !== project.dir.toLowerCase();
+      let copied = 0;
+      if (moved) copied = await invoke<number>("copy_project", { src: project.dir, dst: chosenDir });
+      const np: PosterProject = { ...project, dir: moved ? chosenDir : project.dir, posterFile: name };
       await backupBeforeSave(np);
       await saveProjectYaml(np);
       if (usesCombinedContent(np)) {
@@ -355,8 +358,7 @@ export default function App() {
       setDirty(false);
       log(
         "ok",
-        t("log.savedAs", { dir: project.dir, name }) +
-          (chosenDir !== project.dir ? t("log.savedAsInProjectFolder") : ""),
+        t("log.savedAs", { dir: np.dir, name }) + (moved ? t("log.savedAsCopied", { n: copied }) : ""),
       );
     } catch (e: any) {
       log("error", t("log.saveFailed", { msg: e?.message ?? e }));

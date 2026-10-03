@@ -184,6 +184,46 @@ fn copy_dir_all(src: &Path, dst: &Path) -> std::io::Result<()> {
     Ok(())
 }
 
+/// "Save as" into another folder: copy the whole project (poster files,
+/// content/, figures/, styles/, references) to `dst`, skipping generated or
+/// bulky top-level folders. Returns the number of files copied.
+#[tauri::command]
+fn copy_project(src: String, dst: String) -> Result<u32, String> {
+    let src = PathBuf::from(&src);
+    let dst = PathBuf::from(&dst);
+    let s = src.canonicalize().map_err(|e| format!("{}: {e}", src.display()))?;
+    fs::create_dir_all(&dst).map_err(|e| format!("{}: {e}", dst.display()))?;
+    let d = dst.canonicalize().map_err(|e| format!("{}: {e}", dst.display()))?;
+    if d == s {
+        return Ok(0);
+    }
+    if d.starts_with(&s) {
+        return Err("保存先がプロジェクトフォルダの中です / the destination is inside the project folder".into());
+    }
+    const SKIP: [&str; 4] = ["exports", "backups", ".git", "node_modules"];
+    fn walk(from: &Path, to: &Path, top: bool, n: &mut u32) -> std::io::Result<()> {
+        fs::create_dir_all(to)?;
+        for entry in fs::read_dir(from)? {
+            let entry = entry?;
+            let name = entry.file_name();
+            if top && SKIP.iter().any(|x| name == *x) {
+                continue;
+            }
+            let target = to.join(&name);
+            if entry.file_type()?.is_dir() {
+                walk(&entry.path(), &target, false, n)?;
+            } else {
+                fs::copy(entry.path(), &target)?;
+                *n += 1;
+            }
+        }
+        Ok(())
+    }
+    let mut n = 0;
+    walk(&s, &d, true, &mut n).map_err(|e| format!("copy: {e}"))?;
+    Ok(n)
+}
+
 /// Find the bundled sample `examples/<name>`: first in the app's resource dir
 /// (installed builds bundle it via tauri.conf.json `bundle.resources`), then by
 /// walking up from the current / executable dir (running from the repository).
@@ -401,6 +441,7 @@ pub fn run() {
             ensure_dir,
             join_path,
             sample_project_dir,
+            copy_project,
             paste_clipboard_image,
             backup_project,
             list_fonts,
