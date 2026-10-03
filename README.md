@@ -123,7 +123,7 @@ Node.js を入れると **`npm` も一緒に入ります**（npm は Node.js に
 *Installing Node.js also installs `npm` — npm ships with Node.js, so you do not install it
 separately.*
 
-- **インストール / Install**: 公式サイト <https://nodejs.org/> から **LTS 版（20 以上）** を入れる。
+- **インストール / Install**: 公式サイト <https://nodejs.org/> から **LTS 版（20.19 以上）** を入れる。
   - Windows: ダウンロードした `.msi` を実行。または PowerShell で `winget install OpenJS.NodeJS.LTS`
   - macOS: 公式インストーラ、または `brew install node`
   - Linux: 各ディストリのパッケージ、または [nvm](https://github.com/nvm-sh/nvm)
@@ -218,10 +218,10 @@ winget で LTS 版を入れるのが簡単です（`npm` も同梱されます�
 winget install OpenJS.NodeJS.LTS
 ```
 
-LTS の世代により、現在は **v24 系**が入ることがありますが、本ツールの要件（20 以上）を満たすので
+LTS の世代により、現在は **v24 系**が入ることがありますが、本ツールの要件（20.19 以上）を満たすので
 問題ありません。インストール後、**PowerShell を開き直して**確認します。
 *Depending on the current LTS line, this may install the v24 series — that still meets the
-requirement (20+). Reopen PowerShell, then verify:*
+requirement (20.19+). Reopen PowerShell, then verify:*
 
 ```powershell
 node -v      # 例 / e.g. v24.x.x
@@ -453,7 +453,13 @@ poster-project/
 
 ## ライセンス / License & attribution
 
-作者 / Author: 中田友貴（Yuki Inoue Nakata）。研究・教育用途を想定したツールです。
+作者 / Authors（研究・教育用途を想定したツールです / built for research and teaching）:
+
+- 中田友貴（Yuki Inoue Nakata, [ORCID 0009-0000-4934-323X](https://orcid.org/0009-0000-4934-323X)）—
+  設計・実装・文書 / design, implementation, documentation
+- 長谷川翔一（Shoichi Hasegawa, [ORCID 0000-0001-9080-902X](https://orcid.org/0000-0001-9080-902X)）—
+  既存ポスター再現による検証・検証用ポスターデータの提供・Windows セットアップ手順 /
+  validation by reproducing existing posters, test poster data, Windows setup guide
 
 本リポジトリは **Apache License 2.0** で公開しています（全文は [`LICENSE`](./LICENSE)、
 帰属表示は [`NOTICE`](./NOTICE)）。
@@ -476,8 +482,12 @@ poster-project/
 *If you use this software, please cite it. Machine-readable metadata is in
 [`CITATION.cff`](./CITATION.cff) (also via GitHub's "Cite this repository").*
 
-下記の DOI は全バージョン共通の concept DOI です（常に最新版に解決）。特定の版を引用する場合は版ごとの DOI（v0.1.0: [10.5281/zenodo.23114418](https://doi.org/10.5281/zenodo.23114418)）を使ってください。
-*The DOI below is the concept DOI, which always resolves to the latest version. To cite a specific version, use its version DOI (v0.1.0: [10.5281/zenodo.23114418](https://doi.org/10.5281/zenodo.23114418)).*
+下記の DOI は全バージョン共通の concept DOI です（常に最新版に解決）。特定の版を引用する場合は、
+`version` を書き足し、DOI をその版の DOI に差し替えてください（各版の DOI は
+[Zenodo の版一覧](https://doi.org/10.5281/zenodo.23114417)、例: v0.1.0 = [10.5281/zenodo.23114418](https://doi.org/10.5281/zenodo.23114418)）。
+*The DOI below is the concept DOI, which always resolves to the latest version. To cite a specific
+version, add `version` and use that version's DOI (listed on [Zenodo](https://doi.org/10.5281/zenodo.23114417);
+e.g. v0.1.0 = [10.5281/zenodo.23114418](https://doi.org/10.5281/zenodo.23114418)).*
 
 ```bibtex
 @software{nakata_research_poster_studio,
@@ -485,7 +495,6 @@ poster-project/
   title   = {Research Poster Studio},
   year    = {2026},
   url     = {https://github.com/YukiInoueNakata/research_poster_studio},
-  version = {0.1.0},
   doi     = {10.5281/zenodo.23114417}
 }
 ```

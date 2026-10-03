@@ -17,7 +17,7 @@
     "build": "npm run build -ws --if-present",
     "build:libs": "npm run build -w @rps/core -w @rps/renderer -w @rps/exporter",
     "watch:libs": "npm run dev -w @rps/core & npm run dev -w @rps/renderer & npm run dev -w @rps/exporter",
-    "typecheck": "npm run typecheck -ws --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
     "smoke": "node scripts/smoke-columns.mjs && node scripts/smoke-cli.mjs",
     "tauri": "npm run tauri -w @rps/desktop-app --",
     "rps": "tsx packages/cli/src/index.ts"

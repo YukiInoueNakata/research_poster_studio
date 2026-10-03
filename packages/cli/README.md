@@ -26,7 +26,7 @@ Formats for `export`: `pdf`, `png`, `html`, `svg`, `marp`.
 
 ## Requirements
 
-- Node.js >= 18
+- Node.js >= 20.19
 - PDF / PNG export additionally needs a Chromium build:
   `npx playwright install chromium`. HTML / SVG / Marp need no extra dependencies.
 
