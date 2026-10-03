@@ -1,7 +1,8 @@
 // New-project setup wizard (5 steps): destination -> basic info ->
 // paper & columns -> structure -> theme preset.
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { documentDir, join, sep } from "@tauri-apps/api/path";
 import { open } from "@tauri-apps/plugin-dialog";
 import type { Orientation, PaperSize } from "@rps/core";
 import { MAX_COLUMNS, THEME_PRESETS } from "@rps/core";
@@ -51,6 +52,16 @@ export default function NewProjectWizard({ onCancel, onCreate }: Props) {
   // step 1: destination
   const [parentDir, setParentDir] = useState("");
   const [folderName, setFolderName] = useState("");
+  // Default parent: <Documents>/Research Poster Studio (same place as the
+  // sample copies). A relative path would resolve against the app's working
+  // directory (src-tauri under `npm run dev`), so only absolute paths pass.
+  useEffect(() => {
+    documentDir()
+      .then((d) => join(d, "Research Poster Studio"))
+      .then((p) => setParentDir((cur) => cur || p))
+      .catch(() => {});
+  }, []);
+  const parentIsAbsolute = /^([A-Za-z]:[\\/]|\\\\|\/)/.test(parentDir.trim());
   // step 2: basic info
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
@@ -79,7 +90,7 @@ export default function NewProjectWizard({ onCancel, onCreate }: Props) {
   }
 
   function stepValid(): boolean {
-    if (step === 0) return !!parentDir && isValidFolderName(folderName);
+    if (step === 0) return !!parentDir && parentIsAbsolute && isValidFolderName(folderName);
     if (step === 1) return title.trim().length > 0;
     if (step === 2) {
       return posterSize !== "custom" || (customW > 0 && customH > 0);
@@ -157,6 +168,9 @@ export default function NewProjectWizard({ onCancel, onCreate }: Props) {
                   />
                   <button onClick={pickParentDir}>{t("wizard.choose")}</button>
                 </div>
+                {parentDir && !parentIsAbsolute ? (
+                  <div className="wizard-error">{t("wizard.parentNotAbsolute")}</div>
+                ) : null}
               </div>
               <div className="wizard-row">
                 <label>{t("wizard.projectName")}</label>
@@ -172,10 +186,10 @@ export default function NewProjectWizard({ onCancel, onCreate }: Props) {
                   </div>
                 ) : null}
               </div>
-              {parentDir && isValidFolderName(folderName) ? (
+              {parentDir && parentIsAbsolute && isValidFolderName(folderName) ? (
                 <div className="wizard-hint">
-                  {t("wizard.createdAt")}: {parentDir}
-                  {"\\"}
+                  {t("wizard.createdAt")}: {parentDir.trim().replace(/[\\/]+$/, "")}
+                  {sep()}
                   {folderName.trim()}
                 </div>
               ) : null}

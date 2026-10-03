@@ -86,6 +86,7 @@ export const lang_en: Record<string, string> = {
   "wizard.projectName": "Project name (folder name)",
   "wizard.projectNamePlaceholder": "e.g. jpa2026-poster",
   "wizard.invalidFolderName": "The folder name contains characters that cannot be used (\\ / : * ? \" < > |).",
+  "wizard.parentNotAbsolute": "Choose the parent folder with the button or enter a full path (a bare name would be created in an unexpected place).",
   "wizard.createdAt": "Will be created at",
   "wizard.title": "Title (required)",
   "wizard.subtitle": "Subtitle",

@@ -35,6 +35,10 @@ follow [Semantic Versioning](https://semver.org/).
   catches the blank-window regression (`npm run smoke:desktop`).
 
 ### Fixed
+- New-project wizard: a parent folder typed as a bare name was resolved against the app's
+  working directory (e.g. `packages/desktop-app/src-tauri` under `npm run dev`). The parent
+  now defaults to `Documents/Research Poster Studio`, must be an absolute path, and the
+  preview path uses the OS separator (it showed `\` on Linux/macOS).
 - macOS 12: Graphviz figures were not converted (the CSP keyword `wasm-unsafe-eval` is unknown
   to Safari 15, which then refuses WebAssembly); macOS/Linux builds also allow `unsafe-eval`.
 - Titles and headings fell back to the browser default (a serif face in WebKit, e.g. Times on

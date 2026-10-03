@@ -87,6 +87,7 @@ export const lang_jp: Record<string, string> = {
   "wizard.projectName": "プロジェクト名（フォルダ名）",
   "wizard.projectNamePlaceholder": "例: jpa2026-poster",
   "wizard.invalidFolderName": "フォルダ名に使えない文字（\\ / : * ? \" < > |）が含まれています．",
+  "wizard.parentNotAbsolute": "親フォルダは「選ぶ」で指定するか，ドライブや / から始まる完全なパスで入力してください（フォルダ名だけだと予期しない場所に作られます）．",
   "wizard.createdAt": "作成先",
   "wizard.title": "タイトル（必須）",
   "wizard.subtitle": "副題",
