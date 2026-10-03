@@ -70,7 +70,8 @@ export async function runExport(kind: ExportKind, ctx: ExportCtx): Promise<void>
   try {
     switch (kind) {
       case "pdf": {
-        log("info", t("log.printDialogOpening"));
+        const mac = typeof navigator !== "undefined" && /Macintosh|Mac OS X/.test(navigator.userAgent);
+        log("info", t(mac ? "log.printDialogOpeningMac" : "log.printDialogOpening"));
         await printPoster(project, { diagram });
         break;
       }
