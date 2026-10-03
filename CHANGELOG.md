@@ -31,6 +31,11 @@ follow [Semantic Versioning](https://semver.org/).
   unchanged. Comfortable distances are about 5% shorter.
 
 ### Added
+- Beginner's getting-started guide with step-by-step screenshots, in Japanese and English
+  (`docs/getting-started.ja.md`, `docs/getting-started.en.md`): which file to download,
+  install / start / uninstall for each OS, running and updating from source, and a first
+  walk-through from the sample to a PDF.
+- The Windows `.exe` installer and uninstaller follow the OS language (English or Japanese).
 - Missing-font warning in `rps validate` and the desktop preview: if a font the poster
   asks for is not installed, text silently falls back to another font and may overflow on
   that machine only (seen on macOS, where "Noto Sans JP" fell back to Helvetica).
@@ -38,6 +43,16 @@ follow [Semantic Versioning](https://semver.org/).
   catches the blank-window regression (`npm run smoke:desktop`).
 
 ### Fixed
+- English interface: the preview badges (body size, too small, overflow), the wizard's
+  structure choices, and the placeholders of a new English poster were in Japanese; the
+  wizard's headings/body language now defaults to the interface language.
+- Settings: the two numbering checkboxes wrapped one or two characters per line; they now
+  have their own row.
+- Toolbar: the export buttons wrap as one group and the unsaved mark keeps its width, so
+  the PDF button no longer jumps between rows with the window width or after an edit.
+- PDF on Windows: the log now says to switch the printer to "Save as PDF" (the dialog opens
+  on the default printer, which may print on paper) and to leave the other settings alone;
+  the PDF takes the poster's size even when the dialog shows A4. macOS gets its own hint.
 - New-project wizard: a parent folder typed as a bare name was resolved against the app's
   working directory (e.g. `packages/desktop-app/src-tauri` under `npm run dev`). The parent
   now defaults to `Documents/Research Poster Studio`, must be an absolute path, and the
