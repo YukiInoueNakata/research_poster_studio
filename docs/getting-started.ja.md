@@ -104,15 +104,38 @@ English version: [getting-started.en.md](getting-started.en.md)
 ### インストール
 
 1. Releases のページで `…_universal.dmg` を押して，ダウンロードします．
-   <!-- img: mac-01… -->
-2. ダウンロードした `.dmg` をダブルクリックします．開いた窓で，「Research Poster Studio」のアイコンを
-   「Applications」（アプリケーション）フォルダへドラッグします．
-   <!-- img: mac-02… -->
-3. 「アプリケーション」フォルダで「Research Poster Studio」を**右クリック**（または control キーを押しながらクリック）し，
-   「開く」を押します．確認が出たら，もう一度「開く」を押します．
-   アプリに電子署名が付いていないため，ふつうにダブルクリックすると開けません．右クリックで開くのは初回だけです．
-   <!-- img: mac-03… -->
-4. それでも開けないときは，「システム設定」→「プライバシーとセキュリティ」を開き，下のほうにある「このまま開く」を押します．
+   ダウンロードしたファイルは「ダウンロード」フォルダに入ります．これをダブルクリックします．
+
+   ![「ダウンロード」フォルダの dmg](images/getting-started/mac-01-downloads.png)
+
+2. 開いた窓で，「Research Poster Studio.app」のアイコン（1）を，「Applications」のフォルダ（2）の上までドラッグして離します．
+   これでアプリが「アプリケーション」フォルダにコピーされます．
+
+   ![dmg の窓．1 を 2 へドラッグする](images/getting-started/mac-02-dmg-window.png)
+
+3. Finder で「アプリケーション」フォルダを開き，「Research Poster Studio」をダブルクリックします．
+
+   ![アプリケーションのフォルダ](images/getting-started/mac-03-applications.png)
+
+4. 「開発元を検証できないため開けません」と出ます．アプリに電子署名が付いていないためです．
+   ここでは「キャンセル」を押します．**「ゴミ箱に入れる」は押さないでください．**
+
+   ![開発元を検証できないため開けません](images/getting-started/mac-04-gatekeeper.png)
+
+5. もう一度「アプリケーション」フォルダで，「Research Poster Studio」を**右クリック**します
+   （トラックパッドなら 2 本の指でクリック，または control キーを押しながらクリック）．出てきたメニューの「開く」を押します．
+
+   ![右クリックのメニューの「開く」](images/getting-started/mac-05-right-click.png)
+
+6. 「開いてもよろしいですか?」と出たら，「開く」を押します．
+
+   ![確認のダイアログの「開く」](images/getting-started/mac-06-confirm-open.png)
+
+7. アプリが起動します．次からは，ふつうにダブルクリックするだけで起動します（右クリックで開くのは初回だけです）．
+
+   ![起動した画面](images/getting-started/mac-07-started.png)
+
+macOS 13 以降で 5〜6 のやり方では開けないときは，「システム設定」→「プライバシーとセキュリティ」を開き，下のほうにある「このまま開く」を押します．
 
 > **「壊れているため開けません」と出る場合**
 > 「ターミナル」（アプリケーション → ユーティリティ）を開き，次の 1 行を貼り付けて Enter を押してから，もう一度開いてください．

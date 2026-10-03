@@ -103,14 +103,39 @@ The `.msi` build uninstalls normally even when Smart App Control is on.
 ### Install
 
 1. On the Releases page, click `…_universal.dmg` to download it.
-   <!-- img: mac-01… -->
-2. Double-click the `.dmg`. In the window that opens, drag the "Research Poster Studio" icon onto the "Applications" folder.
-   <!-- img: mac-02… -->
-3. In the Applications folder, **right-click** "Research Poster Studio" (or Control-click it) and choose "Open".
-   When asked again, click "Open".
-   Because the app is not signed, a plain double-click will not open it the first time. You only need to do this once.
-   <!-- img: mac-03… -->
-4. If it still does not open, go to System Settings → Privacy & Security and click "Open Anyway" near the bottom.
+   The file goes into your Downloads folder. Double-click it.
+
+   ![The dmg in the Downloads folder](images/getting-started/mac-01-downloads.png)
+
+2. In the window that opens, drag the "Research Poster Studio.app" icon (1) onto the "Applications" folder (2) and let go.
+   This copies the app into your Applications folder.
+
+   ![The dmg window: drag 1 onto 2](images/getting-started/mac-02-dmg-window.png)
+
+3. Open the Applications folder in Finder and double-click "Research Poster Studio".
+
+   ![The Applications folder](images/getting-started/mac-03-applications.png)
+
+4. macOS says the app "can't be opened because the developer cannot be verified". This is because the app is not digitally signed.
+   Click "Cancel". **Do not click "Move to Trash".**
+
+   ![The developer cannot be verified](images/getting-started/mac-04-gatekeeper.png)
+
+5. In the Applications folder, **right-click** "Research Poster Studio" (two-finger click on a trackpad, or Control-click) and choose "Open".
+
+   ![Open in the right-click menu](images/getting-started/mac-05-right-click.png)
+
+6. When asked "Are you sure you want to open it?", click "Open".
+
+   ![Open in the confirmation dialog](images/getting-started/mac-06-confirm-open.png)
+
+7. The app starts. From now on, a normal double-click opens it; the right-click is needed only the first time.
+
+   ![The app after starting](images/getting-started/mac-07-started.png)
+
+On macOS 13 or later, if steps 5–6 do not open the app, go to System Settings → Privacy & Security and click "Open Anyway" near the bottom.
+
+The screenshots are from a Japanese-language Mac (macOS 12).
 
 > **If macOS says the app "is damaged and can't be opened"**
 > Open Terminal (Applications → Utilities), paste this line, press Return, and open the app again:
