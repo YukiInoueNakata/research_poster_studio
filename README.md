@@ -97,6 +97,28 @@ want a reproducible, version-controlled workflow or LLM-assisted authoring.*
 - **Windows（SmartScreen）**: 「詳細情報」→「実行」。
 - **macOS（Gatekeeper）**: アプリを右クリック →「開く」→「開く」。または
   システム設定 → プライバシーとセキュリティ →「このまま開く」。
+  macOS 15 以降などで「壊れているため開けません」と表示される場合は、ターミナルで次を実行してから開いてください。
+  *If macOS says the app "is damaged and can't be opened", clear the quarantine flag in Terminal:*
+
+  ```bash
+  xattr -dr com.apple.quarantine "/Applications/Research Poster Studio.app"
+  ```
+
+> **Windows でアンインストールできない場合 / If uninstall is blocked on Windows:**
+> `.exe`（NSIS）版のアンインストーラ `uninstall.exe` は未署名のため、**スマート アプリ コントロール（SAC）**が
+> 有効な環境ではブロックされ、アンインストールが完走しないことがあります。この場合、`uninstall.exe` と
+> インストール先フォルダが削除されずに残ります。その場合は、アプリを閉じたうえで次のフォルダを**手動で削除**してください。
+> *The `.exe` (NSIS) uninstaller `uninstall.exe` is unsigned, so Smart App Control (SAC) may block it and the
+> uninstall may not complete, leaving `uninstall.exe` and its folder behind. If so, close the app and delete this
+> folder manually:*
+>
+> ```
+> %LocalAppData%\Research Poster Studio
+> ```
+>
+> （エクスプローラーのアドレスバーに `%LocalAppData%` と入力すると該当フォルダへ移動できます。）
+> *`.msi` 版、または SAC が無効な環境では、通常のアンインストールで削除されます。*
+> *On the `.msi` build, or when SAC is off, the normal uninstall removes everything.*
 
 自分でビルドする場合は下記の手順に従ってください。
 *To build from source, follow the steps below.*
