@@ -175,6 +175,141 @@ Tauri prerequisites (step 3). If you only want the `rps` command, no Rust is nee
 *On launch, a dialog lets you create a new project (a setup wizard), open a sample,
 open an existing `poster.yaml`, or reopen a recent project.*
 
+## Windows でゼロからセットアップする / Windows setup from scratch
+
+ビルド済みインストーラを使わず、**Windows でソースからビルドして起動する**ための手順を、
+何も入っていない状態から順に説明します。以下はすべて **PowerShell** で実行します
+（スタートメニューで `powershell` と検索して起動）。
+*A step-by-step guide to building and running from source on Windows, starting from nothing.
+Run everything in **PowerShell** (search `powershell` in the Start menu).*
+
+> **ヒント / Tip:** 各ツールをインストールした後は、**PowerShell を一度閉じて開き直して**から
+> 確認コマンドを実行してください。インストーラが設定した PATH は、新しく開いたウィンドウにしか
+> 反映されません（`node` や `git` が「認識されません」と出る典型的な原因です）。
+> *After installing a tool, close and reopen PowerShell before verifying — PATH changes only
+> apply to newly opened windows.*
+
+### 1. WebView2 ランタイム（Tauri の必須要件 / required by Tauri）
+
+Windows 11 と最近の Windows 10 には標準搭載です。導入済みか確認するには次を実行します。
+バージョン番号（例: `151.0.4129.86`）が返れば導入済みです。
+*Bundled with Windows 11 and recent Windows 10. Check with the command below — a version
+number means it is installed.*
+
+```powershell
+Get-ItemProperty "HKLM:\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}" -Name pv -ErrorAction SilentlyContinue | Select-Object pv
+```
+
+何も返らない場合は、Microsoft の Evergreen ランタイムを入れてください
+（<https://developer.microsoft.com/microsoft-edge/webview2/>）。
+*If nothing is returned, install the Evergreen runtime from the link above.*
+
+### 2. Node.js / npm
+
+winget で LTS 版を入れるのが簡単です（`npm` も同梱されます）。
+*The easiest route is winget (it also installs `npm`):*
+
+```powershell
+winget install OpenJS.NodeJS.LTS
+```
+
+LTS の世代により、現在は **v24 系**が入ることがありますが、本ツールの要件（20 以上）を満たすので
+問題ありません。インストール後、**PowerShell を開き直して**確認します。
+*Depending on the current LTS line, this may install the v24 series — that still meets the
+requirement (20+). Reopen PowerShell, then verify:*
+
+```powershell
+node -v      # 例 / e.g. v24.x.x
+npm -v       # 例 / e.g. 11.x.x
+```
+
+> **npm で「スクリプトの実行が無効」エラーが出たら / If `npm` fails with an execution-policy error:**
+> PowerShell のスクリプト実行がブロックされているためです。次を実行して許可します
+> （途中で確認を聞かれたら `Y`）。
+> *PowerShell is blocking script execution. Run the following (answer `Y` when prompted):*
+> ```powershell
+> Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+> ```
+> `CurrentUser` スコープ・`RemoteSigned` は管理者権限不要で、開発用途に安全な標準的設定です。
+> *This user-scoped, `RemoteSigned` setting needs no admin rights and is the standard, safe choice for development.*
+
+### 3. Rust / Cargo
+
+<https://rustup.rs/> から `rustup-init.exe` を実行し、デフォルト（stable）で入れます。
+開き直して確認します。
+*Run `rustup-init.exe` from rustup.rs with the default (stable) profile, reopen PowerShell, then verify:*
+
+```powershell
+rustc --version    # 例 / e.g. rustc 1.97.x
+cargo --version    # 例 / e.g. cargo 1.97.x
+```
+
+> **C++ ビルド環境 / C++ build tools:** Rust が Windows でコンパイルするには MSVC のリンカーが
+> 必要です。`rustup` の導入時に自動で案内・設定されることが多く、後述の `npm run dev` が通れば
+> 揃っている証拠です。もし `link.exe not found` などのエラーが出たら、Visual Studio Build Tools の
+> **「C++ によるデスクトップ開発」** を入れてください
+> （<https://visualstudio.microsoft.com/visual-cpp-build-tools/>）。
+> *Rust needs the MSVC linker on Windows. `rustup` usually sets this up; if a build later fails with
+> `link.exe not found`, install the "Desktop development with C++" workload of Visual Studio Build Tools.*
+
+### 4. Git
+
+winget で入れて、開き直して確認します。
+*Install with winget, reopen PowerShell, then verify:*
+
+```powershell
+winget install Git.Git
+git --version      # 例 / e.g. git version 2.x.x
+```
+
+> **`git --version` で「認識されません」と表示されたら / If `git --version` reports "not recognized":**
+> 「用語 'git' は、コマンドレット、関数、スクリプト ファイル、または操作可能なプログラムの名前として
+> 認識されません」と出る場合は、Git が未インストール（または PATH 未反映）です。上記の
+> `winget install Git.Git` で導入し、**PowerShell を開き直してから**再度 `git --version` を実行してください。
+> `git version 2.x.x` のように返れば成功です。
+> *If you see "'git' is not recognized as ... a cmdlet, function, script file, or operable program",
+> Git is not installed yet (or PATH hasn't refreshed). Install it with `winget install Git.Git` above,
+> reopen PowerShell, and run `git --version` again — `git version 2.x.x` means success.*
+
+### 5. RPSの取得・インストール・起動 / Clone, install, run for RPS
+
+任意の作業フォルダ（例ではドキュメント）に移動してから取得します。
+*Move into a working folder (Documents here), then clone:*
+
+```powershell
+cd $env:USERPROFILE\Documents                                      # = C:\Users\<あなた>\Documents
+git clone https://github.com/YukiInoueNakata/research_poster_studio.git
+cd research_poster_studio
+npm install                                                        # 依存を取得（初回のみ）/ install deps (first time)
+npm run dev                                                        # ビルドして GUI を起動 / build and launch the GUI
+```
+
+`npm run dev` は初回のみ Rust のクレートを一からコンパイルするため、**数分〜十数分**かかることが
+あります。ログが流れた後、デスクトップアプリのウィンドウが自動で立ち上がれば成功です。
+*The first `npm run dev` compiles Rust crates from scratch and can take several minutes; the desktop
+window opens automatically when ready.*
+
+> **起動後の注意 / While running:** PowerShell のウィンドウは**閉じないでください**（アプリが
+> 動き続ける土台です）。終了するときはアプリを閉じてから、PowerShell で **`Ctrl + C`** を押します。
+> *Keep the PowerShell window open while using the app; press `Ctrl + C` to stop the dev server.*
+
+### 次回以降の起動 / Running again later
+
+セットアップ済みなら、次回からは以下だけで起動できます（`npm install` は不要）。
+*Once set up, later launches only need:*
+
+```powershell
+cd $env:USERPROFILE\Documents\research_poster_studio
+npm run dev
+```
+
+PDF / PNG 出力を使う場合のみ、初回に一度だけ次を実行しておきます。
+*For PDF/PNG export, run this once:*
+
+```powershell
+npx playwright install chromium
+```
+
 ## CLI（`rps`）
 
 `rps` は Rust なしで使えます（デスクトップアプリのビルドは不要）。「1. Node.js」だけ
