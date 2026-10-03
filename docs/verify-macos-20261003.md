@@ -1,6 +1,6 @@
 # macOS 動作確認（2026-10-03）
 
-対象: main（b743150 時点）／v0.1.2 候補．手順は README の記載どおり（clone → `npm ci` → `npm run build:libs` …）．
+対象: main（b743150 → 22df216．確認中に見つかった不具合を修正しながら）／v0.1.2 候補．手順は README の記載どおり（clone → `npm ci` → `npm run build:libs` …）．
 
 ## 環境
 
@@ -34,23 +34,25 @@
 - Homebrew は Intel Mac に入らない（インストーラが拒否）．本ソフトの確認には不要だった（Node・Rust は公式配布物をユーザー領域に導入済み）．
 - 非対話の SSH では `~/.bash_profile` が読まれないので，`bash -lc` で包む必要がある．
 
-## デスクトップアプリ（Mac の前で目視）
+## デスクトップアプリ（SSH から操作・撮影して確認）
 
-`npm run tauri build -w @rps/desktop-app -- --bundles app` で .app をビルドし，SSH から `open` で起動する．
+`npm run tauri build -w @rps/desktop-app -- --bundles app` で .app をビルドし，SSH から `open` で起動．
+操作は `osascript`（System Events のクリック・キー入力），確認は `screencapture`．
+事前に「画面収録」「アクセシビリティ」「オートメーション（System Events）」へ `/usr/libexec/sshd-keygen-wrapper` の許可が必要（ユーザーが一度だけ設定）．
 
 | # | 確認内容 | 結果 |
 |---|---|---|
-| 1 | 起動する（白画面にならない）．アイコンが新しいもの | |
-| 2 | 開始ダイアログ・ツールバーのボタンと選択欄が暗い配色（白くない） | |
-| 3 | 「サンプルを開く（日本語）」「Open sample (English)」が開く | |
-| 4 | Zoom を 10%〜200% に変えても，あふれの誤検知が出ない（英語デモはフォント警告とはみ出しが出るのが正しい） | |
-| 5 | 本文欄に入力 → そのまま Cmd+Z で戻る，Cmd+Shift+Z でやり直す | |
-| 6 | PNG 出力でファイルができる | |
-| 7 | PDF（印刷ダイアログ）が開き，用紙 A0・余白なし・100% で PDF に保存できる | |
-| 8 | PPTX 出力が Keynote / PowerPoint で崩れずに開く | |
-| 9 | Marp 出力に本文が入っている | |
-| 10 | 「名前を付けて保存」で別フォルダに一式ができる | |
-| 11 | 全体設定ダイアログの部品が暗い配色 | |
+| 1 | 起動する．新しいアイコン | NG→OK．**真っ黒**だった（Safari 15 が正規表現の後読みを読めず起動時に例外）→ 45ca157 で修正 |
+| 2 | ボタン・選択欄が暗い配色 | OK |
+| 3 | 「サンプルを開く」日英 | OK（英語で確認） |
+| 4 | Zoom 5%〜81% で誤検知なし | OK（警告は常に 2 件＝はみ出し・フォント．いずれも正しい） |
+| 5 | 本文欄で Cmd+Z | OK |
+| 6 | PNG 出力 | OK（4967×7022）．ただし **Graphviz 図が未変換**だった（CSP の wasm-unsafe-eval を Safari 15 が知らない）→ 4fe2f45 で修正し再確認 OK |
+| 7 | PDF（印刷） | NG→OK．**何も起きなかった**（WKWebView は iframe 内の print を無視）→ 22df216 でネイティブ印刷に変更．ダイアログは出るが，用紙は既定（A4 で 3 分割）＝ README に用紙設定の手順を記載 |
+| 8 | PPTX 出力 | OK（Windows の PowerPoint で描画して崩れなし） |
+| 9 | Marp 出力 | OK（本文入り 5,439 バイト） |
+| 10 | 名前を付けて保存（別フォルダ） | OK（一式コピー） |
+| 11 | 見出し・タイトルのフォント | NG→OK．Noto Sans JP が無いと **Times（明朝）**になった → 60bdbf9 で代替フォントを付与 |
 
 ## 未確認
 

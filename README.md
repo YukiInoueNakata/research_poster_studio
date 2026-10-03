@@ -222,6 +222,10 @@ writable folder under your Documents.*
 - **用紙サイズ / Paper size**: ポスターと同じ（A0 = 841 × 1189 mm、A1 = 594 × 841 mm）。一覧に無ければユーザー定義サイズを作る
   *the poster's size (A0 = 841 × 1189 mm, A1 = 594 × 841 mm); create a custom size if it is not listed.*
 - **余白 / Margins**: なし / None、**倍率 / Scale**: 100%（「ページに合わせる」はオフ / no "fit to page"）
+- **macOS**: 印刷ダイアログの「詳細を表示」→「用紙サイズ」→「カスタムサイズを管理」で 841 × 1189 mm（余白 0）を作って選び、
+  左下の「PDF」→「PDF として保存」。macOS ではポスター側の用紙指定が効かず、既定の用紙（A4 など）に分割されるため
+  *macOS: Show Details → Paper Size → Manage Custom Sizes (841 × 1189 mm, zero margins), then PDF → Save as PDF;
+  otherwise macOS splits the poster over the default paper size.*
 
 背景色は「背景のグラフィックス」を選ばなくても印刷されます（v0.1.2 以降）。実寸の PDF を確実に作るには CLI の
 `npm run rps -- export pdf <project-dir>` も使えます（[CLI](#clirps) 参照）。
