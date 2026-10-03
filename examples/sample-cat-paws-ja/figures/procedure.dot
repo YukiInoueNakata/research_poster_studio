@@ -4,7 +4,7 @@ digraph procedure {
   node  [shape=box, style="rounded,filled", fillcolor="#EEF2F7", color="#1F3A5F", fontname="Noto Sans JP", fontsize=13, penwidth=1.4, margin="0.32,0.12"];
   edge  [color="#1F3A5F", penwidth=1.4, arrowsize=0.8];
 
-  recruit  [label="募集\n学生 60 名\n猫 30 匹"];
+  recruit  [label="募集\n学生 60 名\n猫 延べ 180 匹"];
   rand     [label="無作為\n割付\n5 条件"];
   rent     [label="貸し出し\n装着と\n説明"];
   produce  [label="ポスター\n作成\n最長 72 時間"];

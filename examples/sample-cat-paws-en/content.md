@@ -29,7 +29,7 @@ We conducted a randomized trial of cat paw rental during poster production to te
 - **H2** The effect grows with the number of paws (dose-response).
 - **H3** Renting cat paws improves author morale.
 
-> If the proverb is right, two cats (eight paws) should be the most efficient condition.
+> If the proverb is right, eight paws should be the most efficient condition.
 
 
 # 2 Method {#method}
@@ -38,8 +38,8 @@ We conducted a randomized trial of cat paw rental during poster production to te
 
 ### 2-1. Participants and design
 
-- 60 graduate students preparing an A0 poster, and 30 cats from a paw rental agency (both fictitious).
-- Students were randomly assigned to one of **5 conditions**: 0, 1, 2, 4 (one whole cat), or 8 paws (two cats); *n* = 12 per condition.
+- 60 graduate students preparing an A0 poster, and 180 cat rentals from a paw rental agency (both fictitious).
+- Students were randomly assigned to one of **5 conditions**: 0, 1, 2, 4, or 8 paws, one paw per cat (so paws = cats); *n* = 12 per condition.
 
 ## {#m_22}
 
@@ -76,8 +76,8 @@ Values are *M* (*SD*); *n* = 12 per condition.
 | 0 | 31.4 (6.2) | 0.6 (0.4) | 3.2 (1.1) | n/a |
 | 1 | 27.9 (5.8) | 1.4 (0.9) | 4.9 (1.0) | 41 (14) |
 | 2 | 26.8 (6.5) | 2.9 (1.6) | 5.4 (0.9) | 33 (15) |
-| 4 (1 cat) | 35.7 (7.9) | 8.7 (3.9) | 5.8 (1.2) | 18 (11) |
-| 8 (2 cats) | 48.2 (10.4) | 21.3 (8.2) | 6.1 (1.0) | 9 (7) |
+| 4 | 35.7 (7.9) | 8.7 (3.9) | 5.8 (1.2) | 18 (11) |
+| 8 | 48.2 (10.4) | 21.3 (8.2) | 6.1 (1.0) | 9 (7) |
 
 ## {#r_32}
 
@@ -86,7 +86,7 @@ Values are *M* (*SD*); *n* = 12 per condition.
 - Paw condition affected production time, *F*(4, 55) = 17.62, *p* < .001, η² = .56.
 - The quadratic contrast was significant, *t*(55) = 6.11, *p* < .001.
 - One or two paws shortened production compared with none (*d* = 0.58 and 0.72).
-- Two cats lengthened it sharply (*d* = 1.96).
+- Eight paws lengthened it sharply (*d* = 1.96).
 
 ## {#r_33}
 
@@ -105,9 +105,9 @@ Values are *M* (*SD*); *n* = 12 per condition.
 - H1 was supported for one or two paws, and H3 was supported in every condition.
 - H2 was rejected: the effect reversed beyond two paws, contrary to the proverb.
 
-### 4-2. Why whole cats backfire
+### 4-2. Why more paws backfire
 
-- Paws raise morale through warmth and purring, but whole cats also bring a body that lies on the keyboard.
+- Paws raise morale through warmth and purring, but every paw comes with a whole cat that lies on the keyboard.
 - Beyond two paws, keyboard interference outweighs the morale benefit.
 
 ### 4-3. Limitations
@@ -123,7 +123,7 @@ Values are *M* (*SD*); *n* = 12 per condition.
 
 ### 5-1. A revised proverb
 
-Borrow a cat's paws when you are desperate, but **stop at two**, and leave the rest of the cat at home.
+Borrow a cat's paws when you are desperate, but **stop at two paws (two cats)**.
 
 - Authors who cannot borrow a cat may consult evidence-based guides to poster design [@faulkes2021].
 
@@ -138,7 +138,7 @@ Borrow a cat's paws when you are desperate, but **stop at two**, and leave the r
 
 ## {#c_ack}
 
-**Acknowledgements.** We thank the other 29 cats, who declined to be listed as co-authors.
+**Acknowledgements.** We thank the other 179 cats, who declined to be listed as co-authors.
 
 
 # References {#references}

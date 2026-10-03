@@ -4,7 +4,7 @@ digraph procedure {
   node  [shape=box, style="rounded,filled", fillcolor="#EEF2F7", color="#1F3A5F", fontname="Helvetica", fontsize=14, penwidth=1.4];
   edge  [color="#1F3A5F", penwidth=1.4, arrowsize=0.8];
 
-  recruit  [label="Recruit\n60 students\n30 cats"];
+  recruit  [label="Recruit\n60 students\n180 cats"];
   rand     [label="Randomize\n5 paw\nconditions"];
   rent     [label="Paw rental\n(fitting and\nbriefing)"];
   produce  [label="Poster\nproduction\n(max. 72 h)"];
