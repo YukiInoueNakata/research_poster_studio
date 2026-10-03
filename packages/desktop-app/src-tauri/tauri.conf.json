@@ -40,6 +40,11 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
+    "windows": {
+      "nsis": {
+        "languages": ["English", "Japanese"]
+      }
+    },
     "resources": {
       "../../../examples/sample-cat-paws-en/": "examples/sample-cat-paws-en/",
       "../../../examples/sample-cat-paws-ja/": "examples/sample-cat-paws-ja/",
