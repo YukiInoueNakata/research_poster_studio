@@ -15,7 +15,7 @@ project:
     - サンプル大学 心理学部
     - サンプル大学 大学院
   conference:
-    name: 日本心理学会 第90回大会
+    name: サンプル学会 第1回大会
     date: "2026-09-12"
   keywords:
     - 援助要請

@@ -1,4 +1,4 @@
-Nakata, Y. (2024). Implicit and explicit attitudes toward help-seeking. *Journal of Applied Social Psychology, 54*(3), 211–228.
+Example, A. (2024). Fictional reference for demonstration only. *Journal of Example Studies, 1*(1), 1–10.（表示確認用の架空文献）
 
 Greenwald, A. G., McGhee, D. E., & Schwartz, J. L. K. (1998). Measuring individual differences in implicit cognition. *Journal of Personality and Social Psychology, 74*(6), 1464–1480.
 

@@ -106,7 +106,7 @@ for (const [name, dir] of Object.entries(SAMPLES)) {
   check("html: graphviz code block converted to inline svg", h.includes("<svg"), "no inline svg from ```dot");
   check("html: no missing figures", count(h, "missing figure") === 0);
   check("html: gallery markup", h.includes("rps-gallery"));
-  check("html: citation expanded (Nakata)", h.includes("Nakata"));
+  check("html: citation expanded (Example)", h.includes("Example"));
 }
 
 // ---- single-file content.md（sample-combined）------------------------------
