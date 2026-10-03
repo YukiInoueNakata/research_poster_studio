@@ -13,6 +13,16 @@ poster project you open (`poster.yaml`, Markdown, BibTeX, figures) and renders i
 WebView (desktop app) or headless Chromium (CLI export). Treat poster projects from other
 people like any other document from an untrusted source.
 
+## Hardening in the desktop app
+
+- Markdown and raw HTML in poster bodies are sanitized with DOMPurify before rendering.
+- A Content Security Policy only allows the app's own scripts (plus WebAssembly for
+  Graphviz); inline scripts, `data:` scripts and event-handler attributes are blocked and
+  no remote resources are loaded.
+- Remaining limitation: the file commands behind the UI (read/write/list) accept any path
+  the user can access, because projects and exports may live anywhere. They are reachable
+  only from the app's own code, which the two layers above protect.
+
 ## Known advisories in dependencies
 
 `npm audit --omit=dev` reports the following; none is reachable in the shipped app:

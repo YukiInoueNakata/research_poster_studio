@@ -7,6 +7,12 @@ follow [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Security
+- The desktop app now sets a Content Security Policy (was `null`): only its own scripts
+  (and WebAssembly for Graphviz) run, so script injected through poster content cannot
+  reach the file commands. Verified in a release build: samples, Mermaid / Graphviz / PDF
+  figures, math, PNG / PPTX export and printing work; injected scripts are blocked.
+- `THIRD_PARTY_NOTICES.md` lists the 722 bundled npm packages and Rust crates with their
+  license texts (and Graphviz, EPL-2.0, inside `@viz-js/viz`); it ships with the installers.
 - Updated production dependencies within their semver ranges (js-yaml, DOMPurify,
   mermaid, pdf.js, undici and others): `npm audit --omit=dev` goes from 9 to 4 advisories.
   The remaining four are not reachable in the app; see `SECURITY.md`.
