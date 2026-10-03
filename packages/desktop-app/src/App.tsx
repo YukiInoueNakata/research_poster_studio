@@ -363,9 +363,9 @@ export default function App() {
     }
   }
 
-  async function onOpenSample() {
+  async function onOpenSample(sampleLang: "ja" | "en") {
     try {
-      const dir = await invoke<string>("sample_project_dir");
+      const dir = await invoke<string>("sample_project_dir", { lang: sampleLang });
       await doLoad(dir);
     } catch (e: any) {
       log("error", t("log.sampleNotFound", { msg: e?.message ?? e }));

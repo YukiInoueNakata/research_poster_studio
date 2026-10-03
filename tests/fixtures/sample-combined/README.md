@@ -10,9 +10,9 @@
 確認:
 
 ```bash
-rps explain examples/sample-combined        # content: single-file (content.md)
-rps validate examples/sample-combined        # 0 errors
-rps export html examples/sample-combined     # exports/poster.html
+rps explain tests/fixtures/sample-combined        # content: single-file (content.md)
+rps validate tests/fixtures/sample-combined        # 0 errors
+rps export html tests/fixtures/sample-combined     # exports/poster.html
 ```
 
 per-block 方式（`content/<id>.md`）との相互変換はデスクトップアプリの全体設定

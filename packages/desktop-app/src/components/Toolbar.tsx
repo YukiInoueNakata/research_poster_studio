@@ -18,7 +18,7 @@ interface Props {
   recent: RecentProject[];
   onNew: () => void;
   onOpen: () => void;
-  onOpenSample: () => void;
+  onOpenSample: (lang: "ja" | "en") => void;
   onOpenRecent: (r: RecentProject) => void;
   onSave: () => void;
   onSaveAs: () => void;
@@ -89,7 +89,20 @@ export default function Toolbar({
           ))}
         </select>
       ) : null}
-      <button onClick={onOpenSample}>{t("toolbar.sample")}</button>
+      <select
+        value=""
+        title={t("toolbar.sample")}
+        onChange={(e) => {
+          const v = e.target.value;
+          if (v === "ja" || v === "en") onOpenSample(v);
+        }}
+      >
+        <option value="" disabled>
+          {t("toolbar.sample")}
+        </option>
+        <option value="ja">{t("toolbar.sample.ja")}</option>
+        <option value="en">{t("toolbar.sample.en")}</option>
+      </select>
       <button onClick={onSave} disabled={!loaded || !dirty}>
         {t("toolbar.save")}{dirty ? " *" : ""}
       </button>

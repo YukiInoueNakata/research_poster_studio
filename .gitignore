@@ -60,3 +60,6 @@ pnpm-debug.log*
 /docs/shortcuts-proposal.md
 /docs/postergenius-feature-gap.md
 /examples/sample-poster/agent/
+
+# JORS 論文用スクリーンショット（論文リポジトリへコピーして使う）
+/paper-figures/

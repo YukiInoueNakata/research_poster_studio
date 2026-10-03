@@ -169,11 +169,30 @@ fn join_path(base: String, segments: Vec<String>) -> String {
     p.to_string_lossy().to_string()
 }
 
-/// Locate the bundled sample project by walking up from the current dir and
-/// the executable dir looking for `examples/sample-poster/poster.yaml`.
-#[tauri::command]
-fn sample_project_dir() -> Result<String, String> {
+/// Copy a directory tree (used to give the user a writable copy of a sample).
+fn copy_dir_all(src: &Path, dst: &Path) -> std::io::Result<()> {
+    fs::create_dir_all(dst)?;
+    for entry in fs::read_dir(src)? {
+        let entry = entry?;
+        let to = dst.join(entry.file_name());
+        if entry.file_type()?.is_dir() {
+            copy_dir_all(&entry.path(), &to)?;
+        } else {
+            fs::copy(entry.path(), &to)?;
+        }
+    }
+    Ok(())
+}
+
+/// Find the bundled sample `examples/<name>`: first in the app's resource dir
+/// (installed builds bundle it via tauri.conf.json `bundle.resources`), then by
+/// walking up from the current / executable dir (running from the repository).
+fn find_sample_source(app: &tauri::AppHandle, name: &str) -> Option<PathBuf> {
+    use tauri::Manager;
     let mut roots: Vec<PathBuf> = Vec::new();
+    if let Ok(res) = app.path().resource_dir() {
+        roots.push(res);
+    }
     if let Ok(cwd) = std::env::current_dir() {
         roots.push(cwd);
     }
@@ -186,9 +205,9 @@ fn sample_project_dir() -> Result<String, String> {
         let mut dir: Option<&Path> = Some(root.as_path());
         let mut depth = 0;
         while let Some(d) = dir {
-            let candidate = d.join("examples").join("sample-poster");
+            let candidate = d.join("examples").join(name);
             if candidate.join("poster.yaml").exists() {
-                return Ok(candidate.to_string_lossy().to_string());
+                return Some(candidate);
             }
             if depth >= 7 {
                 break;
@@ -197,7 +216,32 @@ fn sample_project_dir() -> Result<String, String> {
             dir = d.parent();
         }
     }
-    Err("sample-poster が見つかりません".into())
+    None
+}
+
+/// Return a writable copy of the standard demo poster for `lang` ("ja" | "en").
+/// The bundled copy may live in a read-only install dir, so it is copied to
+/// `<Documents>/Research Poster Studio/samples/<name>` on first use; an existing
+/// copy is reopened as-is so the user's edits are never overwritten.
+#[tauri::command]
+fn sample_project_dir(app: tauri::AppHandle, lang: Option<String>) -> Result<String, String> {
+    use tauri::Manager;
+    let name = match lang.as_deref() {
+        Some("en") => "sample-cat-paws-en",
+        _ => "sample-cat-paws-ja",
+    };
+    let base = app
+        .path()
+        .document_dir()
+        .or_else(|_| app.path().home_dir())
+        .map_err(|e| format!("documents folder not found: {e}"))?;
+    let dest = base.join("Research Poster Studio").join("samples").join(name);
+    if dest.join("poster.yaml").exists() {
+        return Ok(dest.to_string_lossy().to_string());
+    }
+    let src = find_sample_source(&app, name).ok_or_else(|| format!("{name} not found"))?;
+    copy_dir_all(&src, &dest).map_err(|e| format!("copy {} -> {}: {e}", src.display(), dest.display()))?;
+    Ok(dest.to_string_lossy().to_string())
 }
 
 /// Read an image from the OS clipboard, save it as PNG under `<dir>/figures/`,

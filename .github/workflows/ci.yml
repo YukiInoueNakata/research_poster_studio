@@ -57,8 +57,13 @@ jobs:
       - name: Install Chromium (for PDF/PNG export)
         run: npx playwright install --with-deps chromium
 
+      - name: Validate demo posters (schema + rendered overflow)
+        run: |
+          npm run rps -- validate examples/sample-cat-paws-en
+          npm run rps -- validate examples/sample-cat-paws-ja
+
       - name: Export sample poster to PDF
-        run: npm run rps -- export pdf examples/sample-full
+        run: npm run rps -- export pdf examples/sample-cat-paws-en
 
       - name: Check the PDF was produced
-        run: test -s examples/sample-full/exports/poster.pdf
+        run: test -s examples/sample-cat-paws-en/exports/poster.pdf

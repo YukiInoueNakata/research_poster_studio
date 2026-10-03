@@ -31,7 +31,7 @@ must have been run first; paths are relative to the repository root):
 
 ```bash
 npm run build:libs
-npm run rps -- validate examples/sample-poster   # run the CLI against a sample
+npm run rps -- validate examples/sample-cat-paws-en   # run the CLI against a sample
 ```
 
 ## Tests & checks / テスト・検査

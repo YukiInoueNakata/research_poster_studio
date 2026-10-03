@@ -11,10 +11,12 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SAMPLES = {
-  poster: path.join(ROOT, "examples", "sample-poster"),
-  nested: path.join(ROOT, "examples", "sample-nested"),
-  full: path.join(ROOT, "examples", "sample-full"),
-  combined: path.join(ROOT, "examples", "sample-combined"),
+  // standard demos (examples/) + feature fixtures (tests/fixtures/)
+  catEn: path.join(ROOT, "examples", "sample-cat-paws-en"),
+  catJa: path.join(ROOT, "examples", "sample-cat-paws-ja"),
+  nested: path.join(ROOT, "tests", "fixtures", "sample-nested"),
+  full: path.join(ROOT, "tests", "fixtures", "sample-full"),
+  combined: path.join(ROOT, "tests", "fixtures", "sample-combined"),
 };
 
 let pass = 0;
@@ -41,7 +43,7 @@ function rps(...args) {
 
 const count = (s, re) => (s.match(new RegExp(re, "g")) ?? []).length;
 
-// ---- validate: 3 サンプルすべて成功（exit 0） ------------------------------
+// ---- validate: 全サンプル成功（exit 0） ------------------------------
 for (const [name, dir] of Object.entries(SAMPLES)) {
   const r = rps("validate", dir);
   check(`validate ${name} exits 0`, r.code === 0, `code=${r.code}`);
@@ -147,7 +149,7 @@ for (const [name, dir] of Object.entries(SAMPLES)) {
 }
 
 // ---- 既存サンプルの export html も生成できる --------------------------------
-for (const name of ["poster", "nested"]) {
+for (const name of ["catEn", "catJa", "nested"]) {
   const r = rps("export", "html", SAMPLES[name]);
   check(`export html ${name} exits 0`, r.code === 0, `code=${r.code}`);
 }

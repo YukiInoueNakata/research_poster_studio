@@ -4,11 +4,11 @@ GUI（デスクトップアプリ）の実機確認用チェックリスト．�
 `scripts/smoke-columns.mjs`・`scripts/smoke-cli.mjs` が担当し，本表は
 **目視・操作が必要な項目**を扱う．
 
-- 検証用プロジェクト: `examples/sample-full/`（全部入り）を基本に使う．
-  BibTeX のカスタムスタイルのみ `examples/sample-poster/`，
-  入れ子ブロックの追加確認に `examples/sample-nested/` を使う．
+- 検証用プロジェクト: `tests/fixtures/sample-full/`（全部入り・カスタム引用スタイル `my-style` を含む）を
+  基本に使う．入れ子ブロックの追加確認に `tests/fixtures/sample-nested/` を使う．
+  標準デモ（「サンプルを開く」で開くもの）は `examples/sample-cat-paws-ja/`・`examples/sample-cat-paws-en/`．
 - 結果列は `OK` / `NG` / `WARN`（備考必須）を記入し，確認日を残す．
-- NG が出たら TODO.md に課題として戻す．
+- NG が出たら GitHub Issue に課題として起票する．
 
 最終更新: 2026-06-15（単一 content.md・自動採番・UI 日英切替を追加．I 領域新設）．
 
@@ -16,8 +16,8 @@ GUI（デスクトップアプリ）の実機確認用チェックリスト．�
 
 | ID | 確認内容 | 手順 | 期待結果 | 結果 | 確認日 |
 |---|---|---|---|---|---|
-| A-1 | サンプルを開く | ツールバー「サンプルを開く」 | sample-poster が表示される | | |
-| A-2 | ファイルを開く | 「ファイルを開く」で examples/sample-full/poster.yaml | 全部入りサンプルが表示される | | |
+| A-1 | サンプルを開く | 開始ダイアログ／ツールバーの「サンプルを開く」で日本語版・英語版をそれぞれ選ぶ | 猫の手ポスター（選んだ言語）が，ドキュメント配下のコピーとして開き，保存できる | | |
+| A-2 | ファイルを開く | 「ファイルを開く」で tests/fixtures/sample-full/poster.yaml | 全部入りサンプルが表示される | | |
 | A-3 | 最近開いた一覧 | 「最近開いた...」から再オープン | 開ける．存在しないパスは一覧から自動削除 | | |
 | A-4 | 保存 | 編集後に「保存」 | poster.yaml / content/*.md に書き戻る | | |
 | A-5 | 自動バックアップ | 保存を 11 回以上繰り返す | backups/<タイムスタンプ>/ に poster.yaml・references.bib・content/・styles/ がコピーされ，10 世代を超えた古い分が消える | | |
@@ -79,7 +79,7 @@ GUI（デスクトップアプリ）の実機確認用チェックリスト．�
 |---|---|---|---|---|---|
 | E-1 | 引用展開 | sample-full の背景ブロック | [@example2024]→（Example, 2024）形式，[@greenwald1998; @vogel2006] の複数引用，地の文 @mizuno1999 が展開 | | |
 | E-2 | リスト自動生成 | 引用文献ブロック（references_list ON） | 引用された文献のみ和欧統合アルファベット順・ぶら下げインデント．apa7 + DOI 付き | | |
-| E-3 | スタイル切替 | 全体設定でスタイルを apa7 / jpa / my-style（sample-poster）に変更 | 体裁が切り替わる | | |
+| E-3 | スタイル切替 | 全体設定でスタイルを apa7 / jpa / my-style（sample-full）に変更 | 体裁が切り替わる | | |
 | E-4 | エクスポート反映 | HTML / SVG / PPTX / Marp に出力 | 展開済み引用とリストが反映 | | |
 
 ## F. 警告

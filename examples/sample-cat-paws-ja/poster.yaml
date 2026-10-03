@@ -1,0 +1,195 @@
+# Cat's-paw poster (Japanese) — the standard demo. The study is fictional (stated on the poster).
+# 猫の手ポスター（架空研究・日本語版）＝標準デモ．英語版 sample-cat-paws-en と同じ構成：
+# 色帯ヘッダー／番号つき節見出し／「n-n. 要点」の小見出し／本文左・図右のサブ段組／下段に文献．
+project:
+  title: "猫の手の貸借がポスター作成効率に与える効果"
+  subtitle: "― ことわざ「猫の手も借りたい」の無作為化比較試験 ―"
+  authors:
+    - name: "三毛 たま"
+      affiliations: [0]
+    - name: "猫又 くろ"
+      affiliations: [1]
+    - name: "Nyan Cat"
+      affiliations: [0]
+  affiliations:
+    - "猫の労働研究所"
+    - "架空大学 ことわざ検証学科"
+  conference:
+    name: "日本ことわざ検証学会 第 1 回大会（架空）"
+  poster_size: "A0"
+  orientation: "portrait"
+  content_file: content.md
+
+layout:
+  template: "two-column-research"
+  margin_mm: 12
+  column_gap_mm: 10
+  row_gap_mm: 10
+  columns:
+    count: 2
+    width_mode: "ratio"
+    ratio: [0.5, 0.5]
+    sync_mode: "sync_row"
+
+theme:
+  name: "default"
+  font_family:
+    body: "Noto Sans JP"
+    heading: "Noto Sans JP"
+    title: "Noto Sans JP"
+  font_size:
+    title: "76pt"
+    subtitle: "40pt"
+    heading1: "42pt"
+    heading2: "33pt"
+    body: "29pt"
+    caption: "24pt"
+    references: "22pt"
+  colors:
+    text: "#1f1f1f"
+    heading: "#1F3A5F"
+    accent: "#D9822B"
+    warning: "#b45309"
+    muted: "#5b6573"
+    background: "#ffffff"
+  line_height: 1.28
+  paragraph_spacing_mm: 1.2
+
+header:
+  background: "#1F3A5F"
+  title_color: "#ffffff"
+  accent_color: "#F6D7B8"
+  text_color: "#ffffff"
+  conference_font_size: "30pt"
+  conference_align: "right"
+  authors_font_size: "38pt"
+  author_separator: "，"
+  show_affiliation: true
+  affiliation_marker: number
+  show_keywords: false
+
+blocks:
+  # === 架空であることの明示（ヘッダー直下・全幅） ===
+  - id: notice
+    type: text
+    title: ""
+    source: content.md#notice
+    column: wide
+    order: 0
+    height: { mode: auto }
+    style: { background: "#FBEBDD", border: true, border_color: "#D9822B", border_width: "1pt", padding_mm: 3 }
+
+  # === 1 Introduction：全幅・2 サブカラム ===
+  - id: intro
+    type: text
+    title: "1 背景と目的"
+    source: content.md#intro
+    column: wide
+    order: 1
+    height: { mode: auto }
+    style: { heading_background: "#1F3A5F", heading_color: "#ffffff", heading_accent_bar: false }
+    child_layout: { mode: custom, count: 2, width_mode: ratio, ratio: [0.5, 0.5] }
+    children:
+      - { id: intro_l, type: text, title: "", source: content.md#intro_l, column: left, order: 1, height: { mode: auto } }
+      - { id: intro_r, type: text, title: "", source: content.md#intro_r, column: right, order: 2, height: { mode: auto } }
+
+  # === 2 Method（左）：2-2 の下に手続き図（Graphviz） ===
+  - id: method
+    type: text
+    title: "2 方法"
+    source: content.md#method
+    column: left
+    order: 2
+    height: { mode: auto }
+    style: { heading_background: "#1F3A5F", heading_color: "#ffffff", heading_accent_bar: false }
+    children:
+      - { id: m_21, type: text, title: "", source: content.md#m_21, column: wide, order: 1, height: { mode: auto } }
+      - { id: m_21f, type: figure, title: "", figure_id: fig_cond, column: wide, order: 1.5, height: { mode: auto } }
+      - { id: m_22, type: text, title: "", source: content.md#m_22, column: wide, order: 2, height: { mode: auto } }
+      - { id: m_22f, type: figure, title: "", figure_id: fig_proc, column: wide, order: 3, height: { mode: auto } }
+      - { id: m_23, type: text, title: "", source: content.md#m_23, column: wide, order: 4, height: { mode: auto } }
+      - { id: m_24, type: text, title: "", source: content.md#m_24, column: wide, order: 5, height: { mode: auto } }
+
+  # === 3 Results（右）：表 1，本文左＋図右のサブ段組を 2 つ ===
+  - id: results
+    type: text
+    title: "3 結果"
+    source: content.md#results
+    column: right
+    order: 2
+    height: { mode: auto }
+    style: { heading_background: "#1F3A5F", heading_color: "#ffffff", heading_accent_bar: false }
+    children:
+      - { id: r_31, type: text, title: "", source: content.md#r_31, column: wide, order: 1, height: { mode: auto } }
+      - id: r_32
+        type: text
+        title: ""
+        column: wide
+        order: 2
+        height: { mode: auto }
+        child_layout: { mode: custom, count: 2, width_mode: ratio, ratio: [0.40, 0.60] }
+        children:
+          - { id: r_32t, type: text, title: "", source: content.md#r_32, column: left, order: 1, height: { mode: auto } }
+          - { id: r_32f, type: figure, title: "", figure_id: fig_time, column: right, order: 2, height: { mode: auto } }
+      - id: r_33
+        type: text
+        title: ""
+        column: wide
+        order: 3
+        height: { mode: auto }
+        child_layout: { mode: custom, count: 2, width_mode: ratio, ratio: [0.40, 0.60] }
+        children:
+          - { id: r_33t, type: text, title: "", source: content.md#r_33, column: left, order: 1, height: { mode: auto } }
+          - { id: r_33f, type: figure, title: "", figure_id: fig_typo, column: right, order: 2, height: { mode: auto } }
+
+  # === 4 Discussion（左） ===
+  - id: discussion
+    type: text
+    title: "4 考察"
+    source: content.md#discussion
+    column: left
+    order: 3
+    height: { mode: auto }
+    style: { heading_background: "#1F3A5F", heading_color: "#ffffff", heading_accent_bar: false }
+    children:
+      - { id: d_41, type: text, title: "", source: content.md#d_41, column: wide, order: 1, height: { mode: auto } }
+
+  # === 5 Conclusion（右）：引用箱＋謝辞 ===
+  - id: conclusion
+    type: text
+    title: "5 結論"
+    source: content.md#conclusion
+    column: right
+    order: 3
+    height: { mode: auto }
+    style: { heading_background: "#1F3A5F", heading_color: "#ffffff", heading_accent_bar: false }
+    children:
+      - { id: c_51, type: text, title: "", source: content.md#c_51, column: wide, order: 1, height: { mode: auto } }
+      - { id: c_quote, type: text, title: "", source: content.md#c_quote, column: wide, order: 2, height: { mode: auto }, style: { background: "#FBEBDD", border: true, border_color: "#D9822B", border_width: "0.5pt", padding_mm: 3 } }
+      - { id: c_ack, type: text, title: "", source: content.md#c_ack, column: wide, order: 3, height: { mode: auto } }
+
+  # === References：.bib から引用された文献のみを自動生成 ===
+  - id: references
+    type: text
+    title: "引用文献"
+    source: content.md#references
+    column: wide
+    order: 100
+    height: { mode: auto }
+    references_list: true
+    style: { heading_color: "#1F3A5F", heading_accent_bar: false, heading_font_size: "33pt" }
+
+figures:
+  - { id: fig_cond, path: figures/fig_conditions.svg, caption: "図 1．5 つの貸し出し条件", placement: inside-block, block: m_21f, scale: 0.95, align: center }
+  - { id: fig_proc, path: figures/procedure.dot, caption: "図 2．試験の手続き（架空）", placement: inside-block, block: m_22f, scale: 1, align: center }
+  - { id: fig_time, path: figures/fig1_time.svg, caption: "図 3．手の本数別の作成時間（M ± SE）", placement: inside-block, block: r_32f, scale: 1, align: center }
+  - { id: fig_typo, path: figures/fig2_typos_morale.svg, caption: "図 4．手の本数別の誤字数と士気（M ± SE）", placement: inside-block, block: r_33f, scale: 1, align: center }
+
+references:
+  style: jpa
+  include_doi: true
+
+export:
+  pdf: { enabled: true, filename: exports/poster.pdf }
+  png: { enabled: true, filename: exports/poster.png }
+  svg: { enabled: true, filename: exports/poster.svg }

@@ -169,11 +169,16 @@ npm run dev                   # 共有ライブラリを建てて GUI を起動 
 Tauri prerequisites (step 3). If you only want the `rps` command, no Rust is needed — see
 [CLI](#clirps) below.*
 
-起動直後のダイアログから、新規作成（設定ウィザード）・サンプルを開く・
-ファイルを開く・最近開いた一覧を選べます。
+起動直後のダイアログから、新規作成（設定ウィザード）・サンプルを開く（日本語版／英語版）・
+ファイルを開く・最近開いた一覧を選べます。サンプルは架空研究の A0 ポスター
+（[`examples/sample-cat-paws-ja`](examples/sample-cat-paws-ja)・[`examples/sample-cat-paws-en`](examples/sample-cat-paws-en)）で、
+開くと書き込み可能なフォルダ（ドキュメント配下）にコピーされます。
 
-*On launch, a dialog lets you create a new project (a setup wizard), open a sample,
-open an existing `poster.yaml`, or reopen a recent project.*
+*On launch, a dialog lets you create a new project (a setup wizard), open a sample poster
+(Japanese or English), open an existing `poster.yaml`, or reopen a recent project. The
+samples are fictional-study A0 posters ([`examples/sample-cat-paws-en`](examples/sample-cat-paws-en),
+[`examples/sample-cat-paws-ja`](examples/sample-cat-paws-ja)); opening one copies it to a
+writable folder under your Documents.*
 
 ## Windows でゼロからセットアップする / Windows setup from scratch
 
@@ -331,18 +336,24 @@ relative to the repository root.*
 ```bash
 npm run build:libs                             # 初回のみ / once
 
-npm run rps -- validate <project-dir>          # スキーマ＋警告チェック / validate
+npm run rps -- validate <project-dir>          # スキーマ＋警告＋はみ出し / validate
 npm run rps -- explain  <project-dir> [--json] # Agent 向け構造要約 / structure summary
 npm run rps -- export   pdf <project-dir>      # exports/ に出力 / export
 npm run rps -- init     <dir> --template quantitative
 ```
 
 `npm run rps --` が `rps` コマンド本体で、`--` の後ろに `rps` の引数を書きます
-（例: `npm run rps -- validate examples/sample-full`）。`<project-dir>` は
-poster.yaml のあるフォルダに置き換えてください。同梱サンプルは `examples/sample-full` です。
+（例: `npm run rps -- validate examples/sample-cat-paws-en`）。`<project-dir>` は
+poster.yaml のあるフォルダに置き換えてください。同梱サンプルは `examples/` にあります。
 *`npm run rps --` invokes the CLI; put the `rps` arguments after `--`. Replace
-`<project-dir>` with a folder containing `poster.yaml` (a bundled sample is
-`examples/sample-full`).*
+`<project-dir>` with a folder containing `poster.yaml` (bundled samples are in
+`examples/`).*
+
+`validate` は Chromium で実際にレイアウトし、版面の下端やブロック枠からのはみ出しも
+エラーとして報告します（Chromium が無ければその旨を表示して省略、`--no-measure` で無効化）。
+*`validate` also lays the poster out in Chromium and reports content running off the page
+or out of a block as errors (skipped with a notice if Chromium is missing; disable with
+`--no-measure`).*
 
 HTML / SVG / Marp は追加依存なしで出力できます。PDF / PNG は初回のみ
 `npx playwright install chromium` が必要です。
@@ -361,12 +372,12 @@ npm install
 npm run build:libs
 npx playwright install chromium                # PDF/PNG 出力に必要 / needed for PDF
 
-npm run rps -- validate examples/sample-full   # → ✓ 0 errors, 0 warnings
-npm run rps -- export pdf examples/sample-full # → examples/sample-full/exports/poster.pdf
+npm run rps -- validate examples/sample-cat-paws-en    # → ✓ 0 errors, 0 warnings
+npm run rps -- export pdf examples/sample-cat-paws-en  # → exports/poster.pdf
 ```
 
-最後のコマンドで `examples/sample-full/exports/poster.pdf`（A0 実寸）が生成されます。
-*The last command writes `examples/sample-full/exports/poster.pdf` at full A0 size.*
+最後のコマンドで `examples/sample-cat-paws-en/exports/poster.pdf`（A0 実寸）が生成されます。
+*The last command writes `examples/sample-cat-paws-en/exports/poster.pdf` at full A0 size.*
 
 ## ビルド・検証 / Build & test
 
@@ -390,7 +401,8 @@ packages/
   cli/               @rps/cli       rps（init / validate / explain / preview / export）
   desktop-app/       @rps/desktop-app   Tauri v2 + React GUI
   vscode-extension/  @rps/vscode-extension  VS Code 拡張（validate / preview / warnings）
-examples/            サンプル（sample-poster / sample-nested / sample-full / sample-combined）
+examples/            標準デモ（猫の手ポスター 日本語版・英語版．架空研究）
+tests/fixtures/      機能検証用プロジェクト（smoke テスト・手動受け入れテスト用）
 skills/research-poster-studio/  Agent LLM 用 Skill（SKILL.md / schema / templates / prompts）
 docs/                design.md / architecture.md / export-matrix.md / agent-workflow.md ほか
 ```

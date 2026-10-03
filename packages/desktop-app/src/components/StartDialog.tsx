@@ -8,7 +8,7 @@ interface Props {
   recent: RecentProject[];
   onNew: () => void;
   onOpen: () => void;
-  onOpenSample: () => void;
+  onOpenSample: (lang: "ja" | "en") => void;
   onOpenRecent: (r: RecentProject) => void;
   onClose: () => void;
 }
@@ -47,8 +47,12 @@ export default function StartDialog({
               <strong>{t("start.open")}</strong>
               <span>{t("start.open.desc")}</span>
             </button>
-            <button className="start-action" onClick={onOpenSample}>
-              <strong>{t("start.sample")}</strong>
+            <button className="start-action" onClick={() => onOpenSample("ja")}>
+              <strong>{t("start.sample.ja")}</strong>
+              <span>{t("start.sample.desc")}</span>
+            </button>
+            <button className="start-action" onClick={() => onOpenSample("en")}>
+              <strong>{t("start.sample.en")}</strong>
               <span>{t("start.sample.desc")}</span>
             </button>
           </div>
