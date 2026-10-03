@@ -6,6 +6,11 @@ follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- Reading-distance index: the "comfortable" visual angle is 22 arcmin (was 21), the lower
+  bound of the preferred range in ANSI/HFES 100-2007 §7.2.6.1; the 16-arcmin minimum is
+  unchanged. Comfortable distances are about 5% shorter.
+
 ### Fixed
 - The desktop preview reported false overflow errors (blocks and the whole page) when
   zoomed out. Preview-only overlays (pt / overflow badges, page frame, margin guide,

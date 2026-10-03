@@ -198,7 +198,7 @@ export const lang_jp: Record<string, string> = {
   "settings.bg.emptyHint": "ポスター全面の背景に画像を敷きます（背景色の上）．",
   "settings.bg.add": "＋背景画像を選択",
   "settings.dist.legend": "読書距離インデックス",
-  "settings.dist.hint": "現在のフォントサイズで会場のどこまで読めるかの目安です（快適=推奨視角 21分，限界=最小視角 16分．文字高 0.7em で計算）．",
+  "settings.dist.hint": "現在のフォントサイズで会場のどこまで読めるかの目安です（快適=推奨視角 22分，限界=最小視角 16分．文字高 0.7em で計算）．",
   "settings.dist.element": "要素",
   "settings.dist.comfortable": "快適",
   "settings.dist.legible": "限界",

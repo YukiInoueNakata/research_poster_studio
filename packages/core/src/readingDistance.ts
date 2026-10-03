@@ -1,10 +1,11 @@
 // Optimal reading distance index (最適読書距離インデックス).
 //
 // Model: a character is comfortably readable when its cap height subtends
-// at least ~21 arcmin of visual angle (ANSI/HFES 100 recommends 20-22' as
-// the preferred character height for reading tasks), and remains legible
-// down to ~16 arcmin (the same standard's minimum). Cap height is taken as
-// 0.70 em of the font size. Distances are returned in meters.
+// at least 22 arcmin of visual angle, and remains legible down to 16 arcmin.
+// Both come from ANSI/HFES 100-2007 §7.2.6.1 (character height: minimum 16',
+// preferably 22'-30'), a display-ergonomics standard applied here to poster
+// viewing distance as a rule of thumb. Cap height is taken as 0.70 em of the
+// font size. Distances are returned in meters.
 //
 // This is an *index* shown to the user, not a hard rule — the only enforced
 // threshold stays MIN_BODY_PT (warnings.ts / 設計書 §8.5).
@@ -17,7 +18,7 @@ export const PT_TO_MM = 25.4 / 72;
 /** cap height as a fraction of the em size (typical Latin/Japanese UI fonts) */
 const CAP_HEIGHT_EM = 0.7;
 /** preferred visual angle for comfortable reading (arcmin) */
-const COMFORT_ARCMIN = 21;
+const COMFORT_ARCMIN = 22;
 /** minimum visual angle for legibility (arcmin) */
 const LEGIBLE_ARCMIN = 16;
 

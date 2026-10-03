@@ -197,7 +197,7 @@ export const lang_en: Record<string, string> = {
   "settings.bg.emptyHint": "Lays an image across the entire poster background (over the background color).",
   "settings.bg.add": "+ Choose background image",
   "settings.dist.legend": "Reading distance index",
-  "settings.dist.hint": "An estimate of how far away the venue your current font sizes remain readable (comfortable = recommended viewing angle 21 arcmin, limit = minimum viewing angle 16 arcmin; computed with 0.7em glyph height).",
+  "settings.dist.hint": "An estimate of how far away the venue your current font sizes remain readable (comfortable = recommended viewing angle 22 arcmin, limit = minimum viewing angle 16 arcmin; computed with 0.7em glyph height).",
   "settings.dist.element": "Element",
   "settings.dist.comfortable": "Comfortable",
   "settings.dist.legible": "Limit",
