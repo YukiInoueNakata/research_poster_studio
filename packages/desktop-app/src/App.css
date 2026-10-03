@@ -9,6 +9,9 @@
   --warn: #e0a030;
   --err: #e05252;
   --ok: #4caf72;
+  /* dark native controls / scrollbars (WebKitGTK otherwise draws light GTK widgets) */
+  color-scheme: dark;
+  accent-color: var(--accent);
   font-family: "Segoe UI", "Yu Gothic UI", system-ui, sans-serif;
   font-size: 13px;
 }
@@ -47,6 +50,8 @@ html, body, #root {
 .toolbar .title { font-weight: 600; margin-right: 8px; }
 .toolbar .spacer { flex: 1; }
 button {
+  appearance: none;
+  -webkit-appearance: none;
   background: var(--panel-2);
   color: var(--text);
   border: 1px solid var(--border);
@@ -67,6 +72,17 @@ select, input[type="text"], input[type="number"], input[type="color"], textarea 
   font-size: 12px;
 }
 input[type="color"] { padding: 1px; height: 26px; }
+/* own the select look: WebKit (Linux .deb, macOS) keeps the light native widget otherwise */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 22px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239aa0a6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 7px center;
+}
+option { background: var(--panel-2); color: var(--text); }
+a { color: var(--accent); }
 
 /* ---- main 3-pane (columns set inline; collapsible + resizable) ---- */
 .main {
