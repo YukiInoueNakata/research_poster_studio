@@ -26,6 +26,12 @@ function cleanValue(v: string): string {
     .replace(/\\&/g, "&")
     .replace(/\\%/g, "%")
     .replace(/~/g, " ")
+    // LaTeX quotes: ``text'' → “text”, `text' → ‘text’
+    .replace(/``/g, "“")
+    .replace(/''/g, "”")
+    .replace(/`/g, "‘")
+    .replace(/(^|[^\w])'(?=\w)/g, "$1‘")
+    .replace(/'/g, "’")
     .replace(/\s+/g, " ")
     .trim();
 }

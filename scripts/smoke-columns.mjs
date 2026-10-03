@@ -1,5 +1,5 @@
 // 4+ カラム対応の smoke test（node scripts/smoke-columns.mjs で実行）
-import { columnOrder, resolveColumn, layoutBlocks, MAX_COLUMNS, normalizeDoc, docWarnings } from "../packages/core/dist/index.js";
+import { columnOrder, resolveColumn, layoutBlocks, MAX_COLUMNS, normalizeDoc, docWarnings, parseBibtex } from "../packages/core/dist/index.js";
 
 let pass = 0, fail = 0;
 const eq = (name, got, want) => {
@@ -61,6 +61,10 @@ const docW = normalizeDoc({
 const wcodes = docWarnings(docW).filter((w) => w.code === "unknown-column");
 eq("unknown-column count", wcodes.length, 1);
 eq("unknown-column target", wcodes[0]?.blockId, "x");
+
+// BibTeX: LaTeX quotes → typographic quotes
+const bq = parseBibtex("@article{q, title = {The ``wall of text'' and `single' quotes}}");
+eq("bibtex latex quotes", bq.entries[0]?.fields.title, "The “wall of text” and ‘single’ quotes");
 
 console.log(`\n${pass} OK / ${fail} NG`);
 process.exit(fail ? 1 : 0);
