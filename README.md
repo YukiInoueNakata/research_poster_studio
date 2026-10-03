@@ -409,6 +409,7 @@ npm run rps -- export pdf examples/sample-cat-paws-en  # → exports/poster.pdf
 npm run build:libs                       # 共有ライブラリ / build shared libs
 npm run tauri build -w @rps/desktop-app  # 配布物 / desktop installers
 npm run typecheck                        # 全ワークスペースの型チェック / typecheck
+npm test                                 # 単体テスト（vitest）/ unit tests
 npm run smoke                            # smoke test（要 build:libs）
 npm run smoke:desktop                    # デスクトップ UI の描画確認（要 Chromium）/ desktop UI renders
 ```

@@ -24,8 +24,15 @@ export function validatePoster(raw: unknown): ValidationResult {
       errors.push(`${issue.path.join(".") || "(root)"}: ${issue.message}`);
     }
   }
-  // normalizeDoc is tolerant and always yields a renderable doc
-  const doc = normalizeDoc(raw);
+  // normalizeDoc is tolerant, but structurally wrong input (e.g. `blocks` not a
+  // list) can still make it throw; report that as an error instead of crashing.
+  let doc: PosterDoc;
+  try {
+    doc = normalizeDoc(raw);
+  } catch (e: any) {
+    if (errors.length === 0) errors.push(`(root): cannot read poster structure: ${e?.message ?? e}`);
+    doc = normalizeDoc({});
+  }
   const warnings = docWarnings(doc);
   return { ok: errors.length === 0, errors, warnings, doc };
 }

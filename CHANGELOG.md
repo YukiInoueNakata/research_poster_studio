@@ -22,6 +22,10 @@ follow [Semantic Versioning](https://semver.org/).
   bound of the preferred range in ANSI/HFES 100-2007 §7.2.6.1; the 16-arcmin minimum is
   unchanged. Comfortable distances are about 5% shorter.
 
+### Added
+- Unit tests with vitest (`npm test`, run in CI) and a desktop UI smoke test that
+  catches the blank-window regression (`npm run smoke:desktop`).
+
 ### Fixed
 - The desktop preview reported false overflow errors (blocks and the whole page) when
   zoomed out. Preview-only overlays (pt / overflow badges, page frame, margin guide,
@@ -52,6 +56,8 @@ follow [Semantic Versioning](https://semver.org/).
   flattened to plain text. Each block now gets its own title/body boxes, backgrounds and
   borders from the rendered styles, formatted runs (bold, italic, underline, sub/super,
   colour, bullets / numbering) and native PowerPoint tables at their measured positions.
+- `validatePosterYaml` threw on structurally wrong input (e.g. `blocks` not a list) instead
+  of returning errors; the CLI only exited 1 because it crashed.
 
 ## [0.1.1] - 2026-10-03
 
