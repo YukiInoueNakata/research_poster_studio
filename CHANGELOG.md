@@ -6,6 +6,11 @@ follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Security
+- Updated production dependencies within their semver ranges (js-yaml, DOMPurify,
+  mermaid, pdf.js, undici and others): `npm audit --omit=dev` goes from 9 to 4 advisories.
+  The remaining four are not reachable in the app; see `SECURITY.md`.
+
 ### Changed
 - Reading-distance index: the "comfortable" visual angle is 22 arcmin (was 21), the lower
   bound of the preferred range in ANSI/HFES 100-2007 §7.2.6.1; the 16-arcmin minimum is
