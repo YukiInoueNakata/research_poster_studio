@@ -335,7 +335,7 @@ poster-project/
 
 ```bibtex
 @software{nakata_research_poster_studio,
-  author  = {Nakata, Yuki Inoue},
+  author  = {Nakata, Yuki Inoue and Hasegawa, Shoichi},
   title   = {Research Poster Studio},
   year    = {2026},
   url     = {https://github.com/YukiInoueNakata/research_poster_studio},

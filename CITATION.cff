@@ -10,13 +10,17 @@ authors:
   - family-names: "Nakata"
     given-names: "Yuki Inoue"
     affiliation: "College of Comprehensive Psychology, Ritsumeikan University"
-    # orcid: "https://orcid.org/0000-0000-0000-0000"   # TODO: add ORCID
+    orcid: "https://orcid.org/0009-0000-4934-323X"
+  - family-names: "Hasegawa"
+    given-names: "Shoichi"
+    affiliation: "Graduate School of Information Science and Engineering, Ritsumeikan University"
+    orcid: "https://orcid.org/0000-0001-9080-902X"
 repository-code: "https://github.com/YukiInoueNakata/research_poster_studio"
 url: "https://github.com/YukiInoueNakata/research_poster_studio"
 license: Apache-2.0
 version: "0.1.0"
 # doi: "10.5281/zenodo.XXXXXXX"      # TODO: add after archiving a release on Zenodo
-# date-released: "2026-XX-XX"        # TODO: set to the release date
+date-released: "2026-10-03"
 keywords:
   - academic poster
   - authoring tool
