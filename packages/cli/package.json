@@ -43,9 +43,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@rps/core": "^0.1.0",
-    "@rps/exporter": "^0.1.0",
-    "@rps/renderer": "^0.1.0",
+    "@rps/core": "^0.1.2",
+    "@rps/exporter": "^0.1.2",
+    "@rps/renderer": "^0.1.2",
     "@viz-js/viz": "^3.28.0",
     "chokidar": "^4.0.1",
     "commander": "^12.1.0",

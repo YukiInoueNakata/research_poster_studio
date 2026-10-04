@@ -6,6 +6,8 @@ follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-10-04
+
 ### Security
 - The desktop app now sets a Content Security Policy (was `null`): only its own scripts
   (and WebAssembly for Graphviz) run, so script injected through poster content cannot
@@ -147,5 +149,7 @@ First public release (archived on Zenodo: [10.5281/zenodo.23114418](https://doi.
 Note: the sample posters in this archived version contain the fabricated reference
 described under 0.1.1 "Fixed"; it is corrected from 0.1.1 on.
 
+[Unreleased]: https://github.com/YukiInoueNakata/research_poster_studio/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/YukiInoueNakata/research_poster_studio/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/YukiInoueNakata/research_poster_studio/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/YukiInoueNakata/research_poster_studio/releases/tag/v0.1.0

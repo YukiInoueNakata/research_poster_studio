@@ -18,7 +18,7 @@ authors:
 repository-code: "https://github.com/YukiInoueNakata/research_poster_studio"
 url: "https://github.com/YukiInoueNakata/research_poster_studio"
 license: Apache-2.0
-version: "0.1.1"
+version: "0.1.2"
 doi: "10.5281/zenodo.23114417"
 identifiers:
   - type: doi
@@ -30,7 +30,7 @@ identifiers:
   - type: doi
     value: "10.5281/zenodo.23115929"
     description: "Version DOI for v0.1.1"
-date-released: "2026-10-03"
+date-released: "2026-10-04"
 keywords:
   - academic poster
   - authoring tool
