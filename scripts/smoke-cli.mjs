@@ -38,7 +38,10 @@ function rps(...args) {
     encoding: "utf8",
     timeout: 120_000,
   });
-  return { code: r.status, out: `${r.stdout ?? ""}${r.stderr ?? ""}` };
+  const out = `${r.stdout ?? ""}${r.stderr ?? ""}`;
+  // show why a command failed (the checks only report the exit code)
+  if (r.status !== 0) console.log(`  [rps ${args.join(" ")}] exit=${r.status} signal=${r.signal ?? ""} error=${r.error?.message ?? ""}\n${out.slice(-1500)}`);
+  return { code: r.status, out };
 }
 
 const count = (s, re) => (s.match(new RegExp(re, "g")) ?? []).length;
