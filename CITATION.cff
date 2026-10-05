@@ -30,7 +30,10 @@ identifiers:
   - type: doi
     value: "10.5281/zenodo.23115929"
     description: "Version DOI for v0.1.1"
-date-released: "2026-10-04"
+  - type: doi
+    value: "10.5281/zenodo.23148712"
+    description: "Version DOI for v0.1.2"
+date-released: "2026-10-05"
 keywords:
   - academic poster
   - authoring tool

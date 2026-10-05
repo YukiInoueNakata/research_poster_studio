@@ -6,7 +6,7 @@ follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-## [0.1.2] - 2026-10-04
+## [0.1.2] - 2026-10-05
 
 ### Security
 - The desktop app now sets a Content Security Policy (was `null`): only its own scripts
