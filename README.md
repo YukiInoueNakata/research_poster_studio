@@ -186,6 +186,9 @@ CLI やビルド済みアプリの利用には不要です。
 
 ## クイックスタート / Quick start
 
+> はじめての方は、インストーラで入れる [はじめてのガイド](docs/getting-started.ja.md) のほうが簡単です。以下はソースから動かす手順です。
+> *New users: the [Getting started guide](docs/getting-started.en.md) with the installers is easier. The steps below run the app from source.*
+
 「1. Node.js」まで済んでいる前提です。ターミナル（Windows は PowerShell）で、まず
 リポジトリを取得し、そのフォルダの中で各コマンドを実行します。
 *Assuming Node.js (step 1) is installed. In a terminal, get the repository and run the
@@ -245,6 +248,9 @@ copy (delete the folder to start over). New projects also default to `Documents/
 without the dialog, use the CLI: `npm run rps -- export pdf <project-dir>`.*
 
 ## Windows でゼロからセットアップする / Windows setup from scratch
+
+> インストーラを使うならこの手順は要りません（[はじめてのガイド](docs/getting-started.ja.md)）。ソースからの起動と更新の要点は、ガイドの「7. 自分でビルドして動かす」にもあります。
+> *Not needed if you use the installers ([Getting started guide](docs/getting-started.en.md)); section 7 of the guide also summarises running and updating from source.*
 
 ビルド済みインストーラを使わず、**Windows でソースからビルドして起動する**ための手順を、
 何も入っていない状態から順に説明します。以下はすべて **PowerShell** で実行します
@@ -380,6 +386,9 @@ npx playwright install chromium
 ```
 
 ## CLI（`rps`）
+
+> デスクトップアプリの使い方は [はじめてのガイド](docs/getting-started.ja.md) を見てください。この節はコマンドラインで使う場合です。
+> *For the desktop app, see the [Getting started guide](docs/getting-started.en.md); this section covers the command line.*
 
 `rps` は Rust なしで使えます（デスクトップアプリのビルドは不要）。「1. Node.js」だけ
 入っていれば動きます。まだの場合は先にコードを取得して依存を入れてください。
