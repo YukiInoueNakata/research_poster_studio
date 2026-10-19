@@ -240,10 +240,11 @@ copy (delete the folder to start over). New projects also default to `Documents/
   一覧に無ければユーザー定義サイズを作ります。用紙が A4 のままだと端が切れます。
   *Ubuntu: Print to File (PDF), and set the paper size to the poster's size (create a custom size if needed);
   A4 crops the poster.*
-- **macOS**: 印刷ダイアログの「詳細を表示」→「用紙サイズ」→「カスタムサイズを管理」で 841 × 1189 mm（余白 0）を作って選び、
-  左下の「PDF」→「PDF として保存」。macOS ではポスター側の用紙指定が効かず、既定の用紙（A4 など）に分割されるため。
-  *macOS: Show Details → Paper Size → Manage Custom Sizes (841 × 1189 mm, zero margins), then PDF → Save as PDF;
-  otherwise macOS splits the poster over the default paper size.*
+- **macOS**（v0.1.3 以降）: 印刷ダイアログは出ません。保存先を選ぶと、ポスターと同じ大きさ（A0 など）・1 ページの PDF が
+  そのまま保存されます。プリンターが無い Mac でも使えます（v0.1.2 までは印刷ダイアログで用紙を手で設定する必要があり、
+  プリンターが無い Mac では用紙サイズを選べませんでした）。
+  *macOS (v0.1.3+): no print dialog; choose where to save and you get a one-page PDF at the poster's size, even on a Mac
+  without printers.*
 
 背景色は「背景のグラフィックス」を選ばなくても印刷されます（v0.1.2 以降）。実寸の PDF を確実に作るには CLI の
 `npm run rps -- export pdf <project-dir>` も使えます（[CLI](#clirps) 参照）。

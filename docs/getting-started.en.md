@@ -388,7 +388,7 @@ Paper size, columns, colours, and so on are under "Settings".
    ![The PDF](images/getting-started/app-38-pdf-result-ja.png)
 
 
-On a Mac, A0 is not in the print dialog's paper sizes: use "Manage Custom Sizes" to create 841 × 1189 mm (zero margins) and select it.
+On a Mac there is no print dialog: clicking "PDF" asks where to save, and a one-page PDF at the poster's size is written (v0.1.3 and later).
 See [PDF from the desktop app](../README.md#デスクトップアプリから-pdf-を書き出す--pdf-from-the-desktop-app) in the README.
 
 ### Save as an image (PNG) and other formats

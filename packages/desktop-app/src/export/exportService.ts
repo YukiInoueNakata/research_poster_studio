@@ -11,7 +11,7 @@ import { buildHtml, buildSvg, buildMarkdown } from "@rps/renderer";
 import { ensureDir, writeText, writeFileFromBase64 } from "../lib/tauri";
 import { buildPptxBase64 } from "./pptx";
 import { buildPngBase64 } from "./png";
-import { printPoster } from "./print";
+import { IS_MAC_DESKTOP, printPoster, savePosterPdfMac } from "./print";
 import type { ExportKind } from "../components/Toolbar";
 
 type Log = (level: "ok" | "info" | "warn" | "error", message: string) => void;
@@ -70,8 +70,16 @@ export async function runExport(kind: ExportKind, ctx: ExportCtx): Promise<void>
   try {
     switch (kind) {
       case "pdf": {
-        const mac = typeof navigator !== "undefined" && /Macintosh|Mac OS X/.test(navigator.userAgent);
-        log("info", t(mac ? "log.printDialogOpeningMac" : "log.printDialogOpening"));
+        if (IS_MAC_DESKTOP) {
+          // no print panel on macOS: it offers no paper size without a printer
+          const path = await pickExportPath(ctx, exportName(project, "pdf"), "pdf", "PDF");
+          if (!path) break;
+          await savePosterPdfMac(project, path, { diagram });
+          log("ok", t("log.pdfExported", { path }));
+          await openPath(path).catch(() => {});
+          break;
+        }
+        log("info", t("log.printDialogOpening"));
         await printPoster(project, { diagram });
         break;
       }

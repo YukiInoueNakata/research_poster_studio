@@ -31,3 +31,12 @@ image = { version = "0.25", default-features = false, features = ["png"] }
 fontdb = "0.18"
 chrono = "0.4"
 
+# macOS: save the poster as a PDF without the print panel (src/macpdf.rs).
+# Same versions as wry/tauri already use, so nothing new is downloaded.
+[target.'cfg(target_os = "macos")'.dependencies]
+block2 = "0.6"
+objc2-foundation = { version = "0.3", features = ["NSData", "NSError", "NSString"] }
+objc2-core-foundation = { version = "0.3", features = ["CFCGTypes"] }
+objc2 = "0.6"
+objc2-web-kit = { version = "0.3", features = ["WKWebView", "WKPDFConfiguration", "block2", "objc2-app-kit", "objc2-core-foundation"] }
+

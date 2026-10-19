@@ -385,7 +385,7 @@ npm run dev
    ![できた PDF](images/getting-started/app-38-pdf-result-ja.png)
 
 
-Mac では，印刷の画面の「用紙サイズ」に A0 が無いので，「カスタムサイズを管理」で 841 × 1189 mm（余白 0）を作って選びます．
+Mac では印刷の画面は出ません．「PDF」を押すと保存する場所を聞かれ，ポスターと同じ大きさの PDF（1 ページ）がそのまま保存されます（v0.1.3 以降）．
 くわしくは README の [デスクトップアプリから PDF を書き出す](../README.md#デスクトップアプリから-pdf-を書き出す--pdf-from-the-desktop-app) を見てください．
 
 ### 画像（PNG）などにする

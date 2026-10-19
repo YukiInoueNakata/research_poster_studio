@@ -6,6 +6,21 @@ follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- macOS: the desktop PDF export no longer goes through the print panel, which offers no
+  paper size on a Mac without printers (the poster was split over A4 pages). It now asks
+  where to save and writes a one-page PDF at the poster's size (WebKit createPDF, fonts
+  embedded). Verified on macOS 12 (Intel) and macOS 26 (Apple M2, no printers).
+- The English demo overflowed by 53 mm on macOS, where its font (Noto Sans JP) is missing.
+  It now uses Arial, Helvetica, Liberation Sans (metric-compatible faces on Windows, macOS
+  and Linux); 0 warnings on Windows 10 and macOS 26.
+- The missing-font warning looked only at the first listed family; it now warns only when
+  none of the families a poster lists is installed.
+
+### Changed
+- README and getting-started guide: macOS 15+ Gatekeeper steps (Done, then Privacy &
+  Security, then "Open Anyway"); the right-click Open bypass no longer exists there.
+
 ## [0.1.2] - 2026-10-05
 
 ### Security

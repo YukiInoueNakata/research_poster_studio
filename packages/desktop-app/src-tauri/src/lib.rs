@@ -9,6 +9,9 @@ use serde::Serialize;
 use std::fs;
 use std::path::{Path, PathBuf};
 
+#[cfg(target_os = "macos")]
+mod macpdf;
+
 #[derive(Serialize)]
 struct DirEntry {
     name: String,
@@ -190,6 +193,28 @@ fn copy_dir_all(src: &Path, dst: &Path) -> std::io::Result<()> {
 #[tauri::command]
 fn print_webview(webview: tauri::Webview) -> Result<(), String> {
     webview.print().map_err(|e| e.to_string())
+}
+
+/// macOS: write the page, which the frontend has reduced to the poster at
+/// PDF-point scale, to `path` as a one-page PDF with no print panel (see
+/// macpdf.rs). Other platforms use the print dialog, whose Save as PDF already
+/// takes the @page size.
+#[tauri::command]
+async fn save_webview_pdf(webview: tauri::Webview, path: String, rect: Option<(f64, f64)>) -> Result<(), String> {
+    #[cfg(target_os = "macos")]
+    {
+        let (tx, rx) = std::sync::mpsc::channel();
+        webview
+            .with_webview(move |pv| unsafe { macpdf::save_pdf(pv.inner(), path, rect, tx) })
+            .map_err(|e| e.to_string())?;
+        rx.recv_timeout(std::time::Duration::from_secs(120))
+            .map_err(|e| format!("PDF capture did not finish: {e}"))?
+    }
+    #[cfg(not(target_os = "macos"))]
+    {
+        let _ = (webview, path, rect);
+        Err("save_webview_pdf is macOS-only".into())
+    }
 }
 
 /// "Save as" into another folder: copy the whole project (poster files,
@@ -458,6 +483,7 @@ pub fn run() {
             sample_project_dir,
             copy_project,
             print_webview,
+            save_webview_pdf,
             paste_clipboard_image,
             backup_project,
             list_fonts,
