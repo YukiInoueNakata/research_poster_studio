@@ -78,10 +78,16 @@ export async function measureOverflow(html: string): Promise<OverflowReport> {
       // A family that renders exactly like the generic fallback is not installed.
       // (document.fonts.check() reports system fonts as available, so measure.)
       const GENERIC = /^(serif|sans-serif|monospace|cursive|fantasy|system-ui|ui-.*|emoji|math|fangsong)$/i;
-      const families = new Set<string>();
+      // The author's list ends where the renderer's own fallbacks begin (fontStack
+      // appends "Hiragino ..."): a poster may list metric-compatible alternatives
+      // (Arial, Helvetica, Liberation Sans), and is fine if any one of them exists.
+      const FALLBACK = /^(Hiragino Sans|Hiragino Mincho ProN)$/i;
+      const lists = new Map<string, string[]>();
       root.querySelectorAll<HTMLElement>("*").forEach((el) => {
-        const f = getComputedStyle(el).fontFamily.split(",")[0].trim().replace(/^["']|["']$/g, "");
-        if (f && !GENERIC.test(f)) families.add(f);
+        const all = getComputedStyle(el).fontFamily.split(",").map((s) => s.trim().replace(/^["']|["']$/g, ""));
+        const own: string[] = [];
+        for (const f of all) { if (!f || GENERIC.test(f) || FALLBACK.test(f)) break; own.push(f); }
+        if (own.length) lists.set(own.join(","), own);
       });
       const ctx = document.createElement("canvas").getContext("2d")!;
       const sample = "mmmmmmmmmmlli1WWあいう漢字";
@@ -89,9 +95,8 @@ export async function measureOverflow(html: string): Promise<OverflowReport> {
         ctx.font = `72px ${font}`;
         return ctx.measureText(sample).width;
       };
-      const missingFonts = [...families].filter((f) =>
-        ["monospace", "serif"].every((g) => width(`"${f}", ${g}`) === width(g)),
-      );
+      const absent = (f: string) => ["monospace", "serif"].every((g) => width(`"${f}", ${g}`) === width(g));
+      const missingFonts = [...new Set([...lists.values()].filter((own) => own.every(absent)).map((own) => own[0]))];
       return {
         page: pageOver ? { contentMm: pxToMm(root.scrollHeight), pageMm: pxToMm(root.clientHeight) } : null,
         blocks,

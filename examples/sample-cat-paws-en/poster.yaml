@@ -34,9 +34,9 @@ layout:
 theme:
   name: "default"
   font_family:
-    body: "Noto Sans JP"
-    heading: "Noto Sans JP"
-    title: "Noto Sans JP"
+    body: "Arial, Helvetica, Liberation Sans"
+    heading: "Arial, Helvetica, Liberation Sans"
+    title: "Arial, Helvetica, Liberation Sans"
   font_size:
     title: "76pt"
     subtitle: "40pt"

@@ -38,10 +38,15 @@ const clampZoom = (z: number) => Math.min(2, Math.max(0.05, z));
 const fontCache = new Map<string, boolean>();
 function missingFonts(root: HTMLElement): string[] {
   const GENERIC = /^(serif|sans-serif|monospace|cursive|fantasy|system-ui|ui-.*|emoji|math|fangsong)$/i;
-  const families = new Set<string>();
+  // The author's list ends where fontStack's own fallbacks begin ("Hiragino ...");
+  // the poster is fine if any family of that list is installed.
+  const FALLBACK = /^(Hiragino Sans|Hiragino Mincho ProN)$/i;
+  const lists = new Map<string, string[]>();
   root.querySelectorAll<HTMLElement>("*").forEach((el) => {
-    const f = getComputedStyle(el).fontFamily.split(",")[0].trim().replace(/^["']|["']$/g, "");
-    if (f && !GENERIC.test(f)) families.add(f);
+    const all = getComputedStyle(el).fontFamily.split(",").map((s) => s.trim().replace(/^["']|["']$/g, ""));
+    const own: string[] = [];
+    for (const f of all) { if (!f || GENERIC.test(f) || FALLBACK.test(f)) break; own.push(f); }
+    if (own.length) lists.set(own.join(","), own);
   });
   const ctx = document.createElement("canvas").getContext("2d");
   if (!ctx) return [];
@@ -50,10 +55,11 @@ function missingFonts(root: HTMLElement): string[] {
     ctx.font = `72px ${font}`;
     return ctx.measureText(sample).width;
   };
-  return [...families].filter((f) => {
+  const absent = (f: string) => {
     if (!fontCache.has(f)) fontCache.set(f, ["monospace", "serif"].every((g) => width(`"${f}", ${g}`) === width(g)));
-    return fontCache.get(f);
-  });
+    return fontCache.get(f)!;
+  };
+  return [...new Set([...lists.values()].filter((own) => own.every(absent)).map((own) => own[0]))];
 }
 
 /** preview-only overlays excluded from overflow measurement */
