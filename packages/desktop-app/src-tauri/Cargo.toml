@@ -1,6 +1,6 @@
 [package]
 name = "research-poster-studio"
-version = "0.1.2"
+version = "0.1.3"
 description = "Research Poster Studio - structured layout editor for academic research posters"
 authors = ["Yuki Inoue Nakata", "Shoichi Hasegawa"]
 license = "Apache-2.0"

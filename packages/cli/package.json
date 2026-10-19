@@ -1,6 +1,6 @@
 {
   "name": "@rps/cli",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "rps - command line for Research Poster Studio (init / validate / preview / export / info)",
   "license": "Apache-2.0",
   "author": "Yuki Inoue Nakata <dj.y.nakata@gmail.com>",
@@ -43,9 +43,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@rps/core": "^0.1.2",
-    "@rps/exporter": "^0.1.2",
-    "@rps/renderer": "^0.1.2",
+    "@rps/core": "^0.1.3",
+    "@rps/exporter": "^0.1.3",
+    "@rps/renderer": "^0.1.3",
     "@viz-js/viz": "^3.28.0",
     "chokidar": "^4.0.1",
     "commander": "^12.1.0",

@@ -19,4 +19,4 @@ export * from "./combinedContent";
 export * from "./numbering";
 export * from "./validate";
 
-export const RPS_CORE_VERSION = "0.1.2";
+export const RPS_CORE_VERSION = "0.1.3";
