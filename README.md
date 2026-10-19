@@ -102,8 +102,11 @@ how to install, start, and uninstall on each OS, how to run and update from sour
 *The app is unsigned, so your OS may warn on first launch:*
 
 - **Windows（SmartScreen）**: 「詳細情報」→「実行」。
-- **macOS（Gatekeeper）**: アプリを右クリック →「開く」→「開く」。または
-  システム設定 → プライバシーとセキュリティ →「このまま開く」。
+- **macOS（Gatekeeper）**: macOS 14 までは、アプリを右クリック →「開く」→「開く」。
+  macOS 15 以降は警告に「開く」が無いので、「完了」を押してから、システム設定 → プライバシーとセキュリティ →
+  いちばん下の「このまま開く」→ パスワード（macOS 26.7.1 で確認）。
+  *macOS 14 and earlier: right-click the app → Open → Open. macOS 15 and later: click Done, then System Settings →
+  Privacy & Security → "Open Anyway" at the bottom, and authenticate.*
   macOS 15 以降などで「壊れているため開けません」と表示される場合は、ターミナルで次を実行してから開いてください。
   *If macOS says the app "is damaged and can't be opened", clear the quarantine flag in Terminal:*
 

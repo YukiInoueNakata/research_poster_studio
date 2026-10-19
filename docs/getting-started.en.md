@@ -167,7 +167,19 @@ The `.msi` build uninstalls normally even when Smart App Control is on.
 
    ![Permission to access the Documents folder](images/getting-started/mac-08-documents-access.png)
 
-On macOS 13 or later, if steps 5–6 do not open the app, go to System Settings → Privacy & Security and click "Open Anyway" near the bottom.
+> **On macOS 15 or later** (the screenshots above are from macOS 12)
+> The warning in step 4 looks like this and has no "Open" button; right-click → "Open" does not work either.
+>
+> ![The warning on macOS 15 or later (click Done)](images/getting-started/mac-04b-gatekeeper-macos15.png)
+>
+> Do this instead:
+> 1. Click "Done". **Do not click "Move to Trash".**
+> 2. Open System Settings (Apple menu → System Settings) and choose "Privacy & Security" on the left.
+> 3. Scroll the right side to the bottom. In the "Security" section, next to the message about "Research Poster Studio", click "Open Anyway".
+> 4. Enter your Mac login password (or use Touch ID) when asked.
+> 5. If asked again, click "Open Anyway". The app starts; from then on a normal double-click opens it.
+>
+> (Checked on macOS 26.7.1; that screenshot is from a Japanese-language Mac.)
 
 The screenshots are from a Japanese-language Mac (macOS 12).
 
