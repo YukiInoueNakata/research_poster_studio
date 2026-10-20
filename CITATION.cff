@@ -33,6 +33,9 @@ identifiers:
   - type: doi
     value: "10.5281/zenodo.23148712"
     description: "Version DOI for v0.1.2"
+  - type: doi
+    value: "10.5281/zenodo.23487926"
+    description: "Version DOI for v0.1.3"
 date-released: "2026-10-20"
 keywords:
   - academic poster

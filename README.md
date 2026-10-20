@@ -563,10 +563,10 @@ poster-project/
 
 下記の DOI は全バージョン共通の concept DOI です（常に最新版に解決）。特定の版を引用する場合は、
 `version` を書き足し、DOI をその版の DOI に差し替えてください（各版の DOI は
-[Zenodo の版一覧](https://doi.org/10.5281/zenodo.23114417)、例: v0.1.2 = [10.5281/zenodo.23148712](https://doi.org/10.5281/zenodo.23148712)）。
+[Zenodo の版一覧](https://doi.org/10.5281/zenodo.23114417)、例: v0.1.3 = [10.5281/zenodo.23487926](https://doi.org/10.5281/zenodo.23487926)）。
 *The DOI below is the concept DOI, which always resolves to the latest version. To cite a specific
 version, add `version` and use that version's DOI (listed on [Zenodo](https://doi.org/10.5281/zenodo.23114417);
-e.g. v0.1.2 = [10.5281/zenodo.23148712](https://doi.org/10.5281/zenodo.23148712)).*
+e.g. v0.1.3 = [10.5281/zenodo.23487926](https://doi.org/10.5281/zenodo.23487926)).*
 
 ```bibtex
 @software{nakata_research_poster_studio,
